@@ -9,7 +9,7 @@ import Foundation
 
 struct K {
     struct General {
-        
+        static let woopLogoImage = "woopLogo"
     }
     
     struct EventList {

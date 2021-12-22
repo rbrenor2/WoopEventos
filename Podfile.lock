@@ -9,12 +9,14 @@ PODS:
   - SDWebImage (5.12.1):
     - SDWebImage/Core (= 5.12.1)
   - SDWebImage/Core (5.12.1)
+  - SwiftIcons (3.0)
 
 DEPENDENCIES:
   - lottie-ios
   - RxCocoa
   - RxSwift
   - SDWebImage
+  - SwiftIcons
 
 SPEC REPOS:
   trunk:
@@ -23,6 +25,7 @@ SPEC REPOS:
     - RxRelay
     - RxSwift
     - SDWebImage
+    - SwiftIcons
 
 SPEC CHECKSUMS:
   lottie-ios: 6ac74dcc09904798f59b18cb3075c089d76be9ae
@@ -30,7 +33,8 @@ SPEC CHECKSUMS:
   RxRelay: e72dbfd157807478401ef1982e1c61c945c94b2f
   RxSwift: d356ab7bee873611322f134c5f9ef379fa183d8f
   SDWebImage: 4dc3e42d9ec0c1028b960a33ac6b637bb432207b
+  SwiftIcons: 3b748e57d9eee0c7c8d3bdbf2d742c0b1b4c6172
 
-PODFILE CHECKSUM: cf7bf5d0645a3c90b744213e7dad73d651093e36
+PODFILE CHECKSUM: 127b30bc16f20c0deb6d755896075a47823bf4e0
 
 COCOAPODS: 1.11.2

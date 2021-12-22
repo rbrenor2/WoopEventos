@@ -7,7 +7,7 @@
 
 import Foundation
 
-class EventService {
+struct EventService {
     static let shared = EventService()
     
     func fetchEvents() {
