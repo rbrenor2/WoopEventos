@@ -9,21 +9,31 @@
 /* Begin PBXBuildFile section */
 		5B8669EF27726CA300A56DEF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B8669EE27726CA300A56DEF /* AppDelegate.swift */; };
 		5B8669F127726CA300A56DEF /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B8669F027726CA300A56DEF /* SceneDelegate.swift */; };
-		5B8669F327726CA300A56DEF /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B8669F227726CA300A56DEF /* ViewController.swift */; };
 		5B8669F627726CA300A56DEF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5B8669F427726CA300A56DEF /* Main.storyboard */; };
 		5B8669F827726CAA00A56DEF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5B8669F727726CAA00A56DEF /* Assets.xcassets */; };
 		5B8669FB27726CAA00A56DEF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5B8669F927726CAA00A56DEF /* LaunchScreen.storyboard */; };
+		5B866A0927729FB600A56DEF /* EventListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B866A0827729FB600A56DEF /* EventListController.swift */; };
+		5B866A0B27729FD100A56DEF /* EventDetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B866A0A27729FD100A56DEF /* EventDetailController.swift */; };
+		5B866A0D2772A0B300A56DEF /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B866A0C2772A0B300A56DEF /* Event.swift */; };
+		5B866A0F2772A0D300A56DEF /* EventCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B866A0E2772A0D300A56DEF /* EventCell.swift */; };
+		5B866A112772A0FA00A56DEF /* EventService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B866A102772A0FA00A56DEF /* EventService.swift */; };
+		5B866A132772A1A300A56DEF /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B866A122772A1A300A56DEF /* Constants.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		5B8669EB27726CA300A56DEF /* WoopEventos.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WoopEventos.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5B8669EE27726CA300A56DEF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5B8669F027726CA300A56DEF /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		5B8669F227726CA300A56DEF /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		5B8669F527726CA300A56DEF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		5B8669F727726CAA00A56DEF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5B8669FA27726CAA00A56DEF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5B8669FC27726CAA00A56DEF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5B866A0827729FB600A56DEF /* EventListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventListController.swift; sourceTree = "<group>"; };
+		5B866A0A27729FD100A56DEF /* EventDetailController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDetailController.swift; sourceTree = "<group>"; };
+		5B866A0C2772A0B300A56DEF /* Event.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
+		5B866A0E2772A0D300A56DEF /* EventCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventCell.swift; sourceTree = "<group>"; };
+		5B866A102772A0FA00A56DEF /* EventService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventService.swift; sourceTree = "<group>"; };
+		5B866A122772A1A300A56DEF /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,15 +66,68 @@
 		5B8669ED27726CA300A56DEF /* WoopEventos */ = {
 			isa = PBXGroup;
 			children = (
+				5B866A0327729F1600A56DEF /* Model */,
+				5B866A0527729F2200A56DEF /* ViewModel */,
+				5B866A0427729F1D00A56DEF /* View */,
+				5B866A0627729F3D00A56DEF /* Controller */,
+				5B866A0727729F4900A56DEF /* Services */,
+				5B866A0227729F0A00A56DEF /* Utils */,
 				5B8669EE27726CA300A56DEF /* AppDelegate.swift */,
 				5B8669F027726CA300A56DEF /* SceneDelegate.swift */,
-				5B8669F227726CA300A56DEF /* ViewController.swift */,
 				5B8669F427726CA300A56DEF /* Main.storyboard */,
 				5B8669F727726CAA00A56DEF /* Assets.xcassets */,
 				5B8669F927726CAA00A56DEF /* LaunchScreen.storyboard */,
 				5B8669FC27726CAA00A56DEF /* Info.plist */,
+				5B866A122772A1A300A56DEF /* Constants.swift */,
 			);
 			path = WoopEventos;
+			sourceTree = "<group>";
+		};
+		5B866A0227729F0A00A56DEF /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		5B866A0327729F1600A56DEF /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				5B866A0C2772A0B300A56DEF /* Event.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		5B866A0427729F1D00A56DEF /* View */ = {
+			isa = PBXGroup;
+			children = (
+				5B866A0E2772A0D300A56DEF /* EventCell.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		5B866A0527729F2200A56DEF /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		5B866A0627729F3D00A56DEF /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				5B866A0827729FB600A56DEF /* EventListController.swift */,
+				5B866A0A27729FD100A56DEF /* EventDetailController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		5B866A0727729F4900A56DEF /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				5B866A102772A0FA00A56DEF /* EventService.swift */,
+			);
+			path = Services;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -138,9 +201,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5B8669F327726CA300A56DEF /* ViewController.swift in Sources */,
 				5B8669EF27726CA300A56DEF /* AppDelegate.swift in Sources */,
+				5B866A0927729FB600A56DEF /* EventListController.swift in Sources */,
 				5B8669F127726CA300A56DEF /* SceneDelegate.swift in Sources */,
+				5B866A0B27729FD100A56DEF /* EventDetailController.swift in Sources */,
+				5B866A0F2772A0D300A56DEF /* EventCell.swift in Sources */,
+				5B866A0D2772A0B300A56DEF /* Event.swift in Sources */,
+				5B866A112772A0FA00A56DEF /* EventService.swift in Sources */,
+				5B866A132772A1A300A56DEF /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
