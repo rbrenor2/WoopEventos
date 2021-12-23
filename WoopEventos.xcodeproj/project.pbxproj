@@ -22,6 +22,7 @@
 		5B866A152772A99200A56DEF /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B866A142772A99200A56DEF /* Extensions.swift */; };
 		5B866A172772C13700A56DEF /* EventCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B866A162772C13600A56DEF /* EventCellViewModel.swift */; };
 		5B866A192772E63400A56DEF /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B866A182772E63400A56DEF /* Utilities.swift */; };
+		5B866A1B2773A82400A56DEF /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B866A1A2773A82400A56DEF /* MapKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +43,7 @@
 		5B866A142772A99200A56DEF /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		5B866A162772C13600A56DEF /* EventCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventCellViewModel.swift; sourceTree = "<group>"; };
 		5B866A182772E63400A56DEF /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
+		5B866A1A2773A82400A56DEF /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		69F194EE22E9D9D5B460616F /* Pods-WoopEventos.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WoopEventos.release.xcconfig"; path = "Target Support Files/Pods-WoopEventos/Pods-WoopEventos.release.xcconfig"; sourceTree = "<group>"; };
 		B890973E9ABC1CA9A0000BE3 /* Pods_WoopEventos.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WoopEventos.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -51,6 +53,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5B866A1B2773A82400A56DEF /* MapKit.framework in Frameworks */,
 				11C4D68708E3C30B5DF7E024 /* Pods_WoopEventos.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -158,6 +161,7 @@
 		5E184AE539F3829C05DF0F08 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				5B866A1A2773A82400A56DEF /* MapKit.framework */,
 				B890973E9ABC1CA9A0000BE3 /* Pods_WoopEventos.framework */,
 			);
 			name = Frameworks;
