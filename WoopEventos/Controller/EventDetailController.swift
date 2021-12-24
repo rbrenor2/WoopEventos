@@ -8,21 +8,27 @@
 import UIKit
 import SDWebImage
 import MapKit
+import RxSwift
 
 class EventDetailController: UIViewController {
     // MARK: - Properties
+    let disposeBag = DisposeBag()
+    
+    let eventDetailViewModel: EventDetailViewModel = EventDetailViewModel()
+    
+    var id: String?
+    
     let imageView: UIImageView = {
         let iv = UIImageView()
         iv.backgroundColor = .lightGreen
         iv.contentMode = .scaleAspectFill
         iv.clipsToBounds = true
-                iv.sd_setImage(with: URL(string: "https://lproweb.procempa.com.br/pmpa/prefpoa/seda_news/usu_img/Papel%20de%20Parede.png"))
         return iv
     }()
     
     let titleDescriptionLabel: UILabel = {
         let label = UILabel()
-        label.text = "Descrição"
+        label.text = K.EventDetail.descriptionTitle
         label.font = UIFont.boldSystemFont(ofSize: 32)
         return label
     }()
@@ -30,14 +36,13 @@ class EventDetailController: UIViewController {
     let descriptionLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
-        label.text = "O Patas Dadas estará na Redenção, nesse domingo, com cães para adoção e produtos à venda!\n\nNa ocasião, teremos bottons, bloquinhos e camisetas!\n\nTraga seu Pet, os amigos e o chima, e venha aproveitar esse dia de sol com a gente e com alguns de nossos peludinhos - que estarão prontinhos para ganhar o ♥ de um humano bem legal pra chamar de seu. \n\nAceitaremos todos os tipos de doação:\n- guias e coleiras em bom estado\n- ração (as que mais precisamos no momento são sênior e filhote)\n- roupinhas \n- cobertas \n- remédios dentro do prazo de validade"
         label.font = UIFont.systemFont(ofSize: 14)
         return label
     }()
     
     let titleLocationLabel: UILabel = {
         let label = UILabel()
-        label.text = "Onde?"
+        label.text = K.EventDetail.locationTile
         label.font = UIFont.boldSystemFont(ofSize: 32)
         return label
     }()
@@ -55,7 +60,7 @@ class EventDetailController: UIViewController {
     
     let shareButton: UIButton = {
         let button = UIButton()
-        button.setImage(UIImage.init(systemName: "square.and.arrow.up"), for: .normal)
+        button.setImage(UIImage.init(systemName: K.EventDetail.shareButtonIconName), for: .normal)
         return button
     }()
 
@@ -64,7 +69,7 @@ class EventDetailController: UIViewController {
         button.backgroundColor = .lightPurple
         button.setDimensions(width: 84, height: 32)
         button.layer.cornerRadius = 32/2
-        button.setTitle("Check-in", for: .normal)
+        button.setTitle(K.EventDetail.checkinButtonTitle, for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 12)
         button.contentEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
 
@@ -79,16 +84,51 @@ class EventDetailController: UIViewController {
         return scroll
     }()
     
+    
+    // MARK: - Reactiveness
+    func bindViewModel() {
+        eventDetailViewModel.eventDetail.subscribe (onNext:{ [weak self] eventDetailType in
+            print("DEBUG: BINDVIEWMODEL")
+            switch eventDetailType {
+            case .normal(let viewModel):
+                self?.configureUI(eventViewModel: viewModel)
+            case .error(let error):
+                self?.configureErrorUI(message: error)
+            case .empty:
+                self?.configureEmptyUI()
+            }
+        }, onError: { error in
+            self.configureErrorUI(message: error.localizedDescription)
+        } ).disposed(by: disposeBag)
+
+    }
+    
     // MARK: - Lifecycle
-    override func viewDidLoad() {
-        configureUI()
+    init(id: String) {
+        super.init(nibName: nil, bundle: nil)
+        self.id = id
+        self.bindViewModel()
+        eventDetailViewModel.getEvent(id: id)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     // MARK: - Helpers
-    func configureUI() {
+    func configureEmptyUI() {
+        
+    }
+    
+    func configureErrorUI(message: String) {
+        
+    }
+        
+    func configureUI(eventViewModel: EventViewModel) {
         view.backgroundColor = .white
         
         view.addSubview(imageView)
+        imageView.sd_setImage(with: eventViewModel.event.image)
         imageView.anchor(top: view.topAnchor, left: view.leftAnchor, right: view.rightAnchor, width: view.frame.width, height: 200)
         
         view.addSubview(shareButton)
@@ -100,6 +140,7 @@ class EventDetailController: UIViewController {
         view.addSubview(scrollView)
         scrollView.anchor(top: imageView.bottomAnchor, left: view.leftAnchor, right: view.rightAnchor, paddingTop: 60, paddingLeft: 20, paddingRight: 20, width: view.frame.width, height: view.frame.height)
         
+        descriptionLabel.text = eventViewModel.event.description
         let descriptionStack = Utilities().infoStack(withTitle: titleDescriptionLabel, views: [descriptionLabel], direction: .vertical)
         scrollView.addSubview(descriptionStack)
         descriptionStack.anchor(top: scrollView.topAnchor, left: scrollView.leftAnchor, right: scrollView.rightAnchor, paddingTop: 18, width: scrollView.frame.width - 500)
@@ -115,15 +156,20 @@ class EventDetailController: UIViewController {
         let mapHeight:CGFloat = 300
         
         mapView.frame = CGRect(x: leftMargin, y: topMargin, width: mapWidth, height: mapHeight)
+        let location = CLLocationCoordinate2D(latitude: eventViewModel.event.latitude, longitude: eventViewModel.event.longitude)
+        let region = MKCoordinateRegion(center: location, span: MKCoordinateSpan(latitudeDelta: 0.009, longitudeDelta: 0.009))
+        mapView.setRegion(region, animated: true)
         
         mapView.mapType = MKMapType.standard
-        mapView.isZoomEnabled = true
-        mapView.isScrollEnabled = true
+        mapView.isZoomEnabled = false
+        mapView.isScrollEnabled = false
         
-        // Or, if needed, we can position map in the center of the view
+        let pin = MKPointAnnotation()
+        pin.coordinate = location
+        pin.title = eventViewModel.event.title
+        mapView.addAnnotation(pin)
+        
         mapView.center = view.center
 
     }
-    
-    // MARK: - API
 }

@@ -68,8 +68,8 @@ struct EventService {
                     case .success:
                         do {
                             guard let data = response.data else {return}
-                            let events = try JSONDecoder().decode(Event.self, from: data)
-                            observer.onNext(events)
+                            let event = try JSONDecoder().decode(Event.self, from: data)
+                            observer.onNext(event)
                         } catch {
                             observer.onError(error)
                         }

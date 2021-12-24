@@ -20,11 +20,13 @@
 		5B866A112772A0FA00A56DEF /* EventService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B866A102772A0FA00A56DEF /* EventService.swift */; };
 		5B866A132772A1A300A56DEF /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B866A122772A1A300A56DEF /* Constants.swift */; };
 		5B866A152772A99200A56DEF /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B866A142772A99200A56DEF /* Extensions.swift */; };
-		5B866A172772C13700A56DEF /* EventCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B866A162772C13600A56DEF /* EventCellViewModel.swift */; };
+		5B866A172772C13700A56DEF /* EventViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B866A162772C13600A56DEF /* EventViewModel.swift */; };
 		5B866A192772E63400A56DEF /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B866A182772E63400A56DEF /* Utilities.swift */; };
 		5B866A1B2773A82400A56DEF /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B866A1A2773A82400A56DEF /* MapKit.framework */; };
 		5B866A1D277558F700A56DEF /* EventCheckin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B866A1C277558F600A56DEF /* EventCheckin.swift */; };
 		5B866A1F27755E1200A56DEF /* EventListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B866A1E27755E1200A56DEF /* EventListViewModel.swift */; };
+		5B866A2127758EBB00A56DEF /* EventDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B866A2027758EBA00A56DEF /* EventDetailViewModel.swift */; };
+		5B866A2327758FC500A56DEF /* EventDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B866A2227758FC500A56DEF /* EventDetail.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -43,11 +45,13 @@
 		5B866A102772A0FA00A56DEF /* EventService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventService.swift; sourceTree = "<group>"; };
 		5B866A122772A1A300A56DEF /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		5B866A142772A99200A56DEF /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
-		5B866A162772C13600A56DEF /* EventCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventCellViewModel.swift; sourceTree = "<group>"; };
+		5B866A162772C13600A56DEF /* EventViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventViewModel.swift; sourceTree = "<group>"; };
 		5B866A182772E63400A56DEF /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		5B866A1A2773A82400A56DEF /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		5B866A1C277558F600A56DEF /* EventCheckin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventCheckin.swift; sourceTree = "<group>"; };
 		5B866A1E27755E1200A56DEF /* EventListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventListViewModel.swift; sourceTree = "<group>"; };
+		5B866A2027758EBA00A56DEF /* EventDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDetailViewModel.swift; sourceTree = "<group>"; };
+		5B866A2227758FC500A56DEF /* EventDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDetail.swift; sourceTree = "<group>"; };
 		69F194EE22E9D9D5B460616F /* Pods-WoopEventos.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WoopEventos.release.xcconfig"; path = "Target Support Files/Pods-WoopEventos/Pods-WoopEventos.release.xcconfig"; sourceTree = "<group>"; };
 		B890973E9ABC1CA9A0000BE3 /* Pods_WoopEventos.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WoopEventos.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -134,6 +138,7 @@
 			isa = PBXGroup;
 			children = (
 				5B866A0E2772A0D300A56DEF /* EventCell.swift */,
+				5B866A2227758FC500A56DEF /* EventDetail.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -141,8 +146,9 @@
 		5B866A0527729F2200A56DEF /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				5B866A162772C13600A56DEF /* EventCellViewModel.swift */,
+				5B866A162772C13600A56DEF /* EventViewModel.swift */,
 				5B866A1E27755E1200A56DEF /* EventListViewModel.swift */,
+				5B866A2027758EBA00A56DEF /* EventDetailViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -295,11 +301,13 @@
 				5B866A0927729FB600A56DEF /* EventListController.swift in Sources */,
 				5B8669F127726CA300A56DEF /* SceneDelegate.swift in Sources */,
 				5B866A0B27729FD100A56DEF /* EventDetailController.swift in Sources */,
-				5B866A172772C13700A56DEF /* EventCellViewModel.swift in Sources */,
+				5B866A172772C13700A56DEF /* EventViewModel.swift in Sources */,
+				5B866A2327758FC500A56DEF /* EventDetail.swift in Sources */,
 				5B866A0F2772A0D300A56DEF /* EventCell.swift in Sources */,
 				5B866A1D277558F700A56DEF /* EventCheckin.swift in Sources */,
 				5B866A0D2772A0B300A56DEF /* Event.swift in Sources */,
 				5B866A112772A0FA00A56DEF /* EventService.swift in Sources */,
+				5B866A2127758EBB00A56DEF /* EventDetailViewModel.swift in Sources */,
 				5B866A132772A1A300A56DEF /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

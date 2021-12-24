@@ -12,7 +12,7 @@ import SwiftIcons
 class EventCell: UITableViewCell {
     
     // MARK: - Properties
-    var viewModel: EventCellViewModel? {
+    var viewModel: EventViewModel? {
         didSet {
             configureUI()
         }

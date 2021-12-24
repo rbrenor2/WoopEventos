@@ -11,7 +11,7 @@ import RxSwift
 import RxCocoa
 
 enum EventCellViewModelType {
-    case normal(cellViewModel: EventCellViewModel)
+    case normal(eventViewModel: EventViewModel)
     case error(message: String)
     case empty
 }
@@ -39,8 +39,8 @@ class EventListViewModel {
             }
             
             let cellsViewModelList: [EventCellViewModelType] = events.compactMap { event in
-                let viewModel = EventCellViewModel(event: event)
-                let type = EventCellViewModelType.normal(cellViewModel: viewModel)
+                let viewModel = EventViewModel(event: event)
+                let type = EventCellViewModelType.normal(eventViewModel: viewModel)
                 return type
             }
             

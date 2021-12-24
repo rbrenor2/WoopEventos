@@ -68,10 +68,18 @@ class EventListController: UITableViewController {
     }
     
     func handleCellTapped() {
-        tableView.rx.itemSelected.subscribe ({ [weak self] IndexPath in
-            let detailVC = EventDetailController()
-            self?.present(detailVC, animated: true, completion: nil)
-        }).disposed(by: disposeBag)        
+        tableView
+        .rx
+        .modelSelected(EventCellViewModelType.self)
+        .subscribe(
+            onNext: { [weak self] eventCellType in
+                if case let .normal(viewModel) = eventCellType {
+                    let detailVC = EventDetailController(id: viewModel.event.id)
+                    self?.present(detailVC, animated: true, completion: nil)
+                }
+            }
+        )
+        .disposed(by: disposeBag)
     }
     
     // MARK: - Helpers
