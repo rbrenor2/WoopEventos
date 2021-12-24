@@ -10,7 +10,7 @@ import RxSwift
 import Alamofire
 
 enum EventFailureReason: Int, Error {
-    case unAuthorized = 401
+    case unauthorized = 401
     case notFound = 404
     case badRequest = 400
 }
@@ -34,6 +34,7 @@ struct EventService {
                         do {
                             guard let data = response.data else {return}
                             let events = try JSONDecoder().decode([Event].self, from: data)
+                            print("DEBUG: Events count \(events.count)")
                             observer.onNext(events)
                         } catch {
                             observer.onError(error)

@@ -9,26 +9,80 @@ import UIKit
 import RxSwift
 
 private let reuseIdentifier = "eventCell"
-private let disposeBag = DisposeBag()
 
 class EventListController: UITableViewController {
     
     // MARK: - Properties
+    let disposeBag = DisposeBag()
+    let eventListViewModel: EventListViewModel = EventListViewModel()
     
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         configureUI()
+        bindViewModel()
+        handleCellTapped()
+
+        eventListViewModel.getEvents()
+    }
+    
+    // MARK: - Reactiveness
+    func bindViewModel() {
+        tableView
+            .rx.setDelegate(self)
+            .disposed(by: disposeBag)
+        
+        eventListViewModel.eventCells.bind(to: tableView.rx.items, curriedArgument: {
+            tableView, index, element in
+            
+            let indexPath = IndexPath(item: index, section: 0)
+            
+            switch element {
+            case .normal(let viewModel):
+                
+                guard let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as? EventCell else {
+                    return UITableViewCell()
+                }
+                cell.viewModel = viewModel
+                
+                return cell
+                
+            case .error(let message):
+                
+                let cell = UITableViewCell()
+                cell.isUserInteractionEnabled = false
+                cell.textLabel?.text = message
+                
+                return cell
+                
+            case .empty:
+                let cell = UITableViewCell()
+                cell.isUserInteractionEnabled = false
+                cell.textLabel?.text = "Sem dados"
+                
+                return cell
+            }
+        }).disposed(by: disposeBag)
+        
+    }
+    
+    func handleCellTapped() {
+        tableView.rx.itemSelected.subscribe ({ [weak self] IndexPath in
+            let detailVC = EventDetailController()
+            self?.present(detailVC, animated: true, completion: nil)
+        }).disposed(by: disposeBag)        
     }
     
     // MARK: - Helpers
     func configureUI() {
-        
         configureNavBarUI()
         configureEventListUI()
     }
     
     func configureEventListUI() {
+        tableView.dataSource = nil
+        tableView.delegate = nil
         tableView.register(EventCell.self, forCellReuseIdentifier: reuseIdentifier)
     }
     
@@ -39,29 +93,10 @@ class EventListController: UITableViewController {
         navigationController?.navigationBar.isHidden = false
         navigationItem.titleView = logoImageView
     }
-    
-    // MARK: - API
 }
 
-// MARK: - UICollectionViewDelegate/DataSource
-
 extension EventListController {
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
-    }
-    
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as! EventCell
-        
-        return cell
-    }
-    
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 90
-    }
-    
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let detailVC = EventDetailController()
-        present(detailVC, animated: true, completion: nil)
+        return 120
     }
 }

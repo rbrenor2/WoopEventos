@@ -24,6 +24,7 @@
 		5B866A192772E63400A56DEF /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B866A182772E63400A56DEF /* Utilities.swift */; };
 		5B866A1B2773A82400A56DEF /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B866A1A2773A82400A56DEF /* MapKit.framework */; };
 		5B866A1D277558F700A56DEF /* EventCheckin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B866A1C277558F600A56DEF /* EventCheckin.swift */; };
+		5B866A1F27755E1200A56DEF /* EventListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B866A1E27755E1200A56DEF /* EventListViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -46,6 +47,7 @@
 		5B866A182772E63400A56DEF /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		5B866A1A2773A82400A56DEF /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		5B866A1C277558F600A56DEF /* EventCheckin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventCheckin.swift; sourceTree = "<group>"; };
+		5B866A1E27755E1200A56DEF /* EventListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventListViewModel.swift; sourceTree = "<group>"; };
 		69F194EE22E9D9D5B460616F /* Pods-WoopEventos.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WoopEventos.release.xcconfig"; path = "Target Support Files/Pods-WoopEventos/Pods-WoopEventos.release.xcconfig"; sourceTree = "<group>"; };
 		B890973E9ABC1CA9A0000BE3 /* Pods_WoopEventos.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WoopEventos.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -140,6 +142,7 @@
 			isa = PBXGroup;
 			children = (
 				5B866A162772C13600A56DEF /* EventCellViewModel.swift */,
+				5B866A1E27755E1200A56DEF /* EventListViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -287,6 +290,7 @@
 			files = (
 				5B8669EF27726CA300A56DEF /* AppDelegate.swift in Sources */,
 				5B866A152772A99200A56DEF /* Extensions.swift in Sources */,
+				5B866A1F27755E1200A56DEF /* EventListViewModel.swift in Sources */,
 				5B866A192772E63400A56DEF /* Utilities.swift in Sources */,
 				5B866A0927729FB600A56DEF /* EventListController.swift in Sources */,
 				5B8669F127726CA300A56DEF /* SceneDelegate.swift in Sources */,
