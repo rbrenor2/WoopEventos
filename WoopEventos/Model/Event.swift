@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Event {
+struct Event: Decodable {
     let people: [String]
     let date: Int
     let description: String

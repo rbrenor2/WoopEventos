@@ -10,6 +10,8 @@ import SDWebImage
 import SwiftIcons
 
 class EventCell: UITableViewCell {
+     
+    
     // MARK: - Properties
     private let profileImageView: UIImageView = {
         let iv = UIImageView()
@@ -84,21 +86,16 @@ class EventCell: UITableViewCell {
         addSubview(profileImageView)
         profileImageView.centerY(inView: self)
         profileImageView.anchor(left: leftAnchor, paddingLeft: 8)
-        
+
         let nameDateStack = UIStackView(arrangedSubviews: [eventDateLabel, eventNameLabel])
         nameDateStack.axis = .vertical
         nameDateStack.spacing = 4
         addSubview(nameDateStack)
         nameDateStack.centerY(inView: self)
         nameDateStack.anchor(left: profileImageView.rightAnchor, paddingLeft: 12)
-        
+
         addSubview(priceLabel)
         priceLabel.anchor(top: topAnchor, right: rightAnchor, paddingTop: 12, paddingRight: 12)
-        
-        
-//        addSubview(seeMoreButton)
-//        seeMoreButton.anchor(bottom: bottomAnchor, right: rightAnchor, paddingBottom: 12, paddingRight: 12)
-        
     }
     
     

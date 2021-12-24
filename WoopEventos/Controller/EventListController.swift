@@ -6,8 +6,10 @@
 //
 
 import UIKit
+import RxSwift
 
 private let reuseIdentifier = "eventCell"
+private let disposeBag = DisposeBag()
 
 class EventListController: UITableViewController {
     

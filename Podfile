@@ -11,4 +11,5 @@ target 'WoopEventos' do
   pod 'lottie-ios'
   pod 'SDWebImage'
   pod 'SwiftIcons'
+  pod 'Alamofire'
 end

@@ -19,4 +19,10 @@ struct K {
     struct EventDetail {
         
     }
+    
+    struct Services {
+        static let getEventListURL = "https://5f5a8f24d44d640016169133.mockapi.io/api/events"
+        static let getEventURL = "https://5f5a8f24d44d640016169133.mockapi.io/api/events/{id}"
+        static let postEventCheckinURL = "https://5f5a8f24d44d640016169133.mockapi.io/api/checkin"
+    }
 }
