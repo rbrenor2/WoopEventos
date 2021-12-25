@@ -65,13 +65,17 @@ class EventDetailController: UIViewController {
     }()
 
     let checkinButton: UIButton = {
-        let button = UIButton()
+
+        let button = UIButton(type: .system)
         button.backgroundColor = .lightPurple
-        button.setDimensions(width: 84, height: 32)
-        button.layer.cornerRadius = 32/2
         button.setTitle(K.EventDetail.checkinButtonTitle, for: .normal)
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 12)
+        button.titleLabel?.textAlignment = .center
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
+        button.setTitleColor(.white, for: .normal)
+        button.frame = CGRect(x: 0, y: 0, width: 64, height: 32)
+        button.layer.cornerRadius = 32/2
         button.contentEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+        button.addTarget(self, action: #selector(handleCheckinTapped), for: .touchUpInside)
 
         return button
     }()
@@ -87,6 +91,19 @@ class EventDetailController: UIViewController {
     
     // MARK: - Reactiveness
     func bindViewModel() {
+        eventDetailViewModel.eventCheckin.subscribe (onNext:{ [unowned self] eventCheckinType in
+            switch eventCheckinType {
+            case .normal(let code):
+                self.showCheckinConfirmationAlert(message: code)
+            case .error(let error):
+                self.showCheckinConfirmationAlert(message: error)
+            case .empty:
+                self.showCheckinConfirmationAlert(message: "")
+            }
+        }, onError: { [unowned self] error in
+            self.configureErrorUI(message: error.localizedDescription)
+        } ).disposed(by: disposeBag)
+        
         eventDetailViewModel.eventDetail.subscribe (onNext:{ [unowned self] eventDetailType in
             switch eventDetailType {
             case .normal(let viewModel):
@@ -99,7 +116,6 @@ class EventDetailController: UIViewController {
         }, onError: { [unowned self] error in
             self.configureErrorUI(message: error.localizedDescription)
         } ).disposed(by: disposeBag)
-
     }
     
     // MARK: - Lifecycle
@@ -118,6 +134,13 @@ class EventDetailController: UIViewController {
     }
     
     // MARK: - Helpers
+    func showCheckinConfirmationAlert(message: String) {
+        let alert = UIAlertController(title: "\(K.EventDetail.checkinAlertTitle) \(message)", message: K.EventDetail.checkinButtonTitle, preferredStyle: .alert)
+        let action = UIAlertAction(title: K.EventDetail.checkinAlertActionButtonTitle, style: .cancel)
+        alert.addAction(action)
+        self.present(alert, animated: true, completion: nil)
+    }
+    
     func configureEmptyUI() {
         
     }
@@ -172,6 +195,13 @@ class EventDetailController: UIViewController {
         mapView.addAnnotation(pin)
         
         mapView.center = view.center
-
+    }
+    
+    // MARK: - Selectors
+    
+    @objc func handleCheckinTapped() {
+        guard let id = self.id else {return}
+        let eventCheckin = EventCheckin(eventId: id, name: "Breno Rios", email: "rbrenorios@gmail.com")
+        eventDetailViewModel.checkinEvent(eventCheckin: eventCheckin)
     }
 }

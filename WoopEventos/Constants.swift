@@ -21,6 +21,9 @@ struct K {
         static let locationTile = "Onde vai ser?"
         static let shareButtonIconName = ""
         static let checkinButtonTitle = "Check-in"
+        static let checkinAlertMessage = "Seu lugar já está reservado. Aproveite o evento!"
+        static let checkinAlertTitle = "Status "
+        static let checkinAlertActionButtonTitle = "OK"
     }
     
     struct Services {

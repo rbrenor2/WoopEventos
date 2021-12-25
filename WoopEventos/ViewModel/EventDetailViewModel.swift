@@ -15,11 +15,21 @@ enum EventDetailViewModelType {
     case empty
 }
 
+enum EventChekinViewModelType {
+    case normal(code: String)
+    case error(message: String)
+    case empty
+}
+
 class EventDetailViewModel {
     private let loading = BehaviorRelay(value: false)
     private let detail = BehaviorRelay<EventDetailViewModelType>(value: .empty)
+    private let checkin = BehaviorRelay<EventChekinViewModelType>(value: .empty)
     private let disposeBag = DisposeBag()
 
+    var eventCheckin: Observable<EventChekinViewModelType> {
+        return checkin.asObservable()
+    }
     var eventDetail: Observable<EventDetailViewModelType> {
         return detail.asObservable()
     }
@@ -43,6 +53,21 @@ class EventDetailViewModel {
         }, onError: { [unowned self] error in
             self.loading.accept(false)
             self.detail.accept(.error(message: "Xiii, ocorreu um problema. Tente novamente em alguns momentos."))
+        }).disposed(by: disposeBag)
+    }
+    
+    func checkinEvent(eventCheckin: EventCheckin) {
+        loading.accept(true)
+        
+        EventService.shared.checkinEvent(byEventCheckin: eventCheckin).subscribe (onNext: { [unowned self] response in
+            self.loading.accept(false)
+            
+            let eventCheckinViewModel: EventChekinViewModelType = EventChekinViewModelType.normal(code: response.code)
+            
+            self.checkin.accept(eventCheckinViewModel)
+        }, onError: { [unowned self] error in
+            self.loading.accept(false)
+            self.detail.accept(.error(message: "Xiii, ocorreu um problema no Checkin. Tente novamente em alguns momentos."))
         }).disposed(by: disposeBag)
     }
 }
