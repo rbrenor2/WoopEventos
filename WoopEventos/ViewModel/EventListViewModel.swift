@@ -30,12 +30,12 @@ class EventListViewModel {
     func getEvents() {
         loading.accept(true)
         
-        EventService.shared.getEventList().subscribe (onNext: { [weak self] events in
-            self?.loading.accept(false)
+        EventService.shared.getEventList().subscribe (onNext: { [unowned self] events in
+            self.loading.accept(false)
             
             let count = events.count
             if count == 0 {
-                self?.cells.accept([.empty])
+                self.cells.accept([.empty])
             }
             
             let cellsViewModelList: [EventCellViewModelType] = events.compactMap { event in
@@ -44,10 +44,10 @@ class EventListViewModel {
                 return type
             }
             
-            self?.cells.accept(cellsViewModelList)
-        }, onError: { [weak self] error in
-            self?.loading.accept(false)
-            self?.cells.accept([.error(message: "Xiii, ocorreu um problema. Tente novamente em alguns momentos.")])
+            self.cells.accept(cellsViewModelList)
+        }, onError: { [unowned self] error in
+            self.loading.accept(false)
+            self.cells.accept([.error(message: "Xiii, ocorreu um problema. Tente novamente em alguns momentos.")])
         }).disposed(by: disposeBag)
     }
 }

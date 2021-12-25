@@ -29,20 +29,20 @@ class EventDetailViewModel {
     func getEvent(id: String) {
         loading.accept(true)
         
-        EventService.shared.getEvent(byId: id).subscribe (onNext: { [weak self] event in
-            self?.loading.accept(false)
+        EventService.shared.getEvent(byId: id).subscribe (onNext: { [unowned self] event in
+            self.loading.accept(false)
             
             if event.date == nil {
-                self?.detail.accept(.empty)
+                self.detail.accept(.empty)
             }
             
             let viewModel = EventViewModel(event: event)
             let eventDetailViewModel: EventDetailViewModelType = EventDetailViewModelType.normal(eventViewModel: viewModel)
             
-            self?.detail.accept(eventDetailViewModel)
-        }, onError: { [weak self] error in
-            self?.loading.accept(false)
-            self?.detail.accept(.error(message: "Xiii, ocorreu um problema. Tente novamente em alguns momentos."))
+            self.detail.accept(eventDetailViewModel)
+        }, onError: { [unowned self] error in
+            self.loading.accept(false)
+            self.detail.accept(.error(message: "Xiii, ocorreu um problema. Tente novamente em alguns momentos."))
         }).disposed(by: disposeBag)
     }
 }

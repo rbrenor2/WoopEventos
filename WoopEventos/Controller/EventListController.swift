@@ -72,10 +72,10 @@ class EventListController: UITableViewController {
         .rx
         .modelSelected(EventCellViewModelType.self)
         .subscribe(
-            onNext: { [weak self] eventCellType in
+            onNext: { [unowned self] eventCellType in
                 if case let .normal(viewModel) = eventCellType {
                     let detailVC = EventDetailController(id: viewModel.event.id)
-                    self?.present(detailVC, animated: true, completion: nil)
+                    self.present(detailVC, animated: true, completion: nil)
                 }
             }
         )

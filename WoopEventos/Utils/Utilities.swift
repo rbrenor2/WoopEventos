@@ -25,6 +25,5 @@ class Utilities {
         button.setDimensions(width: size, height: size)
         button.layer.cornerRadius = size/2
         return button
-        
     }
 }

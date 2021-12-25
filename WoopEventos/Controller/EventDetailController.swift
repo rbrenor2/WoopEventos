@@ -87,17 +87,16 @@ class EventDetailController: UIViewController {
     
     // MARK: - Reactiveness
     func bindViewModel() {
-        eventDetailViewModel.eventDetail.subscribe (onNext:{ [weak self] eventDetailType in
-            print("DEBUG: BINDVIEWMODEL")
+        eventDetailViewModel.eventDetail.subscribe (onNext:{ [unowned self] eventDetailType in
             switch eventDetailType {
             case .normal(let viewModel):
-                self?.configureUI(eventViewModel: viewModel)
+                self.configureUI(eventViewModel: viewModel)
             case .error(let error):
-                self?.configureErrorUI(message: error)
+                self.configureErrorUI(message: error)
             case .empty:
-                self?.configureEmptyUI()
+                self.configureEmptyUI()
             }
-        }, onError: { error in
+        }, onError: { [unowned self] error in
             self.configureErrorUI(message: error.localizedDescription)
         } ).disposed(by: disposeBag)
 
@@ -107,12 +106,15 @@ class EventDetailController: UIViewController {
     init(id: String) {
         super.init(nibName: nil, bundle: nil)
         self.id = id
-        self.bindViewModel()
-        eventDetailViewModel.getEvent(id: id)
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func viewDidLoad() {
+        self.bindViewModel()
+        eventDetailViewModel.getEvent(id: self.id!)
     }
     
     // MARK: - Helpers
