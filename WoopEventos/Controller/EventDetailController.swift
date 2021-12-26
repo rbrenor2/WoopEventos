@@ -29,6 +29,12 @@ class EventDetailController: UIViewController {
         return iv
     }()
     
+    private let dateLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.boldSystemFont(ofSize: 14)
+        return label
+    }()
+    
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.text = K.EventDetail.descriptionTitle
@@ -188,7 +194,7 @@ class EventDetailController: UIViewController {
         
         let mapView = Utilities().setupMapView(location: CLLocationCoordinate2D(latitude: eventViewModel.event.latitude, longitude: eventViewModel.event.longitude), annotation: annotation, mapWidth: view.frame.width, mapHeight: 300)
         
-        setupInfoScrollView(title: event.title, description: event.description, titleLocation: K.EventDetail.locationTile, mapView: mapView)
+        setupInfoScrollView(title: event.title, description: event.description, titleLocation: K.EventDetail.locationTile, date: event.date, mapView: mapView)
     }
     
     func setupImageView(withURL url: URL) {
@@ -211,7 +217,7 @@ class EventDetailController: UIViewController {
         priceLabel.anchor(top: imageView.bottomAnchor, left: view.leftAnchor, paddingTop: 12, paddingLeft: 12)
     }
     
-    func setupInfoScrollView(title: String, description: String, titleLocation: String, mapView: MKMapView) {
+    func setupInfoScrollView(title: String, description: String, titleLocation: String, date: Date, mapView: MKMapView) {
         
         let scrollView = UIScrollView()
         scrollView.translatesAutoresizingMaskIntoConstraints = false
@@ -231,10 +237,11 @@ class EventDetailController: UIViewController {
         
         titleLabel.text = title
         descriptionLabel.text = description
-        let descriptionStack = Utilities().infoStack(withTitle: titleLabel, views: [descriptionLabel], direction: .vertical)
+        dateLabel.text = Utilities().formatDate(withDate: date)
+        let descriptionStack = Utilities().infoStack(withViews: [dateLabel, titleLabel, descriptionLabel], direction: .vertical)
 
         titleLocationLabel.text = titleLocation
-        let locationStack = Utilities().infoStack(withTitle: titleLocationLabel, views: [mapView], direction: .vertical)
+        let locationStack = Utilities().infoStack(withViews: [titleLocationLabel, mapView], direction: .vertical)
         mapView.setDimensions(width: infoStack.frame.width, height: 200)
 
         infoStack.addSubview(descriptionStack)
