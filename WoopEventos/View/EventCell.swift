@@ -104,21 +104,13 @@ class EventCell: UITableViewCell {
         nameDateStack.spacing = 4
         addSubview(nameDateStack)
         
-        
-        let locale = Locale(identifier: "pt_BR")
-        let formatter = DateFormatter()
-        formatter.locale = locale
-        formatter.dateStyle = .long
-        eventDateLabel.text = formatter.string(from: viewModel.event.date)
+        eventDateLabel.text = Utilities().formatDate(withDate: viewModel.event.date)
         
         eventNameLabel.text = viewModel.event.title
         nameDateStack.centerY(inView: self)
         nameDateStack.anchor(left: eventImageView.rightAnchor, paddingLeft: 12, width: 200)
 
-        let priceFormatter = NumberFormatter()
-        priceFormatter.locale = locale
-        priceFormatter.numberStyle = .currency
-        priceLabel.text = priceFormatter.string(from: NSNumber(value: viewModel.event.price))
+        priceLabel.text = Utilities().formatPrice(withPrice: viewModel.event.price)
         
         addSubview(favoriteButton)
         favoriteButton.anchor(top: topAnchor, right: rightAnchor, paddingTop: 12, paddingRight: 12)
