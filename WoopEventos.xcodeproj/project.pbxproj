@@ -30,6 +30,7 @@
 		5B96856E2776C7290053B25B /* banana.json in Resources */ = {isa = PBXBuildFile; fileRef = 5B96856A2776C7240053B25B /* banana.json */; };
 		5B96856F2776C7290053B25B /* singing.json in Resources */ = {isa = PBXBuildFile; fileRef = 5B96856B2776C7280053B25B /* singing.json */; };
 		5B9685702776C7290053B25B /* traveler.json in Resources */ = {isa = PBXBuildFile; fileRef = 5B96856C2776C7290053B25B /* traveler.json */; };
+		5B9685722778AB360053B25B /* EventDetailInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B9685712778AB350053B25B /* EventDetailInfoView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -58,6 +59,7 @@
 		5B96856A2776C7240053B25B /* banana.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = banana.json; sourceTree = "<group>"; };
 		5B96856B2776C7280053B25B /* singing.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = singing.json; sourceTree = "<group>"; };
 		5B96856C2776C7290053B25B /* traveler.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = traveler.json; sourceTree = "<group>"; };
+		5B9685712778AB350053B25B /* EventDetailInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDetailInfoView.swift; sourceTree = "<group>"; };
 		69F194EE22E9D9D5B460616F /* Pods-WoopEventos.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WoopEventos.release.xcconfig"; path = "Target Support Files/Pods-WoopEventos/Pods-WoopEventos.release.xcconfig"; sourceTree = "<group>"; };
 		B890973E9ABC1CA9A0000BE3 /* Pods_WoopEventos.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WoopEventos.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -145,6 +147,7 @@
 			isa = PBXGroup;
 			children = (
 				5B866A0E2772A0D300A56DEF /* EventCell.swift */,
+				5B9685712778AB350053B25B /* EventDetailInfoView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -327,6 +330,7 @@
 				5B8669EF27726CA300A56DEF /* AppDelegate.swift in Sources */,
 				5B866A152772A99200A56DEF /* Extensions.swift in Sources */,
 				5B866A1F27755E1200A56DEF /* EventListViewModel.swift in Sources */,
+				5B9685722778AB360053B25B /* EventDetailInfoView.swift in Sources */,
 				5B866A192772E63400A56DEF /* Utilities.swift in Sources */,
 				5B866A0927729FB600A56DEF /* EventListController.swift in Sources */,
 				5B8669F127726CA300A56DEF /* SceneDelegate.swift in Sources */,

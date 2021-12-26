@@ -108,8 +108,8 @@ class EventListController: UITableViewController {
     func configureNavBarUI() {
         let logoImageView = UIImageView(image: UIImage(named: K.General.woopLogoImage))
         logoImageView.contentMode = .scaleAspectFit
-        logoImageView.setDimensions(width: 44, height: 44)
-        logoImageView.layer.cornerRadius = 44/2
+        logoImageView.setDimensions(width: 34, height: 34)
+        logoImageView.layer.cornerRadius = 34/2
 
         navigationController?.navigationBar.isHidden = false
         navigationItem.titleView = logoImageView

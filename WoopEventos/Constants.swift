@@ -19,7 +19,7 @@ struct K {
     
     struct EventDetail {
         static let descriptionTitle = "Descrição"
-        static let locationTile = "Onde vai ser?"
+        static let locationTitle = "Onde vai ser?"
         static let shareButtonIconName = "square.and.arrow.up"
         static let checkinButtonTitle = "Check-in"
         static let checkinAlertMessage = "Seu lugar já está reservado. Aproveite o evento!"

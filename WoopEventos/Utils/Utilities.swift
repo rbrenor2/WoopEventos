@@ -93,4 +93,41 @@ class Utilities {
         return pin
     }
     
+    func actionButton(withTitle title: String, handleTap: Selector) -> UIButton {
+        
+        let button = UIButton(type: .system)
+        button.backgroundColor = .lightPurple
+        button.setTitle(title, for: .normal)
+        button.titleLabel?.textAlignment = .center
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
+        button.setTitleColor(.white, for: .normal)
+        button.frame = CGRect(x: 0, y: 0, width: 64, height: 32)
+        button.layer.cornerRadius = 32/2
+        button.contentEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+        button.addTarget(self, action: handleTap, for: .touchUpInside)
+
+        return button
+    }
+    
+    func actionIconButton(withIconNamed iconName: String, handleTap: Selector) -> UIButton  {
+        
+        let favoriteButtonConfiguration = UIImage.SymbolConfiguration(font: UIFont.systemFont(ofSize: 20))
+        
+        let button = UIButton()
+        button.tintColor = .mainPurple
+        button.addTarget(self, action:handleTap, for: .touchUpInside)
+        
+        let image = UIImage.init(systemName: iconName, withConfiguration: favoriteButtonConfiguration)
+          button.setImage(image, for: .normal)
+        
+        return button
+    }
+    
+    func textToShare(withTexts texts: [String]) -> String {
+        let text = texts.reduce("") { partialResult, text in
+            return "\(partialResult) \n \(text)"
+        }
+        
+        return text
+    }
 }
