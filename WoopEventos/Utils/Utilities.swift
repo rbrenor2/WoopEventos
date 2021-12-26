@@ -10,11 +10,13 @@ import Lottie
 import MapKit
 
 class Utilities {
-    func infoStack(withTitle titleLabel: UILabel, views: [UIView], direction: NSLayoutConstraint.Axis) -> UIStackView {
-        let stackedViews = [titleLabel] + views
+    let locale = Locale(identifier: "pt_BR")
+    
+    func infoStack(withViews views: [UIView], direction: NSLayoutConstraint.Axis) -> UIStackView {
+        let stackedViews = views
         let stack = UIStackView(arrangedSubviews: stackedViews)
         stack.axis = direction
-        stack.spacing = 6
+        stack.spacing = 10
         
         return stack
     }
@@ -45,14 +47,23 @@ class Utilities {
     }
     
     func formatPrice(withPrice price: Double) -> String {
-        let locale = Locale(identifier: "pt_BR")
-        let priceFormatter = NumberFormatter()
-        priceFormatter.locale = locale
-        priceFormatter.numberStyle = .currency
+        let formatter = NumberFormatter()
+        formatter.locale = locale
+        formatter.numberStyle = .currency
         
-        guard let price = priceFormatter.string(from: NSNumber(value: price)) else {return "N/I"}
+        guard let price = formatter.string(from: NSNumber(value: price)) else {return "N/I"}
         
         return price
+    }
+    
+    func formatDate(withDate date: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.locale = locale
+        formatter.dateStyle = .long
+        
+        let dateStr = formatter.string(from: date)
+        
+        return dateStr
     }
     
     func setupMapView(location: CLLocationCoordinate2D, annotation: MKPointAnnotation, mapWidth: CGFloat, mapHeight: CGFloat) -> MKMapView {
