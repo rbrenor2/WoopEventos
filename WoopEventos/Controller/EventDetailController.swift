@@ -83,6 +83,17 @@ class EventDetailController: UIViewController {
         return button
     }()
     
+    private let priceLabel: UILabel = {
+        let label = UILabel()
+        
+        label.font = UIFont.boldSystemFont(ofSize: 32)
+        label.textColor = .black
+        label.numberOfLines = 1
+        label.textAlignment = .left
+        
+        return label
+    }()
+    
     lazy var scrollView: UIScrollView = {
         let scroll = UIScrollView(frame: self.view.bounds)
         scroll.contentSize = CGSize(width: 100, height: scroll.frame.height + 900)
@@ -170,6 +181,10 @@ class EventDetailController: UIViewController {
         
         view.addSubview(shareButton)
         shareButton.anchor(top: imageView.bottomAnchor, right: view.rightAnchor, paddingTop: 12, paddingRight: 12)
+        
+        view.addSubview(priceLabel)
+        priceLabel.text = Utilities().formatPrice(withPrice: eventViewModel.event.price)
+        priceLabel.anchor(top: imageView.bottomAnchor, left: view.leftAnchor, paddingTop: 12, paddingLeft: 12)
         
         view.addSubview(checkinButton)
         checkinButton.anchor(top: imageView.bottomAnchor, right: view.rightAnchor, paddingTop: 12, paddingRight: 12)

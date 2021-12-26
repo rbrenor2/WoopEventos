@@ -42,4 +42,15 @@ class Utilities {
             loadingView.removeFromSuperview()
         }
     }
+    
+    func formatPrice(withPrice price: Double) -> String {
+        let locale = Locale(identifier: "pt_BR")
+        let priceFormatter = NumberFormatter()
+        priceFormatter.locale = locale
+        priceFormatter.numberStyle = .currency
+        
+        guard let price = priceFormatter.string(from: NSNumber(value: price)) else {return "N/I"}
+        
+        return price
+    }
 }
