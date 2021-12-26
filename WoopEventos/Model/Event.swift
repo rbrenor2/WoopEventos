@@ -18,22 +18,26 @@ struct Event: Decodable {
     let title: String
     let id: String
     
-    init(dictionary: [String: Any]) {
-        people = dictionary["people"] as? [String] ?? []
-        description = dictionary["description"] as? String ?? ""
-        longitude = dictionary["longitude"] as? Double ?? 0.00
-        latitude = dictionary["latitude"] as? Double ?? 0.00
-        price = dictionary["price"] as? Double ?? 0.00
-        title = dictionary["title"] as? String ?? ""
-        id = dictionary["id"] as? String ?? ""
-
-        if let timestamp = dictionary["date"] as? Double {
-            date = Date(timeIntervalSince1970: timestamp)
-        }
+    private enum CodingKeys : String, CodingKey { case people, date, description, image, longitude, latitude, price, title, id }
+    
+    init(from decoder: Decoder) throws {
+        let values = try decoder.container(keyedBy: CodingKeys.self)
         
-        if let imageUrl = dictionary["image"] as? String {
-            guard let url = URL(string: imageUrl) else {return}
-            image = url
-        }
+        people = try values.decode([String].self, forKey: .people)
+        description = try values.decode(String.self, forKey: .description)
+        longitude = try values.decode(Double.self, forKey: .longitude)
+        latitude = try values.decode(Double.self, forKey: .latitude)
+        price = try values.decode(Double.self, forKey: .price)
+        title = try values.decode(String.self, forKey: .title)
+        id = try values.decode(String.self, forKey: .id)
+
+        let unixDate = try values.decode(Double.self, forKey: .date)
+        date = Date(timeIntervalSince1970: unixDate)
+        
+        let imageUrl = try values.decode(String.self, forKey: .image)
+        var comps = URLComponents(string: imageUrl)
+        comps?.scheme = "https"
+        guard let secureUrl = URL(string: comps!.string!) else {return}
+        image = secureUrl
     }
 }
