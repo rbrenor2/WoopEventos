@@ -83,8 +83,8 @@ class EventDetailController: UIViewController {
     func bindDetailInfo() {
         eventDetailViewModel.eventDetail.subscribe (onNext:{ [unowned self] eventDetailType in
             switch eventDetailType {
-            case .normal(let viewModel):
-                self.configureUI(eventViewModel: viewModel)
+            case .normal(let event):
+                self.configureUI(event: event)
             case .error(let error):
                 self.configureErrorUI(message: error)
             case .empty:
@@ -129,17 +129,19 @@ class EventDetailController: UIViewController {
         
     }
         
-    func configureUI(eventViewModel: EventViewModel) {
+    func configureUI(event: Event) {
         view.backgroundColor = .white
         
-        setupImageView(withURL: eventViewModel.event.image!)
+        let imageUrl = event.image == nil ? URL(string: "") : event.image
+        setupImageView(withURL: imageUrl!)
         setupActionButtons()
-        setupPriceLabel(withPrice: eventViewModel.event.price)
+        
+        let price = event.price == nil ? 0.00 : event.price!
+        setupPriceLabel(withPrice: price)
                 
         view.addSubview(detailInfoView)
-        detailInfoView.event = eventViewModel.event
+        detailInfoView.event = event
         detailInfoView.anchor(top: checkinButton.bottomAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 20, paddingLeft: 20, paddingBottom: 30, paddingRight: 20)
-        
     }
     
     func setupImageView(withURL url: URL) {

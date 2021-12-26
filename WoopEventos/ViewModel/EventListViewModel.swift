@@ -5,12 +5,11 @@
 //  Created by Breno Ramos on 23/12/21.
 //
 
-import Foundation
 import RxSwift
 import RxCocoa
 
 enum EventCellViewModelType {
-    case normal(eventViewModel: EventViewModel)
+    case normal(event: Event)
     case error(message: String)
     case empty
 }
@@ -42,8 +41,8 @@ class EventListViewModel {
             }
             
             let cellsViewModelList: [EventCellViewModelType] = events.compactMap { event in
-                let viewModel = EventViewModel(event: event)
-                let type = EventCellViewModelType.normal(eventViewModel: viewModel)
+                
+                let type = EventCellViewModelType.normal(event: event)
                 return type
             }
             

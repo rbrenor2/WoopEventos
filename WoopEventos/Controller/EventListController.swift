@@ -50,12 +50,12 @@ class EventListController: UITableViewController {
             let indexPath = IndexPath(item: index, section: 0)
             
             switch element {
-            case .normal(let viewModel):
+            case .normal(let event):
                 
                 guard let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as? EventCell else {
                     return UITableViewCell()
                 }
-                cell.viewModel = viewModel
+                cell.event = event
                 
                 return cell
                 
@@ -84,8 +84,9 @@ class EventListController: UITableViewController {
         .modelSelected(EventCellViewModelType.self)
         .subscribe(
             onNext: { [unowned self] eventCellType in
-                if case let .normal(viewModel) = eventCellType {
-                    let detailVC = EventDetailController(id: viewModel.event.id)
+                if case let .normal(event) = eventCellType {
+                    guard let id = event.id else { return }
+                    let detailVC = EventDetailController(id: id)
                     self.present(detailVC, animated: true, completion: nil)
                 }
             }

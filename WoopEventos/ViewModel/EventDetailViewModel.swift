@@ -10,7 +10,7 @@ import RxSwift
 import RxCocoa
 
 enum EventDetailViewModelType {
-    case normal(eventViewModel: EventViewModel)
+    case normal(event: Event)
     case error(message: String)
     case empty
 }
@@ -46,12 +46,11 @@ class EventDetailViewModel {
         EventService.shared.getEvent(byId: id).subscribe (onNext: { [unowned self] event in
             self.loading.accept(false)
             
-            if event.date == nil {
+            if event.id == "" {
                 self.detail.accept(.empty)
             }
             
-            let viewModel = EventViewModel(event: event)
-            let eventDetailViewModel: EventDetailViewModelType = EventDetailViewModelType.normal(eventViewModel: viewModel)
+            let eventDetailViewModel: EventDetailViewModelType = EventDetailViewModelType.normal(event: event)
             
             self.detail.accept(eventDetailViewModel)
         }, onError: { [unowned self] error in

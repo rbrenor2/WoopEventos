@@ -11,9 +11,10 @@ import SDWebImage
 class EventCell: UITableViewCell {
     
     // MARK: - Properties
-    var viewModel: EventViewModel? {
+    var event: Event? {
         didSet {
-            configureUI()
+            guard let event = event else {return}
+            configureUI(event: event)
         }
     }
     
@@ -89,13 +90,11 @@ class EventCell: UITableViewCell {
         favoriteButton.setImage(image, for: .normal)
     }
     
-    func configureUI() {
+    func configureUI(event: Event) {
         backgroundColor = .white
-        
-        guard let viewModel = viewModel else {return}
-            
+                    
         addSubview(eventImageView)
-        eventImageView.sd_setImage(with: viewModel.event.image)
+        eventImageView.sd_setImage(with: event.image)
         eventImageView.centerY(inView: self)
         eventImageView.anchor(left: leftAnchor, paddingLeft: 8)
 
@@ -104,13 +103,13 @@ class EventCell: UITableViewCell {
         nameDateStack.spacing = 4
         addSubview(nameDateStack)
         
-        eventDateLabel.text = Utilities().formatDate(withDate: viewModel.event.date)
+        eventDateLabel.text = Utilities().formatDate(withDate: event.date)
         
-        eventNameLabel.text = viewModel.event.title
+        eventNameLabel.text = event.title
         nameDateStack.centerY(inView: self)
         nameDateStack.anchor(left: eventImageView.rightAnchor, paddingLeft: 12, width: 200)
 
-        priceLabel.text = Utilities().formatPrice(withPrice: viewModel.event.price)
+        priceLabel.text = Utilities().formatPrice(withPrice: event.price)
         
         addSubview(favoriteButton)
         favoriteButton.anchor(top: topAnchor, right: rightAnchor, paddingTop: 12, paddingRight: 12)
