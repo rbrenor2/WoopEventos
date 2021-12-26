@@ -17,9 +17,13 @@ enum EventCellViewModelType {
 }
 
 class EventListViewModel {
-    private let loading = BehaviorRelay(value: false)
+    private let loading = BehaviorRelay<Bool>(value: false)
     private let cells = BehaviorRelay<[EventCellViewModelType]>(value: [])
     private let disposeBag = DisposeBag()
+    
+    var eventLoading: Observable<Bool> {
+        return loading.asObservable()
+    }
 
     var eventCells: Observable<[EventCellViewModelType]> {
         return cells.asObservable()

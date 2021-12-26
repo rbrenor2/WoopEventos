@@ -22,10 +22,14 @@ enum EventChekinViewModelType {
 }
 
 class EventDetailViewModel {
-    private let loading = BehaviorRelay(value: false)
+    private let loading = BehaviorRelay<Bool>(value: false)
     private let detail = BehaviorRelay<EventDetailViewModelType>(value: .empty)
     private let checkin = BehaviorRelay<EventChekinViewModelType>(value: .empty)
     private let disposeBag = DisposeBag()
+    
+    var eventLoading: Observable<Bool> {
+        return loading.asObservable()
+    }
 
     var eventCheckin: Observable<EventChekinViewModelType> {
         return checkin.asObservable()
