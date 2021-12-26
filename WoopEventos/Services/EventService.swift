@@ -34,7 +34,7 @@ struct EventService {
                         do {
                             guard let data = response.data else {return}
                             let events = try JSONDecoder().decode([Event].self, from: data)
-                            print("DEBUG: Events count \(events.count)")
+                            
                             observer.onNext(events)
                         } catch {
                             observer.onError(error)
