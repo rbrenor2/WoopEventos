@@ -7,13 +7,14 @@
 
 import UIKit
 import Lottie
+import MapKit
 
 class Utilities {
     func infoStack(withTitle titleLabel: UILabel, views: [UIView], direction: NSLayoutConstraint.Axis) -> UIStackView {
         let stackedViews = [titleLabel] + views
         let stack = UIStackView(arrangedSubviews: stackedViews)
         stack.axis = direction
-        stack.spacing = 4
+        stack.spacing = 6
         
         return stack
     }
@@ -53,4 +54,32 @@ class Utilities {
         
         return price
     }
+    
+    func setupMapView(location: CLLocationCoordinate2D, annotation: MKPointAnnotation, mapWidth: CGFloat, mapHeight: CGFloat) -> MKMapView {
+        
+        let mapView = MKMapView()
+        
+        let leftMargin:CGFloat = 10
+        let topMargin:CGFloat = 60
+
+        mapView.frame = CGRect(x: leftMargin, y: topMargin, width: mapWidth, height: mapHeight)
+        
+        let region = MKCoordinateRegion(center: location, span: MKCoordinateSpan(latitudeDelta: 0.009, longitudeDelta: 0.009))
+        mapView.setRegion(region, animated: true)
+        mapView.mapType = MKMapType.standard
+        mapView.isZoomEnabled = false
+        mapView.isScrollEnabled = false
+
+        mapView.addAnnotation(annotation)
+        
+        return mapView
+    }
+    
+    func setupMapAnnotation(withTitle title: String, location: CLLocationCoordinate2D) -> MKPointAnnotation {
+        let pin = MKPointAnnotation()
+        pin.coordinate = location
+        pin.title = title
+        return pin
+    }
+    
 }

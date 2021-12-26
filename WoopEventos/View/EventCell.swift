@@ -67,7 +67,7 @@ class EventCell: UITableViewCell {
         return button
     }()
     
-    let favoriteButtonConfiguration = UIImage.SymbolConfiguration(font: UIFont.systemFont(ofSize: 20))
+    private let favoriteButtonConfiguration = UIImage.SymbolConfiguration(font: UIFont.systemFont(ofSize: 20))
     
     var isFavorite: Bool = false
     

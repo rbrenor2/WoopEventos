@@ -13,15 +13,15 @@ import Lottie
 
 class EventDetailController: UIViewController {
     // MARK: - Properties
-    let disposeBag = DisposeBag()
+    private let disposeBag = DisposeBag()
     
     var id: String?
     
-    let eventDetailViewModel: EventDetailViewModel = EventDetailViewModel()
+    private let eventDetailViewModel: EventDetailViewModel = EventDetailViewModel()
         
-    let loadingView: AnimationView = Utilities().loadingAnimationView()
+    private let loadingView: AnimationView = Utilities().loadingAnimationView()
     
-    let imageView: UIImageView = {
+    private let imageView: UIImageView = {
         let iv = UIImageView()
         iv.backgroundColor = .lightGreen
         iv.contentMode = .scaleAspectFill
@@ -29,28 +29,29 @@ class EventDetailController: UIViewController {
         return iv
     }()
     
-    let titleDescriptionLabel: UILabel = {
+    private let titleLabel: UILabel = {
         let label = UILabel()
         label.text = K.EventDetail.descriptionTitle
-        label.font = UIFont.boldSystemFont(ofSize: 32)
+        label.font = UIFont.boldSystemFont(ofSize: 30)
+        label.numberOfLines = 0
         return label
     }()
     
-    let descriptionLabel: UILabel = {
+    private let descriptionLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
         label.font = UIFont.systemFont(ofSize: 14)
         return label
     }()
     
-    let titleLocationLabel: UILabel = {
+    private let titleLocationLabel: UILabel = {
         let label = UILabel()
         label.text = K.EventDetail.locationTile
         label.font = UIFont.boldSystemFont(ofSize: 32)
         return label
     }()
     
-    let mapView: MKMapView = {
+    private let mapView: MKMapView = {
         let mapView = MKMapView()
         
         mapView.mapType = MKMapType.standard
@@ -61,14 +62,20 @@ class EventDetailController: UIViewController {
         return mapView
     }()
     
-    let shareButton: UIButton = {
+    private let shareButton: UIButton = {
+        let favoriteButtonConfiguration = UIImage.SymbolConfiguration(font: UIFont.systemFont(ofSize: 20))
+        
         let button = UIButton()
-        button.setImage(UIImage.init(systemName: K.EventDetail.shareButtonIconName), for: .normal)
+        button.tintColor = .mainPurple
+        button.addTarget(self, action: #selector(handleShareTapped), for: .touchUpInside)
+        
+        let image = UIImage.init(systemName: K.EventDetail.shareButtonIconName, withConfiguration: favoriteButtonConfiguration)
+          button.setImage(image, for: .normal)
+        
         return button
     }()
 
-    let checkinButton: UIButton = {
-
+    private let checkinButton: UIButton = {
         let button = UIButton(type: .system)
         button.backgroundColor = .lightPurple
         button.setTitle(K.EventDetail.checkinButtonTitle, for: .normal)
@@ -92,14 +99,6 @@ class EventDetailController: UIViewController {
         label.textAlignment = .left
         
         return label
-    }()
-    
-    lazy var scrollView: UIScrollView = {
-        let scroll = UIScrollView(frame: self.view.bounds)
-        scroll.contentSize = CGSize(width: 100, height: scroll.frame.height + 900)
-        scroll.showsHorizontalScrollIndicator = true
-        scroll.bounces = true
-        return scroll
     }()
     
     
@@ -155,14 +154,13 @@ class EventDetailController: UIViewController {
     }
     
     // MARK: - Helpers
+    
     func showCheckinConfirmationAlert(message: String) {
         let alert = UIAlertController(title: "\(K.EventDetail.checkinAlertTitle) \(message)", message: K.EventDetail.checkinButtonTitle, preferredStyle: .alert)
         let action = UIAlertAction(title: K.EventDetail.checkinAlertActionButtonTitle, style: .cancel)
         alert.addAction(action)
         self.present(alert, animated: true, completion: nil)
     }
-    
-    
     
     func configureEmptyUI() {
         
@@ -175,53 +173,77 @@ class EventDetailController: UIViewController {
     func configureUI(eventViewModel: EventViewModel) {
         view.backgroundColor = .white
         
+        let event = eventViewModel.event
+        
+        setupImageView(withURL: event.image!)
+        setupActionButtons()
+        setupPriceLabel(withPrice: event.price)
+        
+        let location = CLLocationCoordinate2D(latitude: event.latitude, longitude: event.longitude)
+        
+        let annotation = Utilities().setupMapAnnotation(withTitle: eventViewModel.event.title, location: location)
+        
+        let mapView = Utilities().setupMapView(location: CLLocationCoordinate2D(latitude: eventViewModel.event.latitude, longitude: eventViewModel.event.longitude), annotation: annotation, mapWidth: view.frame.width, mapHeight: 300)
+        
+        setupInfoScrollView(title: event.title, description: event.description, titleLocation: K.EventDetail.locationTile, mapView: mapView)
+    }
+    
+    func setupImageView(withURL url: URL) {
         view.addSubview(imageView)
-        imageView.sd_setImage(with: eventViewModel.event.image)
+        imageView.sd_setImage(with: url)
         imageView.anchor(top: view.topAnchor, left: view.leftAnchor, right: view.rightAnchor, width: view.frame.width, height: 200)
-        
-        view.addSubview(shareButton)
-        shareButton.anchor(top: imageView.bottomAnchor, right: view.rightAnchor, paddingTop: 12, paddingRight: 12)
-        
-        view.addSubview(priceLabel)
-        priceLabel.text = Utilities().formatPrice(withPrice: eventViewModel.event.price)
-        priceLabel.anchor(top: imageView.bottomAnchor, left: view.leftAnchor, paddingTop: 12, paddingLeft: 12)
-        
+    }
+    
+    func setupActionButtons() {
         view.addSubview(checkinButton)
         checkinButton.anchor(top: imageView.bottomAnchor, right: view.rightAnchor, paddingTop: 12, paddingRight: 12)
         
+        view.addSubview(shareButton)
+        shareButton.anchor(top: imageView.bottomAnchor, right: checkinButton.leftAnchor, paddingTop: 18, paddingRight: 24)
+    }
+    
+    func setupPriceLabel(withPrice price: Double) {
+        view.addSubview(priceLabel)
+        priceLabel.text = Utilities().formatPrice(withPrice: price)
+        priceLabel.anchor(top: imageView.bottomAnchor, left: view.leftAnchor, paddingTop: 12, paddingLeft: 12)
+    }
+    
+    func setupInfoScrollView(title: String, description: String, titleLocation: String, mapView: MKMapView) {
+        
+        let scrollView = UIScrollView()
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        scrollView.showsHorizontalScrollIndicator = false
+        scrollView.bounces = true
         view.addSubview(scrollView)
-        scrollView.anchor(top: imageView.bottomAnchor, left: view.leftAnchor, right: view.rightAnchor, paddingTop: 60, paddingLeft: 20, paddingRight: 20, width: view.frame.width, height: view.frame.height)
         
-        descriptionLabel.text = eventViewModel.event.description
-        let descriptionStack = Utilities().infoStack(withTitle: titleDescriptionLabel, views: [descriptionLabel], direction: .vertical)
-        scrollView.addSubview(descriptionStack)
-        descriptionStack.anchor(top: scrollView.topAnchor, left: scrollView.leftAnchor, right: scrollView.rightAnchor, paddingTop: 18, width: scrollView.frame.width - 500)
+        let infoStack = UIStackView()
+        infoStack.translatesAutoresizingMaskIntoConstraints = false
+
+        scrollView.addSubview(infoStack)
+        scrollView.anchor(top: checkinButton.bottomAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 20, paddingLeft: 20, paddingBottom: 30, paddingRight: 20)
         
+        infoStack.anchor(top: scrollView.topAnchor, left: scrollView.leftAnchor, bottom: scrollView.bottomAnchor, right: scrollView.rightAnchor)
+        infoStack.centerX(inView: view)
+        infoStack.backgroundColor = .yellow
+        
+        titleLabel.text = title
+        descriptionLabel.text = description
+        let descriptionStack = Utilities().infoStack(withTitle: titleLabel, views: [descriptionLabel], direction: .vertical)
+
+        titleLocationLabel.text = titleLocation
         let locationStack = Utilities().infoStack(withTitle: titleLocationLabel, views: [mapView], direction: .vertical)
-        mapView.setDimensions(width: scrollView.frame.width, height: 200)
-        scrollView.addSubview(locationStack)
-        locationStack.anchor(top: descriptionStack.bottomAnchor, left: scrollView.leftAnchor, right: scrollView.rightAnchor, paddingTop: 18, width: scrollView.frame.width - 500)
-        
-        let leftMargin:CGFloat = 10
-        let topMargin:CGFloat = 60
-        let mapWidth:CGFloat = view.frame.width-20
-        let mapHeight:CGFloat = 300
-        
-        mapView.frame = CGRect(x: leftMargin, y: topMargin, width: mapWidth, height: mapHeight)
-        let location = CLLocationCoordinate2D(latitude: eventViewModel.event.latitude, longitude: eventViewModel.event.longitude)
-        let region = MKCoordinateRegion(center: location, span: MKCoordinateSpan(latitudeDelta: 0.009, longitudeDelta: 0.009))
-        mapView.setRegion(region, animated: true)
-        
-        mapView.mapType = MKMapType.standard
-        mapView.isZoomEnabled = false
-        mapView.isScrollEnabled = false
-        
-        let pin = MKPointAnnotation()
-        pin.coordinate = location
-        pin.title = eventViewModel.event.title
-        mapView.addAnnotation(pin)
-        
-        mapView.center = view.center
+        mapView.setDimensions(width: infoStack.frame.width, height: 200)
+
+        infoStack.addSubview(descriptionStack)
+        descriptionStack.anchor(top: infoStack.topAnchor, left: infoStack.leftAnchor, right: infoStack.rightAnchor, paddingTop: 18, width: infoStack.frame.width)
+
+        infoStack.addSubview(locationStack)
+        locationStack.anchor(top: descriptionStack.bottomAnchor, left: infoStack.leftAnchor, right: infoStack.rightAnchor, paddingTop: 18, width: infoStack.frame.width)
+    }
+   
+    func eventTextToShare() -> String {
+        let text = "\(String(describing: descriptionLabel.text!)) \n Preço: \(priceLabel.text!)"
+        return text
     }
     
     // MARK: - Selectors
@@ -230,5 +252,13 @@ class EventDetailController: UIViewController {
         guard let id = self.id else {return}
         let eventCheckin = EventCheckin(eventId: id, name: "Breno Rios", email: "rbrenorios@gmail.com")
         eventDetailViewModel.checkinEvent(eventCheckin: eventCheckin)
+    }
+    
+    @objc func handleShareTapped() {
+        let itemToShare = [ eventTextToShare()]
+        let shareVC = UIActivityViewController(activityItems: itemToShare, applicationActivities: nil)
+        shareVC.popoverPresentationController?.sourceView = self.view
+                
+        present(shareVC, animated: true, completion: nil)
     }
 }
