@@ -34,7 +34,7 @@ class Utilities {
         
         if isLoading {
             view.addSubview(loadingView)
-            loadingView.anchor(width: view.frame.width - 100, height: view.frame.height/3)
+            loadingView.anchor(width: view.frame.width, height: view.frame.height)
             loadingView.center(inView: view)
             loadingView.backgroundColor = .white
             loadingView.play(completion: nil)

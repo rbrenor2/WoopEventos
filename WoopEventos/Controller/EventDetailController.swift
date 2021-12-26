@@ -115,10 +115,13 @@ class EventDetailController: UIViewController {
             switch eventCheckinType {
             case .normal(let code):
                 self.showCheckinConfirmationAlert(message: code)
+                break
             case .error(let error):
                 self.showCheckinConfirmationAlert(message: error)
+                break
             case .empty:
                 self.showCheckinConfirmationAlert(message: "")
+                break
             }
         }, onError: { [unowned self] error in
             self.configureErrorUI(message: error.localizedDescription)
