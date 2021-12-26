@@ -10,7 +10,6 @@ PODS:
   - SDWebImage (5.12.1):
     - SDWebImage/Core (= 5.12.1)
   - SDWebImage/Core (5.12.1)
-  - SwiftIcons (3.0)
 
 DEPENDENCIES:
   - Alamofire
@@ -18,7 +17,6 @@ DEPENDENCIES:
   - RxCocoa
   - RxSwift
   - SDWebImage
-  - SwiftIcons
 
 SPEC REPOS:
   trunk:
@@ -28,7 +26,6 @@ SPEC REPOS:
     - RxRelay
     - RxSwift
     - SDWebImage
-    - SwiftIcons
 
 SPEC CHECKSUMS:
   Alamofire: 1c4fb5369c3fe93d2857c780d8bbe09f06f97e7c
@@ -37,8 +34,7 @@ SPEC CHECKSUMS:
   RxRelay: e72dbfd157807478401ef1982e1c61c945c94b2f
   RxSwift: d356ab7bee873611322f134c5f9ef379fa183d8f
   SDWebImage: 4dc3e42d9ec0c1028b960a33ac6b637bb432207b
-  SwiftIcons: 3b748e57d9eee0c7c8d3bdbf2d742c0b1b4c6172
 
-PODFILE CHECKSUM: 44fdd979c1bfde0c42b9c4056b7b2cd7c8f509ef
+PODFILE CHECKSUM: e73e1cfd4f70e54ea29d2b3032b7acd9908d9c86
 
 COCOAPODS: 1.11.2

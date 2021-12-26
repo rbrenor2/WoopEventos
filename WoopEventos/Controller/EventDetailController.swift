@@ -9,14 +9,17 @@ import UIKit
 import SDWebImage
 import MapKit
 import RxSwift
+import Lottie
 
 class EventDetailController: UIViewController {
     // MARK: - Properties
     let disposeBag = DisposeBag()
     
-    let eventDetailViewModel: EventDetailViewModel = EventDetailViewModel()
-    
     var id: String?
+    
+    let eventDetailViewModel: EventDetailViewModel = EventDetailViewModel()
+        
+    let loadingView: AnimationView = Utilities().loadingAnimationView()
     
     let imageView: UIImageView = {
         let iv = UIImageView()
@@ -91,6 +94,13 @@ class EventDetailController: UIViewController {
     
     // MARK: - Reactiveness
     func bindViewModel() {
+        eventDetailViewModel.eventLoading
+            .map ({ [unowned self] loading in
+                Utilities().showLoadingIndicator(inView: self.view, loadingView: loadingView, isLoading: loading)
+            })
+            .subscribe()
+            .disposed(by: disposeBag)
+        
         eventDetailViewModel.eventCheckin.subscribe (onNext:{ [unowned self] eventCheckinType in
             switch eventCheckinType {
             case .normal(let code):
@@ -140,6 +150,8 @@ class EventDetailController: UIViewController {
         alert.addAction(action)
         self.present(alert, animated: true, completion: nil)
     }
+    
+    
     
     func configureEmptyUI() {
         

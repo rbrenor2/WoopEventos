@@ -26,7 +26,11 @@
 		5B866A1D277558F700A56DEF /* EventCheckin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B866A1C277558F600A56DEF /* EventCheckin.swift */; };
 		5B866A1F27755E1200A56DEF /* EventListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B866A1E27755E1200A56DEF /* EventListViewModel.swift */; };
 		5B866A2127758EBB00A56DEF /* EventDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B866A2027758EBA00A56DEF /* EventDetailViewModel.swift */; };
-		5B866A2327758FC500A56DEF /* EventDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B866A2227758FC500A56DEF /* EventDetail.swift */; };
+		5B866A2327758FC500A56DEF /* WoopLoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B866A2227758FC500A56DEF /* WoopLoadingView.swift */; };
+		5B96856D2776C7290053B25B /* pets.json in Resources */ = {isa = PBXBuildFile; fileRef = 5B9685692776C71E0053B25B /* pets.json */; };
+		5B96856E2776C7290053B25B /* banana.json in Resources */ = {isa = PBXBuildFile; fileRef = 5B96856A2776C7240053B25B /* banana.json */; };
+		5B96856F2776C7290053B25B /* singing.json in Resources */ = {isa = PBXBuildFile; fileRef = 5B96856B2776C7280053B25B /* singing.json */; };
+		5B9685702776C7290053B25B /* traveler.json in Resources */ = {isa = PBXBuildFile; fileRef = 5B96856C2776C7290053B25B /* traveler.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -51,7 +55,11 @@
 		5B866A1C277558F600A56DEF /* EventCheckin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventCheckin.swift; sourceTree = "<group>"; };
 		5B866A1E27755E1200A56DEF /* EventListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventListViewModel.swift; sourceTree = "<group>"; };
 		5B866A2027758EBA00A56DEF /* EventDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDetailViewModel.swift; sourceTree = "<group>"; };
-		5B866A2227758FC500A56DEF /* EventDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDetail.swift; sourceTree = "<group>"; };
+		5B866A2227758FC500A56DEF /* WoopLoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WoopLoadingView.swift; sourceTree = "<group>"; };
+		5B9685692776C71E0053B25B /* pets.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = pets.json; sourceTree = "<group>"; };
+		5B96856A2776C7240053B25B /* banana.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = banana.json; sourceTree = "<group>"; };
+		5B96856B2776C7280053B25B /* singing.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = singing.json; sourceTree = "<group>"; };
+		5B96856C2776C7290053B25B /* traveler.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = traveler.json; sourceTree = "<group>"; };
 		69F194EE22E9D9D5B460616F /* Pods-WoopEventos.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WoopEventos.release.xcconfig"; path = "Target Support Files/Pods-WoopEventos/Pods-WoopEventos.release.xcconfig"; sourceTree = "<group>"; };
 		B890973E9ABC1CA9A0000BE3 /* Pods_WoopEventos.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WoopEventos.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -99,6 +107,7 @@
 		5B8669ED27726CA300A56DEF /* WoopEventos */ = {
 			isa = PBXGroup;
 			children = (
+				5B9685672776C6D90053B25B /* Animations */,
 				5B866A0327729F1600A56DEF /* Model */,
 				5B866A0527729F2200A56DEF /* ViewModel */,
 				5B866A0427729F1D00A56DEF /* View */,
@@ -138,7 +147,7 @@
 			isa = PBXGroup;
 			children = (
 				5B866A0E2772A0D300A56DEF /* EventCell.swift */,
-				5B866A2227758FC500A56DEF /* EventDetail.swift */,
+				5B866A2227758FC500A56DEF /* WoopLoadingView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -168,6 +177,26 @@
 				5B866A102772A0FA00A56DEF /* EventService.swift */,
 			);
 			path = Services;
+			sourceTree = "<group>";
+		};
+		5B9685672776C6D90053B25B /* Animations */ = {
+			isa = PBXGroup;
+			children = (
+				5B9685682776C6EC0053B25B /* LottieFiles */,
+			);
+			path = Animations;
+			sourceTree = "<group>";
+		};
+		5B9685682776C6EC0053B25B /* LottieFiles */ = {
+			isa = PBXGroup;
+			children = (
+				5B96856A2776C7240053B25B /* banana.json */,
+				5B9685692776C71E0053B25B /* pets.json */,
+				5B96856B2776C7280053B25B /* singing.json */,
+				5B96856C2776C7290053B25B /* traveler.json */,
+			);
+			name = LottieFiles;
+			path = "../New Group/LottieFiles";
 			sourceTree = "<group>";
 		};
 		5E184AE539F3829C05DF0F08 /* Frameworks */ = {
@@ -240,8 +269,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				5B8669FB27726CAA00A56DEF /* LaunchScreen.storyboard in Resources */,
+				5B96856D2776C7290053B25B /* pets.json in Resources */,
+				5B9685702776C7290053B25B /* traveler.json in Resources */,
+				5B96856E2776C7290053B25B /* banana.json in Resources */,
 				5B8669F827726CAA00A56DEF /* Assets.xcassets in Resources */,
 				5B8669F627726CA300A56DEF /* Main.storyboard in Resources */,
+				5B96856F2776C7290053B25B /* singing.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -302,7 +335,7 @@
 				5B8669F127726CA300A56DEF /* SceneDelegate.swift in Sources */,
 				5B866A0B27729FD100A56DEF /* EventDetailController.swift in Sources */,
 				5B866A172772C13700A56DEF /* EventViewModel.swift in Sources */,
-				5B866A2327758FC500A56DEF /* EventDetail.swift in Sources */,
+				5B866A2327758FC500A56DEF /* WoopLoadingView.swift in Sources */,
 				5B866A0F2772A0D300A56DEF /* EventCell.swift in Sources */,
 				5B866A1D277558F700A56DEF /* EventCheckin.swift in Sources */,
 				5B866A0D2772A0B300A56DEF /* Event.swift in Sources */,

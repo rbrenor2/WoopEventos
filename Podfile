@@ -10,6 +10,6 @@ target 'WoopEventos' do
   pod 'RxCocoa'
   pod 'lottie-ios'
   pod 'SDWebImage'
-  pod 'SwiftIcons'
+  pod 'lottie-ios'
   pod 'Alamofire'
 end

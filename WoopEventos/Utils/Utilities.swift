@@ -6,7 +6,7 @@
 //
 
 import UIKit
-import SwiftIcons
+import Lottie
 
 class Utilities {
     func infoStack(withTitle titleLabel: UILabel, views: [UIView], direction: NSLayoutConstraint.Axis) -> UIStackView {
@@ -18,12 +18,28 @@ class Utilities {
         return stack
     }
     
-    func actionButton(withIcon icon: FontType, size: CGFloat, color: UIColor) -> UIButton {
+    func loadingAnimationView() -> AnimationView {
+        let av = AnimationView.init(name: "traveler")
+        av.contentMode = .scaleAspectFit
+        av.loopMode = .loop
+        av.animationSpeed = 0.5
         
-        let button = UIButton(type: .system)
-        button.setIcon(icon: icon, iconSize: size - 10, color: color, forState: .normal)
-        button.setDimensions(width: size, height: size)
-        button.layer.cornerRadius = size/2
-        return button
+        return av
+    }
+    
+    func showLoadingIndicator(inView view: UIView, loadingView: AnimationView, isLoading: Bool) {
+        
+        loadingView.frame = view.bounds
+        
+        if isLoading {
+            view.addSubview(loadingView)
+            loadingView.anchor(width: view.frame.width - 100, height: view.frame.height/3)
+            loadingView.center(inView: view)
+            loadingView.backgroundColor = .white
+            loadingView.play(completion: nil)
+        } else {
+            loadingView.stop()
+            loadingView.removeFromSuperview()
+        }
     }
 }

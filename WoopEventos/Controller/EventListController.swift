@@ -7,6 +7,7 @@
 
 import UIKit
 import RxSwift
+import Lottie
 
 private let reuseIdentifier = "eventCell"
 
@@ -15,6 +16,8 @@ class EventListController: UITableViewController {
     // MARK: - Properties
     let disposeBag = DisposeBag()
     let eventListViewModel: EventListViewModel = EventListViewModel()
+    
+    let loadingView: AnimationView = Utilities().loadingAnimationView()
     
     // MARK: - Lifecycle
     override func viewDidLoad() {
@@ -29,6 +32,14 @@ class EventListController: UITableViewController {
     
     // MARK: - Reactiveness
     func bindViewModel() {
+        
+        eventListViewModel.eventLoading
+            .map ({ [unowned self] loading in
+                Utilities().showLoadingIndicator(inView: self.view, loadingView: loadingView, isLoading: loading)
+            })
+            .subscribe()
+            .disposed(by: disposeBag)
+        
         tableView
             .rx.setDelegate(self)
             .disposed(by: disposeBag)
@@ -98,13 +109,17 @@ class EventListController: UITableViewController {
         let logoImageView = UIImageView(image: UIImage(named: K.General.woopLogoImage))
         logoImageView.contentMode = .scaleAspectFit
         logoImageView.setDimensions(width: 44, height: 44)
+        logoImageView.layer.cornerRadius = 44/2
+
         navigationController?.navigationBar.isHidden = false
         navigationItem.titleView = logoImageView
+        
+        logoImageView.anchor(left: navigationItem.titleView?.leftAnchor, right: navigationItem.titleView?.rightAnchor, paddingTop: 10, paddingBottom: 10)
     }
 }
 
 extension EventListController {
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 120
+        return 130
     }
 }
