@@ -7,7 +7,6 @@
 
 import UIKit
 import SDWebImage
-import SwiftIcons
 
 class EventCell: UITableViewCell {
     
@@ -18,13 +17,13 @@ class EventCell: UITableViewCell {
         }
     }
     
-    private let profileImageView: UIImageView = {
+    private let eventImageView: UIImageView = {
         let iv = UIImageView()
         iv.contentMode = .scaleAspectFill
         iv.clipsToBounds = true
-        iv.setDimensions(width: 68, height: 68)
-        iv.layer.cornerRadius = 68/2
-        iv.backgroundColor = .mainPurple
+        iv.setDimensions(width: 88, height: 88)
+        iv.layer.cornerRadius = 44/2
+        iv.backgroundColor = .lightGreen
 
         return iv
     }()
@@ -32,8 +31,8 @@ class EventCell: UITableViewCell {
     private let eventNameLabel: UILabel = {
         let label = UILabel()
         
-        label.font = UIFont.boldSystemFont(ofSize: 14)
-        label.textColor = .black
+        label.font = UIFont.boldSystemFont(ofSize: 18)
+        label.textColor = .darkGray
         label.numberOfLines = 2
         
         return label
@@ -45,23 +44,38 @@ class EventCell: UITableViewCell {
         label.font = UIFont.systemFont(ofSize: 14)
         label.textColor = .black
         label.numberOfLines = 0
-        
+
         return label
     }()
     
     private let priceLabel: UILabel = {
         let label = UILabel()
         
-        label.font = UIFont.systemFont(ofSize: 14)
+        label.font = UIFont.boldSystemFont(ofSize: 16)
         label.textColor = .black
-        label.numberOfLines = 0
+        label.numberOfLines = 2
+        label.textAlignment = .left
         
         return label
     }()
     
+    let favoriteButton: UIButton = {
+        let button = UIButton()
+        button.tintColor = .mainPurple
+        button.addTarget(self, action: #selector(handleFavoriteTapped), for: .touchUpInside)
+        
+        return button
+    }()
+    
+    let favoriteButtonConfiguration = UIImage.SymbolConfiguration(font: UIFont.systemFont(ofSize: 20))
+    
+    var isFavorite: Bool = false
+    
     // MARK: - Lifecycle
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        configureFavoriteButton()
     }
     
     required init?(coder: NSCoder) {
@@ -70,27 +84,51 @@ class EventCell: UITableViewCell {
     
     // MARK: - Helpers
     
+    func configureFavoriteButton() {
+        let image = UIImage.init(systemName: K.EventList.favoriteUnselectedIcon, withConfiguration: favoriteButtonConfiguration)
+        favoriteButton.setImage(image, for: .normal)
+    }
+    
     func configureUI() {
         backgroundColor = .white
         
         guard let viewModel = viewModel else {return}
             
-        addSubview(profileImageView)
-        profileImageView.sd_setImage(with: viewModel.event.image)
-        profileImageView.centerY(inView: self)
-        profileImageView.anchor(left: leftAnchor, paddingLeft: 8)
+        addSubview(eventImageView)
+        eventImageView.sd_setImage(with: viewModel.event.image)
+        eventImageView.centerY(inView: self)
+        eventImageView.anchor(left: leftAnchor, paddingLeft: 8)
 
-        let nameDateStack = UIStackView(arrangedSubviews: [eventDateLabel, eventNameLabel])
+        let nameDateStack = UIStackView(arrangedSubviews: [eventDateLabel, eventNameLabel, priceLabel])
         nameDateStack.axis = .vertical
         nameDateStack.spacing = 4
         addSubview(nameDateStack)
-        eventDateLabel.text = viewModel.event.date.formatted(date: .numeric, time: .omitted)
+        
+        
+        let locale = Locale(identifier: "pt_BR")
+        let formatter = DateFormatter()
+        formatter.locale = locale
+        formatter.dateStyle = .long
+        eventDateLabel.text = formatter.string(from: viewModel.event.date)
+        
         eventNameLabel.text = viewModel.event.title
         nameDateStack.centerY(inView: self)
-        nameDateStack.anchor(left: profileImageView.rightAnchor, paddingLeft: 12)
+        nameDateStack.anchor(left: eventImageView.rightAnchor, paddingLeft: 12, width: 200)
 
-        addSubview(priceLabel)
-        priceLabel.text = "R$ \(viewModel.event.price)"
-        priceLabel.anchor(top: topAnchor, right: rightAnchor, paddingTop: 12, paddingRight: 12)
+        let priceFormatter = NumberFormatter()
+        priceFormatter.locale = locale
+        priceFormatter.numberStyle = .currency
+        priceLabel.text = priceFormatter.string(from: NSNumber(value: viewModel.event.price))
+        
+        addSubview(favoriteButton)
+        favoriteButton.anchor(top: topAnchor, right: rightAnchor, paddingTop: 12, paddingRight: 12)
+        
+    }
+    
+    // MARK: - Selectors
+    @objc func handleFavoriteTapped() {
+        isFavorite = isFavorite ? false : true
+        let image = UIImage.init(systemName: isFavorite ? K.EventList.favoriteSelectedIcon:K.EventList.favoriteUnselectedIcon, withConfiguration: favoriteButtonConfiguration)
+        favoriteButton.setImage(image, for: .normal)
     }
 }
