@@ -43,6 +43,18 @@ class EventDetailView: UIView {
         return label
     }()
     
+    private let peopleLabel: UILabel = {
+        let label = UILabel()
+        
+        label.font = UIFont.boldSystemFont(ofSize: 12)
+        label.textColor = .gray
+        label.numberOfLines = 1
+        label.textAlignment = .left
+        
+        return label
+    }()
+    
+    
     private lazy var detailInfoView: EventDetailInfoView = {
         let frame = CGRect(origin: center, size: CGSize(width: frame.width, height: 300))
         let detailView = EventDetailInfoView(frame: frame)
@@ -71,10 +83,11 @@ class EventDetailView: UIView {
         setupActionButtons()
         
         setupPriceLabel(withPrice: event.price)
+        setupPeopleLabel(withPeople: event.people)
                 
         addSubview(detailInfoView)
         detailInfoView.event = event
-        detailInfoView.anchor(top: checkinButton.bottomAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 20, paddingLeft: 20, paddingBottom: 30, paddingRight: 20)
+        detailInfoView.anchor(top: peopleLabel.bottomAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 20, paddingLeft: 20, paddingBottom: 30, paddingRight: 20)
     }
     
     func setupImageView(withURL url: URL) {
@@ -97,6 +110,13 @@ class EventDetailView: UIView {
         priceLabel.text = Utilities().formatPrice(withPrice: price)
         priceLabel.anchor(top: imageView.bottomAnchor, left: leftAnchor, paddingTop: 12, paddingLeft: 12)
     }
+    
+    func setupPeopleLabel(withPeople people: [String]) {
+        addSubview(peopleLabel)
+        peopleLabel.text = "\(people.count) pessoas confirmaram"
+        peopleLabel.anchor(top: checkinButton.bottomAnchor, right: rightAnchor, paddingTop: 5, paddingRight: 12)
+    }
+
     
     // MARK: - Helpers
     
