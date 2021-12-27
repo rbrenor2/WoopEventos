@@ -21,12 +21,13 @@ struct K {
     struct EventDetail {
         static let descriptionTitle = "Descrição"
         static let locationTitle = "Onde vai ser?"
-        static let shareButtonIconName = "square.and.arrow.up"
+        static let shareButtonIconName = "square.and.arrow.up.fill"
         static let checkinButtonTitle = "Check-in"
         static let checkinAlertMessage = "Seu lugar já está reservado. Aproveite o evento!"
         static let checkinAlertTitle = "Status "
         static let checkinAlertActionButtonTitle = "OK"
         static let errorMessage = "Xiiii... ocorreu algum problema. Tente novamente mais tarde."
+        static let closeButtonIconName = "xmark.circle.fill"
     }
     
     struct Services {

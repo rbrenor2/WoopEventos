@@ -32,7 +32,7 @@ struct Event: Decodable {
         id = try values.decode(String.self, forKey: .id)
 
         let unixDate = try values.decode(Double.self, forKey: .date)
-        date = Date(timeIntervalSince1970: unixDate)
+        date = Date(timeIntervalSince1970: unixDate/1000)
         
         let imageUrl = try values.decode(String.self, forKey: .image)
         var comps = URLComponents(string: imageUrl)

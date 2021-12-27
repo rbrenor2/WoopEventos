@@ -7,19 +7,22 @@
 
 import UIKit
 import SDWebImage
+import MapKit
 
-class EventDetailView: UIView {
+class EventDetailView: UIScrollView {
+    
     // MARK: - Properties
     
     var event: Event? {
         didSet {
-            configureUI(event: self.event!)
+            configureUI(event: event!)
         }
     }
     
-    var handleShareTapped: Selector
-    var handleCheckinTapped: Selector
-    
+    var handleShareTapped: Selector?
+    var handleCheckinTapped: Selector?
+    var handleCloseTapped: Selector?
+
     private let imageView: UIImageView = {
         let iv = UIImageView()
         iv.backgroundColor = .lightGreen
@@ -28,9 +31,11 @@ class EventDetailView: UIView {
         return iv
     }()
     
-    private lazy var shareButton: UIButton = Utilities().actionIconButton(withIconNamed: K.EventDetail.shareButtonIconName, handleTap: handleShareTapped)
+    private lazy var shareButton: UIButton = Utilities().actionIconButton(withIconNamed: K.EventDetail.shareButtonIconName, handleTap: handleShareTapped!)
 
-    private lazy var checkinButton: UIButton = Utilities().actionButton(withTitle: K.EventDetail.checkinButtonTitle, handleTap: handleCheckinTapped)
+    private lazy var checkinButton: UIButton = Utilities().actionButton(withTitle: K.EventDetail.checkinButtonTitle, handleTap: handleCheckinTapped!)
+    
+    private lazy var closeButton: UIButton = Utilities().actionIconButton(withIconNamed: K.EventDetail.closeButtonIconName, handleTap: handleCloseTapped!)
     
     private let priceLabel: UILabel = {
         let label = UILabel()
@@ -46,30 +51,63 @@ class EventDetailView: UIView {
     private let peopleLabel: UILabel = {
         let label = UILabel()
         
-        label.font = UIFont.boldSystemFont(ofSize: 12)
+        label.font = UIFont.boldSystemFont(ofSize: 14)
         label.textColor = .gray
         label.numberOfLines = 1
-        label.textAlignment = .left
-        
+        label.textAlignment = .center
+
         return label
     }()
     
     
     private lazy var detailInfoView: EventDetailInfoView = {
-        let frame = CGRect(origin: center, size: CGSize(width: frame.width, height: 300))
-        let detailView = EventDetailInfoView(frame: frame)
+        let frame = CGRect(origin: center, size: CGSize(width: frame.width, height: 1000))
+        let detailView = EventDetailInfoView(frame: frame, event: self.event!)
         return detailView
     }()
     
-    // MARK: - Lifecycle
+    private let dateLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.boldSystemFont(ofSize: 14)
+        return label
+    }()
     
-    init(frame: CGRect, handleCheckin: Selector, handleShare: Selector) {
+    private let titleLabel: UILabel = {
+        let label = UILabel()
+        label.text = K.EventDetail.descriptionTitle
+        label.font = UIFont.boldSystemFont(ofSize: 30)
+        label.numberOfLines = 0
+        return label
+    }()
+    
+    private let descriptionLabel: UILabel = {
+        let label = UILabel()
+        label.numberOfLines = 0
+        label.font = UIFont.systemFont(ofSize: 14)
+        return label
+    }()
+    
+    private let titleLocationLabel: UILabel = {
+        let label = UILabel()
+        label.text = K.EventDetail.locationTitle
+        label.font = UIFont.boldSystemFont(ofSize: 32)
+        return label
+    }()
+    
+    let infoStack: UIStackView = UIStackView()
+    
+    let scrollView: UIScrollView = UIScrollView()
+    
+    // MARK: - Lifecycle
+
+    init(frame: CGRect, handleCheckin: Selector, handleShare: Selector, handleClose: Selector) {
         self.handleShareTapped = handleShare
         self.handleCheckinTapped = handleCheckin
-        
-        super.init(frame: frame)        
+        self.handleCloseTapped = handleClose
+
+        super.init(frame: frame)
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -77,17 +115,12 @@ class EventDetailView: UIView {
     // MARK: - UI Setup
     
     func configureUI(event: Event) {
+        bounces = false
         backgroundColor = .white
         
         setupImageView(withURL: event.image!)
-        setupActionButtons()
-        
-        setupPriceLabel(withPrice: event.price)
-        setupPeopleLabel(withPeople: event.people)
-                
-        addSubview(detailInfoView)
-        detailInfoView.event = event
-        detailInfoView.anchor(top: peopleLabel.bottomAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 20, paddingLeft: 20, paddingBottom: 30, paddingRight: 20)
+        setupActionPriceView(withEvent: event)
+        setupCloseButton()
     }
     
     func setupImageView(withURL url: URL) {
@@ -97,26 +130,36 @@ class EventDetailView: UIView {
         imageView.anchor(top: topAnchor, left: leftAnchor, right: rightAnchor, width: frame.width, height: 200)
     }
     
-    func setupActionButtons() {
-        addSubview(checkinButton)
-        checkinButton.anchor(top: imageView.bottomAnchor, right: rightAnchor, paddingTop: 12, paddingRight: 12)
+    func setupActionPriceView(withEvent event: Event) {
+        let actionStack = UIStackView(arrangedSubviews: [shareButton, checkinButton])
+        actionStack.distribution = .fill
+        actionStack.spacing = 8
+                
+        let mainStack = UIStackView(arrangedSubviews: [priceLabel, actionStack])
+        mainStack.backgroundColor = .white
+        mainStack.distribution = .fill
+        mainStack.axis = .horizontal
+//        mainStack.spacing = 8
         
-        addSubview(shareButton)
-        shareButton.anchor(top: imageView.bottomAnchor, right: checkinButton.leftAnchor, paddingTop: 18, paddingRight: 24)
-    }
-    
-    func setupPriceLabel(withPrice price: Double) {
-        addSubview(priceLabel)
-        priceLabel.text = Utilities().formatPrice(withPrice: price)
-        priceLabel.anchor(top: imageView.bottomAnchor, left: leftAnchor, paddingTop: 12, paddingLeft: 12)
-    }
-    
-    func setupPeopleLabel(withPeople people: [String]) {
+        addSubview(mainStack)
+        mainStack.anchor(top: imageView.bottomAnchor, left: leftAnchor, right: rightAnchor, paddingLeft: 14, paddingRight: 14)
+        actionStack.anchor(top: mainStack.topAnchor, right: mainStack.rightAnchor, paddingTop: 14, paddingBottom: 10, paddingRight: 14)
+        
+        priceLabel.text = Utilities().formatPrice(withPrice: event.price)
+        priceLabel.anchor(top: mainStack.topAnchor, left: mainStack.leftAnchor, paddingTop: 14, paddingLeft: 0, paddingBottom: 10)
+        
+        peopleLabel.text = "\(event.people.count) pessoas confirmadas"
         addSubview(peopleLabel)
-        peopleLabel.text = "\(people.count) pessoas confirmaram"
-        peopleLabel.anchor(top: checkinButton.bottomAnchor, right: rightAnchor, paddingTop: 5, paddingRight: 12)
-    }
+        peopleLabel.anchor(top: mainStack.bottomAnchor, right: rightAnchor, paddingTop: 10, paddingRight: 12)
 
+        addSubview(detailInfoView)
+        detailInfoView.anchor(top: peopleLabel.bottomAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 30, paddingLeft: 20, paddingBottom: 30, paddingRight: 20, width: frame.width)
+    }
+    
+    func setupCloseButton() {
+        addSubview(closeButton)
+        closeButton.anchor(top: topAnchor, right: rightAnchor, paddingTop: 12, paddingRight: 12)
+    }
     
     // MARK: - Helpers
     

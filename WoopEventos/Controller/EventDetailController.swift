@@ -21,8 +21,11 @@ class EventDetailController: UIViewController {
         
     private let loadingView: AnimationView = Utilities().loadingAnimationView()
     
-    private var detailView: EventDetailView?
-    
+    private lazy var detailView: EventDetailView = {
+        let view = EventDetailView(frame: view.frame, handleCheckin: #selector(handleCheckinTapped), handleShare: #selector(handleShareTapped), handleClose: #selector(handleCloseTapped))
+        return view
+    }()
+        
     // MARK: - Bind ViewModel
     
     func bindLoading() {
@@ -57,10 +60,12 @@ class EventDetailController: UIViewController {
             switch eventDetailType {
             case .normal(let event):
                 self.configureUI(event: event)
+                break
             case .error(let error):
                 self.configureErrorUI(message: error)
+                break
             case .empty:
-                self.configureErrorUI(message: K.EventDetail.errorMessage)
+                break
             }
         }, onError: { [unowned self] error in
             self.configureErrorUI(message: error.localizedDescription)
@@ -101,16 +106,18 @@ class EventDetailController: UIViewController {
     }
         
     func configureUI(event: Event) {
-        detailView = EventDetailView(frame: view.bounds, handleCheckin: #selector(handleCheckinTapped), handleShare: #selector(handleShareTapped))
-    
-        view.addSubview(detailView!)
-        detailView!.event = event
+        view.addSubview(detailView)
+        detailView.event = event
         
         let safeMargins = view.safeAreaLayoutGuide
-        detailView!.anchor(top: view.topAnchor, left: safeMargins.leftAnchor, bottom: view.bottomAnchor, right: safeMargins.rightAnchor, width: view.bounds.width, height: view.bounds.height)
+        detailView.anchor(top: view.topAnchor, left: safeMargins.leftAnchor, bottom: view.bottomAnchor, right: safeMargins.rightAnchor)
     }
     
     // MARK: - Selectors
+    
+    @objc func handleCloseTapped() {
+        dismiss(animated: true)
+    }
     
     @objc func handleCheckinTapped() {
         guard let id = self.id else {return}
@@ -119,7 +126,7 @@ class EventDetailController: UIViewController {
     }
     
     @objc func handleShareTapped() {
-        let text = Utilities().textToShare(withTexts: [detailView!.getTextToShare() ])
+        let text = Utilities().textToShare(withTexts: [detailView.getTextToShare() ])
         let itemToShare = [ text ]
         let shareVC = UIActivityViewController(activityItems: itemToShare, applicationActivities: nil)
         shareVC.popoverPresentationController?.sourceView = self.view

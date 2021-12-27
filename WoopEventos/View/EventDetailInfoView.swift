@@ -8,13 +8,8 @@
 import UIKit
 import MapKit
 
-class EventDetailInfoView: UIScrollView {
+class EventDetailInfoView: UIView {
     // MARK: - Properties
-    var event: Event? {
-        didSet {
-            configureUI(event: self.event!)
-        }
-    }
     
     private let dateLabel: UILabel = {
         let label = UILabel()
@@ -44,42 +39,50 @@ class EventDetailInfoView: UIScrollView {
         return label
     }()
     
+//    let infoStack: UIStackView = {
+//        let stack = UIStackView()
+//        stack.axis = .vertical
+//        stack.distribution = .fill
+//        stack.spacing = 8
+//
+//        return stack
+//    }()
+    
+    // MARK: - Lifecycle
+    
+    convenience init(frame: CGRect, event: Event) {
+        self.init(frame: frame)
+        configureUI(event: event)
+    }
+    
     // MARK: - UI Setup
     
     func configureUI(event: Event) {
-        
-        translatesAutoresizingMaskIntoConstraints = false
-        showsHorizontalScrollIndicator = false
-        bounces = true
-        
-        let infoStack = UIStackView()
-        infoStack.translatesAutoresizingMaskIntoConstraints = false
-
-        addSubview(infoStack)
-        
-        infoStack.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor)
-        infoStack.centerX(inView: self)
-        
         titleLabel.text = event.title
         descriptionLabel.text = event.description
         dateLabel.text = Utilities().formatDate(withDate: event.date)
         let descriptionStack = Utilities().infoStack(withViews: [dateLabel, titleLabel, descriptionLabel], direction: .vertical)
-
+        
         titleLocationLabel.text = K.EventDetail.locationTitle
         
         let location = CLLocationCoordinate2D(latitude: event.latitude, longitude: event.longitude)
         
         let annotation = Utilities().setupMapAnnotation(withTitle: event.title, location: location)
         
-        let mapView = Utilities().setupMapView(location: CLLocationCoordinate2D(latitude: event.latitude, longitude: event.longitude), annotation: annotation, mapWidth: frame.width, mapHeight: 300)
+        let mapView = Utilities().setupMapView(location: CLLocationCoordinate2D(latitude: event.latitude, longitude: event.longitude), annotation: annotation, mapWidth: frame.width, mapHeight: 200)
         let locationStack = Utilities().infoStack(withViews: [titleLocationLabel, mapView], direction: .vertical)
-        mapView.setDimensions(width: infoStack.frame.width, height: 200)
+        mapView.setDimensions(width: frame.width, height: 200)
+        
+        let infoStack = UIStackView(arrangedSubviews: [descriptionStack, locationStack])
+        infoStack.axis = .vertical
+        infoStack.distribution = .fill
+        infoStack.spacing = 8
+        
+        infoStack.translatesAutoresizingMaskIntoConstraints = false
 
-        infoStack.addSubview(descriptionStack)
-        descriptionStack.anchor(top: infoStack.topAnchor, left: infoStack.leftAnchor, right: infoStack.rightAnchor, paddingTop: 18, width: infoStack.frame.width)
-
-        infoStack.addSubview(locationStack)
-        locationStack.anchor(top: descriptionStack.bottomAnchor, left: infoStack.leftAnchor, right: infoStack.rightAnchor, paddingTop: 18, width: infoStack.frame.width)
+        addSubview(infoStack)
+        
+        infoStack.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor)
     }
     
     // MARK: - Helpers

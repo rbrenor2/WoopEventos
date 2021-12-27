@@ -37,7 +37,7 @@ class Utilities {
         
         if isLoading {
             view.addSubview(loadingView)
-            loadingView.anchor(width: view.frame.width, height: view.frame.height)
+            loadingView.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, width: view.frame.width, height: view.frame.height)
             loadingView.center(inView: view)
             loadingView.backgroundColor = .white
             loadingView.play(completion: nil)
@@ -61,7 +61,7 @@ class Utilities {
         let formatter = DateFormatter()
         formatter.locale = locale
         formatter.dateStyle = .long
-        
+        formatter.timeZone = .current
         let dateStr = formatter.string(from: date)
         
         return dateStr
