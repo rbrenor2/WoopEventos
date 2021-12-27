@@ -11,13 +11,15 @@ import Lottie
 
 private let reuseIdentifier = "eventCell"
 
-class EventListController: UITableViewController {
+class EventListController: UIViewController {
     
     // MARK: - Properties
     let disposeBag = DisposeBag()
     let eventListViewModel: EventListViewModel = EventListViewModel()
     
     let loadingView: AnimationView = Utilities().loadingAnimationView()
+    
+    let tableView: UITableView = UITableView()
     
     // MARK: - Lifecycle
     override func viewDidLoad() {
@@ -30,9 +32,9 @@ class EventListController: UITableViewController {
         eventListViewModel.getEvents()
     }
     
-    // MARK: - Reactiveness
+    // MARK: - Bind to ViewModel
+    
     func bindViewModel() {
-        
         eventListViewModel.eventLoading
             .map ({ [unowned self] loading in
                 Utilities().showLoadingIndicator(inView: self.view, loadingView: loadingView, isLoading: loading)
@@ -58,9 +60,8 @@ class EventListController: UITableViewController {
                 cell.event = event
                 
                 return cell
-                
+
             case .error(let message):
-                
                 let cell = UITableViewCell()
                 cell.isUserInteractionEnabled = false
                 cell.textLabel?.text = message
@@ -85,8 +86,7 @@ class EventListController: UITableViewController {
         .subscribe(
             onNext: { [unowned self] eventCellType in
                 if case let .normal(event) = eventCellType {
-                    guard let id = event.id else { return }
-                    let detailVC = EventDetailController(id: id)
+                    let detailVC = EventDetailController(id: event.id)
                     self.present(detailVC, animated: true, completion: nil)
                 }
             }
@@ -101,6 +101,12 @@ class EventListController: UITableViewController {
     }
     
     func configureEventListUI() {
+        view.backgroundColor = .white
+        view.addSubview(tableView)
+        
+        let safeMargins = view.safeAreaLayoutGuide
+        tableView.anchor(top: view.topAnchor, left: safeMargins.leftAnchor, bottom: view.bottomAnchor, right: safeMargins.rightAnchor)
+        
         tableView.dataSource = nil
         tableView.delegate = nil
         tableView.register(EventCell.self, forCellReuseIdentifier: reuseIdentifier)
@@ -119,8 +125,8 @@ class EventListController: UITableViewController {
     }
 }
 
-extension EventListController {
-    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+extension EventListController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 130
     }
 }
