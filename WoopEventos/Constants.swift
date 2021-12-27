@@ -16,6 +16,7 @@ struct K {
     struct EventList {
         static let favoriteUnselectedIcon = "heart"
         static let favoriteSelectedIcon = "heart.fill"
+        static let refreshTitle = "Carregando..."
     }
     
     struct EventDetail {

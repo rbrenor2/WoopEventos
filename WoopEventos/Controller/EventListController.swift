@@ -21,6 +21,8 @@ class EventListController: UIViewController {
     
     let tableView: UITableView = UITableView()
     
+    let refreshControl = UIRefreshControl()
+    
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,7 +39,7 @@ class EventListController: UIViewController {
     func bindViewModel() {
         eventListViewModel.eventLoading
             .map ({ [unowned self] loading in
-                Utilities().showLoadingIndicator(inView: self.view, loadingView: loadingView, isLoading: loading)
+                if (loading == false) {refreshControl.endRefreshing()}
             })
             .subscribe()
             .disposed(by: disposeBag)
@@ -104,6 +106,10 @@ class EventListController: UIViewController {
         view.backgroundColor = .white
         view.addSubview(tableView)
         
+        refreshControl.attributedTitle = NSAttributedString(string: K.EventList.refreshTitle)
+        refreshControl.addTarget(self, action: #selector(loadNewEvents), for: .valueChanged)
+        tableView.addSubview(refreshControl)
+        
         let safeMargins = view.safeAreaLayoutGuide
         tableView.anchor(top: view.topAnchor, left: safeMargins.leftAnchor, bottom: view.bottomAnchor, right: safeMargins.rightAnchor)
         
@@ -122,6 +128,12 @@ class EventListController: UIViewController {
         navigationItem.titleView = logoImageView
         
         logoImageView.anchor(left: navigationItem.titleView?.leftAnchor, right: navigationItem.titleView?.rightAnchor, paddingTop: 10, paddingBottom: 10)
+    }
+    
+    // MARK: - Selectors
+
+    @objc func loadNewEvents() {
+        eventListViewModel.getEvents()
     }
 }
 
