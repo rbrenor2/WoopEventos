@@ -94,6 +94,21 @@ class Utilities {
         return pin
     }
     
+    func getMapUrl(from latitude: Double, longitude: Double) -> String {
+        let url = "http://maps.apple.com/maps?saddr=\(latitude),\(longitude)"
+        return url
+    }
+    
+    func getTextToShare(title: String, date: Date, description: String, price: Double, latitutde: Double, longitude: Double) -> String {
+        let formattedDate = self.formatDate(withDate: date)
+        let formattedPrice = self.formatPrice(withPrice: price)
+        let formattedLocation = self.getMapUrl(from: latitutde, longitude: longitude)
+        
+        let text = "\(title)\n\(formattedDate) \n \n\(description) \n \n Preço: \(formattedPrice) \n \n Local: \(formattedLocation)"
+        
+        return text
+    }
+    
     func actionButton(withTitle title: String, handleTap: Selector) -> UIButton {
         let button = UIButton(type: .system)
         button.backgroundColor = .lightPurple
@@ -121,14 +136,6 @@ class Utilities {
           button.setImage(image, for: .normal)
         
         return button
-    }
-    
-    func textToShare(withTexts texts: [String]) -> String {
-        let text = texts.reduce("") { partialResult, text in
-            return "\(partialResult) \n \(text)"
-        }
-        
-        return text
     }
     
     func getPlaceholderImage() -> UIImage {

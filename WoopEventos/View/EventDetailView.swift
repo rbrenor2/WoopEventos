@@ -160,15 +160,4 @@ class EventDetailView: UIScrollView {
         addSubview(closeButton)
         closeButton.anchor(top: topAnchor, right: rightAnchor, paddingTop: 12, paddingRight: 12)
     }
-    
-    // MARK: - Helpers
-    
-    func getTextToShare() -> String {
-        guard let price = priceLabel.text else {return "N/I"}
-        let info = detailInfoView.getTextToShare()
-        let text = "\(info) \n Preço: \(price)"
-        return text
-    }
-    
-    
 }

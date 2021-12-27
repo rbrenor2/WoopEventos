@@ -11,6 +11,8 @@ import MapKit
 class EventDetailInfoView: UIView {
     // MARK: - Properties
     
+    var event: Event
+    
     private let dateLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.boldSystemFont(ofSize: 14)
@@ -39,20 +41,16 @@ class EventDetailInfoView: UIView {
         return label
     }()
     
-//    let infoStack: UIStackView = {
-//        let stack = UIStackView()
-//        stack.axis = .vertical
-//        stack.distribution = .fill
-//        stack.spacing = 8
-//
-//        return stack
-//    }()
-    
     // MARK: - Lifecycle
     
-    convenience init(frame: CGRect, event: Event) {
-        self.init(frame: frame)
+    init(frame: CGRect, event: Event) {
+        self.event = event
+        super.init(frame: frame)
         configureUI(event: event)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     // MARK: - UI Setup
@@ -70,6 +68,9 @@ class EventDetailInfoView: UIView {
         let annotation = Utilities().setupMapAnnotation(withTitle: event.title, location: location)
         
         let mapView = Utilities().setupMapView(location: CLLocationCoordinate2D(latitude: event.latitude, longitude: event.longitude), annotation: annotation, mapWidth: frame.width, mapHeight: 200)
+        let gesture = UITapGestureRecognizer(target: self, action: #selector(openMaps))
+        mapView.addGestureRecognizer(gesture)
+        
         let locationStack = Utilities().infoStack(withViews: [titleLocationLabel, mapView], direction: .vertical)
         mapView.setDimensions(width: frame.width, height: 200)
         
@@ -85,12 +86,19 @@ class EventDetailInfoView: UIView {
         infoStack.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor)
     }
     
-    // MARK: - Helpers
-    
-    func getTextToShare() -> String {
-        guard let date = dateLabel.text else {return "N/I"}
-        guard let description = descriptionLabel.text else {return "N/I"}
-        let text = "Data: \(date) \n \(description)"
-        return text
+    @objc func openMaps() {
+        let latitude: CLLocationDegrees = event.latitude
+        let longitude: CLLocationDegrees = event.longitude
+        let regionDistance: CLLocationDistance = 200
+        let coordinates = CLLocationCoordinate2DMake(latitude, longitude)
+        let regionSpan = MKCoordinateRegion(center: coordinates, latitudinalMeters: regionDistance, longitudinalMeters: regionDistance)
+        let options = [
+            MKLaunchOptionsMapCenterKey: NSValue(mkCoordinate: regionSpan.center),
+            MKLaunchOptionsMapSpanKey: NSValue(mkCoordinateSpan: regionSpan.span)
+        ]
+        let placemark = MKPlacemark(coordinate: coordinates, addressDictionary: nil)
+        let mapItem = MKMapItem(placemark: placemark)
+        mapItem.name = event.title
+        mapItem.openInMaps(launchOptions: options)
     }
 }

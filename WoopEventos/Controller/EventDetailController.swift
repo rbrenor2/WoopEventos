@@ -15,6 +15,8 @@ class EventDetailController: UIViewController {
     // MARK: - Properties
     var id: String?
     
+    var event: Event?
+    
     private let disposeBag = DisposeBag()
         
     private let eventDetailViewModel: EventDetailViewModel = EventDetailViewModel()
@@ -60,6 +62,7 @@ class EventDetailController: UIViewController {
             switch eventDetailType {
             case .normal(let event):
                 self.configureUI(event: event)
+                self.event = event
                 break
             case .error(let error):
                 self.configureErrorUI(message: error)
@@ -126,7 +129,8 @@ class EventDetailController: UIViewController {
     }
     
     @objc func handleShareTapped() {
-        let text = Utilities().textToShare(withTexts: [detailView.getTextToShare() ])
+        guard let event = event else { return }
+        let text = Utilities().getTextToShare(title: event.title, date: event.date, description: event.description, price: event.price, latitutde: event.latitude, longitude: event.longitude)
         let itemToShare = [ text ]
         let shareVC = UIActivityViewController(activityItems: itemToShare, applicationActivities: nil)
         shareVC.popoverPresentationController?.sourceView = self.view
