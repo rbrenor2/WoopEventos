@@ -22,6 +22,10 @@ enum EventChekinViewModelType {
 }
 
 class EventDetailViewModel {
+    // MARK: - Properties
+    
+    private let eventService: EventService
+
     private let loading = BehaviorRelay<Bool>(value: false)
     private let detail = BehaviorRelay<EventDetailViewModelType>(value: .empty)
     private let checkin = BehaviorRelay<EventChekinViewModelType>(value: .empty)
@@ -39,11 +43,19 @@ class EventDetailViewModel {
     }
     
     let onShowError = PublishSubject<UIAlertController>()
+    
+    // MARK: - Lifecycle
+    
+    init(eventService: EventService) {
+        self.eventService = eventService
+    }
+    
+    // MARK: - API
             
     func getEvent(id: String) {
         loading.accept(true)
         
-        EventService.shared.getEvent(byId: id).subscribe (onNext: { [unowned self] event in
+        eventService.getEvent(byId: id).subscribe (onNext: { [unowned self] event in
             self.loading.accept(false)
             
             if event.id == "" {
@@ -62,7 +74,7 @@ class EventDetailViewModel {
     func checkinEvent(eventCheckin: EventCheckin) {
         loading.accept(true)
         
-        EventService.shared.checkinEvent(byEventCheckin: eventCheckin).subscribe (onNext: { [unowned self] response in
+        eventService.checkinEvent(byEventCheckin: eventCheckin).subscribe (onNext: { [unowned self] response in
             self.loading.accept(false)
             
             let eventCheckinViewModel: EventChekinViewModelType = EventChekinViewModelType.normal(code: response.code)

@@ -19,9 +19,7 @@ struct EventCheckinResponse: Decodable {
     let code: String
 }
 
-struct EventService {
-    static let shared = EventService()
-    
+struct EventService {    
     // MARK: - Get Event list
     
     func getEventList() -> Observable<[Event]> {

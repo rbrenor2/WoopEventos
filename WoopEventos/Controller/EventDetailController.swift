@@ -19,7 +19,7 @@ class EventDetailController: UIViewController {
     
     private let disposeBag = DisposeBag()
         
-    private let eventDetailViewModel: EventDetailViewModel = EventDetailViewModel()
+    private let eventDetailViewModel: EventDetailViewModel = EventDetailViewModel(eventService: EventService())
         
     private let loadingView: AnimationView = Utilities().loadingAnimationView()
     

@@ -15,6 +15,9 @@ enum EventCellViewModelType {
 }
 
 class EventListViewModel {
+    // MARK: - Properties
+    private let eventService: EventService
+    
     private let loading = BehaviorRelay<Bool>(value: false)
     private let cells = BehaviorRelay<[EventCellViewModelType]>(value: [])
     private let disposeBag = DisposeBag()
@@ -29,10 +32,18 @@ class EventListViewModel {
     
     let onShowError = PublishSubject<UIAlertController>()
     
+    // MARK: - Lifecycle
+    
+    init(eventService: EventService) {
+        self.eventService = eventService
+    }
+    
+    // MARK: - API
+    
     func getEvents() {
         loading.accept(true)
         
-        EventService.shared.getEventList().subscribe (onNext: { [unowned self] events in
+        eventService.getEventList().subscribe (onNext: { [unowned self] events in
             self.loading.accept(false)
             
             let count = events.count
