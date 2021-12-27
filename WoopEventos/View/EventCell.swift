@@ -94,7 +94,10 @@ class EventCell: UITableViewCell {
         backgroundColor = .white
                     
         addSubview(eventImageView)
-        eventImageView.sd_setImage(with: event.image)
+        
+        eventImageView.sd_imageIndicator = SDWebImageActivityIndicator.grayLarge
+        eventImageView.sd_setImage(with: event.image, placeholderImage: Utilities().getPlaceholderImage())
+        
         eventImageView.centerY(inView: self)
         eventImageView.anchor(left: leftAnchor, paddingLeft: 8)
 

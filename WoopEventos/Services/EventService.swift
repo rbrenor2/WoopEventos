@@ -22,6 +22,8 @@ struct EventCheckinResponse: Decodable {
 struct EventService {
     static let shared = EventService()
     
+    // MARK: - Get Event list
+    
     func getEventList() -> Observable<[Event]> {
         return Observable.create { observer -> Disposable in
             AF.request(K.Services.getEventListURL, method: .get)
@@ -36,8 +38,10 @@ struct EventService {
                             let events = try JSONDecoder().decode([Event].self, from: data)
                             
                             observer.onNext(events)
+                            break
                         } catch {
                             observer.onError(error)
+                            break
                         }
                     case .failure(let error):
                         if let statusCode = response.response?.statusCode,
@@ -46,6 +50,7 @@ struct EventService {
                             observer.onError(reason)
                         }
                         observer.onError(error)
+                        break
                     }
             
                 }
@@ -53,6 +58,8 @@ struct EventService {
                 return Disposables.create()
             }
     }
+    
+    // MARK: - Get Event
     
     func getEvent(byId id: String) -> Observable<Event> {
         return Observable.create { observer -> Disposable in
@@ -70,8 +77,10 @@ struct EventService {
                             guard let data = response.data else {return}
                             let event = try JSONDecoder().decode(Event.self, from: data)
                             observer.onNext(event)
+                            break
                         } catch {
                             observer.onError(error)
+                            break
                         }
                     case .failure(let error):
                         if let statusCode = response.response?.statusCode,
@@ -80,6 +89,7 @@ struct EventService {
                             observer.onError(reason)
                         }
                         observer.onError(error)
+                        break
                     }
             
                 }
@@ -87,6 +97,8 @@ struct EventService {
                 return Disposables.create()
             }
     }
+    
+    // MARK: - Checkin Event
     
     func checkinEvent(byEventCheckin checkin: EventCheckin) -> Observable<EventCheckinResponse> {
         return Observable.create { observer -> Disposable in
@@ -101,8 +113,10 @@ struct EventService {
                             guard let data = response.data else {return}
                             let response = try JSONDecoder().decode(EventCheckinResponse.self, from: data)
                             observer.onNext(response)
+                            break
                         } catch {
                             observer.onError(error)
+                            break
                         }
                     case .failure(let error):
                         if let statusCode = response.response?.statusCode,
@@ -111,6 +125,7 @@ struct EventService {
                             observer.onError(reason)
                         }
                         observer.onError(error)
+                        break
                     }
             
                 }

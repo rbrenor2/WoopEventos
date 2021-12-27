@@ -13,43 +13,15 @@ import Lottie
 
 class EventDetailController: UIViewController {
     // MARK: - Properties
-    private let disposeBag = DisposeBag()
-    
     var id: String?
     
+    private let disposeBag = DisposeBag()
+        
     private let eventDetailViewModel: EventDetailViewModel = EventDetailViewModel()
         
     private let loadingView: AnimationView = Utilities().loadingAnimationView()
     
-    private let imageView: UIImageView = {
-        let iv = UIImageView()
-        iv.backgroundColor = .lightGreen
-        iv.contentMode = .scaleAspectFill
-        iv.clipsToBounds = true
-        return iv
-    }()
-    
-    private lazy var shareButton: UIButton = Utilities().actionIconButton(withIconNamed: K.EventDetail.shareButtonIconName, handleTap: #selector(handleShareTapped))
-
-    private lazy var checkinButton: UIButton = Utilities().actionButton(withTitle: K.EventDetail.checkinButtonTitle, handleTap: #selector(handleCheckinTapped))
-    
-    private let priceLabel: UILabel = {
-        let label = UILabel()
-        
-        label.font = UIFont.boldSystemFont(ofSize: 32)
-        label.textColor = .black
-        label.numberOfLines = 1
-        label.textAlignment = .left
-        
-        return label
-    }()
-    
-    private lazy var detailInfoView: EventDetailInfoView = {
-        let frame = CGRect(origin: view.center, size: CGSize(width: view.frame.width, height: 300))
-        let detailView = EventDetailInfoView(frame: frame)
-        return detailView
-    }()
-    
+    private var detailView: EventDetailView?
     
     // MARK: - Bind ViewModel
     
@@ -88,7 +60,7 @@ class EventDetailController: UIViewController {
             case .error(let error):
                 self.configureErrorUI(message: error)
             case .empty:
-                self.configureEmptyUI()
+                self.configureErrorUI(message: K.EventDetail.errorMessage)
             }
         }, onError: { [unowned self] error in
             self.configureErrorUI(message: error.localizedDescription)
@@ -96,6 +68,7 @@ class EventDetailController: UIViewController {
     }
     
     // MARK: - Lifecycle
+    
     init(id: String) {
         super.init(nibName: nil, bundle: nil)
         self.id = id
@@ -115,53 +88,24 @@ class EventDetailController: UIViewController {
     // MARK: - UI Setup
     
     func showCheckinConfirmationAlert(message: String) {
-        let alert = UIAlertController(title: "\(K.EventDetail.checkinAlertTitle) \(message)", message: K.EventDetail.checkinButtonTitle, preferredStyle: .alert)
+        let alert = UIAlertController(title: "\(message)", message: "", preferredStyle: .alert)
         let action = UIAlertAction(title: K.EventDetail.checkinAlertActionButtonTitle, style: .cancel)
         alert.addAction(action)
         self.present(alert, animated: true, completion: nil)
     }
     
-    func configureEmptyUI() {
-        
-    }
-    
     func configureErrorUI(message: String) {
-        
+        let detailErrorView = EventDetailErrorView(frame: view.bounds, title: message)
+        view.addSubview(detailErrorView)
+        detailErrorView.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, width: view.bounds.width, height: view.bounds.height)
     }
         
     func configureUI(event: Event) {
-        view.backgroundColor = .white
-        
-        let imageUrl = event.image == nil ? URL(string: "") : event.image
-        setupImageView(withURL: imageUrl!)
-        setupActionButtons()
-        
-        let price = event.price == nil ? 0.00 : event.price!
-        setupPriceLabel(withPrice: price)
-                
-        view.addSubview(detailInfoView)
-        detailInfoView.event = event
-        detailInfoView.anchor(top: checkinButton.bottomAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 20, paddingLeft: 20, paddingBottom: 30, paddingRight: 20)
-    }
+        detailView = EventDetailView(frame: view.bounds, handleCheckin: #selector(handleCheckinTapped), handleShare: #selector(handleShareTapped))
     
-    func setupImageView(withURL url: URL) {
-        view.addSubview(imageView)
-        imageView.sd_setImage(with: url)
-        imageView.anchor(top: view.topAnchor, left: view.leftAnchor, right: view.rightAnchor, width: view.frame.width, height: 200)
-    }
-    
-    func setupActionButtons() {
-        view.addSubview(checkinButton)
-        checkinButton.anchor(top: imageView.bottomAnchor, right: view.rightAnchor, paddingTop: 12, paddingRight: 12)
-        
-        view.addSubview(shareButton)
-        shareButton.anchor(top: imageView.bottomAnchor, right: checkinButton.leftAnchor, paddingTop: 18, paddingRight: 24)
-    }
-    
-    func setupPriceLabel(withPrice price: Double) {
-        view.addSubview(priceLabel)
-        priceLabel.text = Utilities().formatPrice(withPrice: price)
-        priceLabel.anchor(top: imageView.bottomAnchor, left: view.leftAnchor, paddingTop: 12, paddingLeft: 12)
+        view.addSubview(detailView!)
+        detailView!.event = event
+        detailView!.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, width: view.bounds.width, height: view.bounds.height)
     }
     
     // MARK: - Selectors
@@ -173,7 +117,7 @@ class EventDetailController: UIViewController {
     }
     
     @objc func handleShareTapped() {
-        let text = Utilities().textToShare(withTexts: [detailInfoView.getTextToShare(), "Preço: \(priceLabel.text!)" ])
+        let text = Utilities().textToShare(withTexts: [detailView!.getTextToShare() ])
         let itemToShare = [ text ]
         let shareVC = UIActivityViewController(activityItems: itemToShare, applicationActivities: nil)
         shareVC.popoverPresentationController?.sourceView = self.view

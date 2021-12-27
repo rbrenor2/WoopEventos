@@ -22,14 +22,15 @@ class Utilities {
     }
     
     func loadingAnimationView() -> AnimationView {
-        let av = AnimationView.init(name: "traveler")
+        let images = ["banana", "pets", "singing", "traveler"]
+        let av = AnimationView.init(name: images.randomElement()!)
         av.contentMode = .scaleAspectFit
         av.loopMode = .loop
         av.animationSpeed = 0.5
         
         return av
     }
-    
+        
     func showLoadingIndicator(inView view: UIView, loadingView: AnimationView, isLoading: Bool) {
         
         loadingView.frame = view.bounds
@@ -94,7 +95,6 @@ class Utilities {
     }
     
     func actionButton(withTitle title: String, handleTap: Selector) -> UIButton {
-        
         let button = UIButton(type: .system)
         button.backgroundColor = .lightPurple
         button.setTitle(title, for: .normal)
@@ -129,5 +129,9 @@ class Utilities {
         }
         
         return text
+    }
+    
+    func getPlaceholderImage() -> UIImage {
+        return UIImage(named: K.General.placeholderimage)!
     }
 }

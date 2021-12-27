@@ -84,6 +84,13 @@ extension UIView {
         anchor(top: view.topAnchor, left: view.leftAnchor,
                bottom: view.bottomAnchor, right: view.rightAnchor)
     }
+    
+    func addConstraintsToFillViewSafe(_ view: UIView) {
+        translatesAutoresizingMaskIntoConstraints = false
+        let safeMargins = view.safeAreaLayoutGuide
+        anchor(top: safeMargins.topAnchor, left: safeMargins.leftAnchor,
+               bottom: safeMargins.bottomAnchor, right: safeMargins.rightAnchor)
+    }
 }
 
 // MARK: - UIColor

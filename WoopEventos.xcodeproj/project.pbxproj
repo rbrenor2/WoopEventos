@@ -20,17 +20,14 @@
 		5B866A112772A0FA00A56DEF /* EventService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B866A102772A0FA00A56DEF /* EventService.swift */; };
 		5B866A132772A1A300A56DEF /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B866A122772A1A300A56DEF /* Constants.swift */; };
 		5B866A152772A99200A56DEF /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B866A142772A99200A56DEF /* Extensions.swift */; };
-		5B866A172772C13700A56DEF /* EventViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B866A162772C13600A56DEF /* EventViewModel.swift */; };
 		5B866A192772E63400A56DEF /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B866A182772E63400A56DEF /* Utilities.swift */; };
 		5B866A1B2773A82400A56DEF /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B866A1A2773A82400A56DEF /* MapKit.framework */; };
 		5B866A1D277558F700A56DEF /* EventCheckin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B866A1C277558F600A56DEF /* EventCheckin.swift */; };
 		5B866A1F27755E1200A56DEF /* EventListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B866A1E27755E1200A56DEF /* EventListViewModel.swift */; };
 		5B866A2127758EBB00A56DEF /* EventDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B866A2027758EBA00A56DEF /* EventDetailViewModel.swift */; };
-		5B96856D2776C7290053B25B /* pets.json in Resources */ = {isa = PBXBuildFile; fileRef = 5B9685692776C71E0053B25B /* pets.json */; };
-		5B96856E2776C7290053B25B /* banana.json in Resources */ = {isa = PBXBuildFile; fileRef = 5B96856A2776C7240053B25B /* banana.json */; };
-		5B96856F2776C7290053B25B /* singing.json in Resources */ = {isa = PBXBuildFile; fileRef = 5B96856B2776C7280053B25B /* singing.json */; };
-		5B9685702776C7290053B25B /* traveler.json in Resources */ = {isa = PBXBuildFile; fileRef = 5B96856C2776C7290053B25B /* traveler.json */; };
 		5B9685722778AB360053B25B /* EventDetailInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B9685712778AB350053B25B /* EventDetailInfoView.swift */; };
+		5B9685762778F3330053B25B /* EventDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B9685752778F3330053B25B /* EventDetailView.swift */; };
+		5B96857A2779074D0053B25B /* EventDetailErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B9685792779074D0053B25B /* EventDetailErrorView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -49,17 +46,14 @@
 		5B866A102772A0FA00A56DEF /* EventService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventService.swift; sourceTree = "<group>"; };
 		5B866A122772A1A300A56DEF /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		5B866A142772A99200A56DEF /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
-		5B866A162772C13600A56DEF /* EventViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventViewModel.swift; sourceTree = "<group>"; };
 		5B866A182772E63400A56DEF /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		5B866A1A2773A82400A56DEF /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		5B866A1C277558F600A56DEF /* EventCheckin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventCheckin.swift; sourceTree = "<group>"; };
 		5B866A1E27755E1200A56DEF /* EventListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventListViewModel.swift; sourceTree = "<group>"; };
 		5B866A2027758EBA00A56DEF /* EventDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDetailViewModel.swift; sourceTree = "<group>"; };
-		5B9685692776C71E0053B25B /* pets.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = pets.json; sourceTree = "<group>"; };
-		5B96856A2776C7240053B25B /* banana.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = banana.json; sourceTree = "<group>"; };
-		5B96856B2776C7280053B25B /* singing.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = singing.json; sourceTree = "<group>"; };
-		5B96856C2776C7290053B25B /* traveler.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = traveler.json; sourceTree = "<group>"; };
 		5B9685712778AB350053B25B /* EventDetailInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDetailInfoView.swift; sourceTree = "<group>"; };
+		5B9685752778F3330053B25B /* EventDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDetailView.swift; sourceTree = "<group>"; };
+		5B9685792779074D0053B25B /* EventDetailErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDetailErrorView.swift; sourceTree = "<group>"; };
 		69F194EE22E9D9D5B460616F /* Pods-WoopEventos.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WoopEventos.release.xcconfig"; path = "Target Support Files/Pods-WoopEventos/Pods-WoopEventos.release.xcconfig"; sourceTree = "<group>"; };
 		B890973E9ABC1CA9A0000BE3 /* Pods_WoopEventos.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WoopEventos.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -107,7 +101,6 @@
 		5B8669ED27726CA300A56DEF /* WoopEventos */ = {
 			isa = PBXGroup;
 			children = (
-				5B9685672776C6D90053B25B /* Animations */,
 				5B866A0327729F1600A56DEF /* Model */,
 				5B866A0527729F2200A56DEF /* ViewModel */,
 				5B866A0427729F1D00A56DEF /* View */,
@@ -148,6 +141,8 @@
 			children = (
 				5B866A0E2772A0D300A56DEF /* EventCell.swift */,
 				5B9685712778AB350053B25B /* EventDetailInfoView.swift */,
+				5B9685752778F3330053B25B /* EventDetailView.swift */,
+				5B9685792779074D0053B25B /* EventDetailErrorView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -155,7 +150,6 @@
 		5B866A0527729F2200A56DEF /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				5B866A162772C13600A56DEF /* EventViewModel.swift */,
 				5B866A1E27755E1200A56DEF /* EventListViewModel.swift */,
 				5B866A2027758EBA00A56DEF /* EventDetailViewModel.swift */,
 			);
@@ -177,26 +171,6 @@
 				5B866A102772A0FA00A56DEF /* EventService.swift */,
 			);
 			path = Services;
-			sourceTree = "<group>";
-		};
-		5B9685672776C6D90053B25B /* Animations */ = {
-			isa = PBXGroup;
-			children = (
-				5B9685682776C6EC0053B25B /* LottieFiles */,
-			);
-			path = Animations;
-			sourceTree = "<group>";
-		};
-		5B9685682776C6EC0053B25B /* LottieFiles */ = {
-			isa = PBXGroup;
-			children = (
-				5B96856A2776C7240053B25B /* banana.json */,
-				5B9685692776C71E0053B25B /* pets.json */,
-				5B96856B2776C7280053B25B /* singing.json */,
-				5B96856C2776C7290053B25B /* traveler.json */,
-			);
-			name = LottieFiles;
-			path = "../New Group/LottieFiles";
 			sourceTree = "<group>";
 		};
 		5E184AE539F3829C05DF0F08 /* Frameworks */ = {
@@ -269,12 +243,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				5B8669FB27726CAA00A56DEF /* LaunchScreen.storyboard in Resources */,
-				5B96856D2776C7290053B25B /* pets.json in Resources */,
-				5B9685702776C7290053B25B /* traveler.json in Resources */,
-				5B96856E2776C7290053B25B /* banana.json in Resources */,
 				5B8669F827726CAA00A56DEF /* Assets.xcassets in Resources */,
 				5B8669F627726CA300A56DEF /* Main.storyboard in Resources */,
-				5B96856F2776C7290053B25B /* singing.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -333,9 +303,10 @@
 				5B9685722778AB360053B25B /* EventDetailInfoView.swift in Sources */,
 				5B866A192772E63400A56DEF /* Utilities.swift in Sources */,
 				5B866A0927729FB600A56DEF /* EventListController.swift in Sources */,
+				5B96857A2779074D0053B25B /* EventDetailErrorView.swift in Sources */,
 				5B8669F127726CA300A56DEF /* SceneDelegate.swift in Sources */,
 				5B866A0B27729FD100A56DEF /* EventDetailController.swift in Sources */,
-				5B866A172772C13700A56DEF /* EventViewModel.swift in Sources */,
+				5B9685762778F3330053B25B /* EventDetailView.swift in Sources */,
 				5B866A0F2772A0D300A56DEF /* EventCell.swift in Sources */,
 				5B866A1D277558F700A56DEF /* EventCheckin.swift in Sources */,
 				5B866A0D2772A0B300A56DEF /* Event.swift in Sources */,
@@ -418,7 +389,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.7;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -473,7 +444,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.7;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -497,8 +468,10 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -526,8 +499,10 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

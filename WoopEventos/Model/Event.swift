@@ -18,7 +18,7 @@ struct Event: Decodable {
     let title: String
     let id: String
     
-    private enum CodingKeys : String, CodingKey { case people, date, description, image, longitude, latitude, price, title, id }
+    private enum CodingKeys : String, CodingKey { case people, date, description, image, longitude, latitude, price, title, id, test }
     
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)

@@ -70,7 +70,7 @@ class EventDetailViewModel {
             self.checkin.accept(eventCheckinViewModel)
         }, onError: { [unowned self] error in
             self.loading.accept(false)
-            self.detail.accept(.error(message: "Xiii, ocorreu um problema no Checkin. Tente novamente em alguns momentos."))
+            self.checkin.accept(.error(message: K.EventDetail.errorMessage))
         }).disposed(by: disposeBag)
     }
 }

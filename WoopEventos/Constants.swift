@@ -10,6 +10,7 @@ import Foundation
 struct K {
     struct General {
         static let woopLogoImage = "woopLogo"
+        static let placeholderimage = "placeholder"
     }
     
     struct EventList {
@@ -25,6 +26,7 @@ struct K {
         static let checkinAlertMessage = "Seu lugar já está reservado. Aproveite o evento!"
         static let checkinAlertTitle = "Status "
         static let checkinAlertActionButtonTitle = "OK"
+        static let errorMessage = "Xiiii... ocorreu algum problema. Tente novamente mais tarde."
     }
     
     struct Services {
