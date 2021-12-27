@@ -23,10 +23,11 @@ struct K {
         static let locationTitle = "Onde vai ser?"
         static let shareButtonIconName = "square.and.arrow.up.fill"
         static let checkinButtonTitle = "Check-in"
-        static let checkinAlertMessage = "Seu lugar já está reservado. Aproveite o evento!"
-        static let checkinAlertTitle = "Status "
         static let checkinAlertActionButtonTitle = "OK"
-        static let errorMessage = "Xiiii... ocorreu algum problema. Tente novamente mais tarde."
+        static let checkinErrorTitle = "Xiii... ocorreu algum problema."
+        static let checkinErrorMessage = "Status: {code}"
+        static let checkinSuccessTitle = "Parabéns!"
+        static let checkinSuccessMessage = "Seu lugar já está reservado.\nAproveite o evento!"
         static let closeButtonIconName = "xmark.circle.fill"
     }
     

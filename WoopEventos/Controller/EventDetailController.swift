@@ -43,13 +43,13 @@ class EventDetailController: UIViewController {
         eventDetailViewModel.eventCheckin.subscribe (onNext:{ [unowned self] eventCheckinType in
             switch eventCheckinType {
             case .normal(let code):
-                self.showCheckinConfirmationAlert(message: code)
+                self.showCheckinConfirmationAlert(title: K.EventDetail.checkinSuccessTitle, message: code)
                 break
             case .error(let error):
-                self.showCheckinConfirmationAlert(message: error)
+                self.showCheckinConfirmationAlert(title: K.EventDetail.checkinErrorTitle, message: error)
                 break
             case .empty:
-                self.showCheckinConfirmationAlert(message: "")
+                self.showCheckinConfirmationAlert(title: "", message: "")
                 break
             }
         }, onError: { [unowned self] error in
@@ -95,8 +95,8 @@ class EventDetailController: UIViewController {
     
     // MARK: - UI Setup
     
-    func showCheckinConfirmationAlert(message: String) {
-        let alert = UIAlertController(title: "\(message)", message: "", preferredStyle: .alert)
+    func showCheckinConfirmationAlert(title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         let action = UIAlertAction(title: K.EventDetail.checkinAlertActionButtonTitle, style: .cancel)
         alert.addAction(action)
         self.present(alert, animated: true, completion: nil)
