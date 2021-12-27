@@ -105,7 +105,9 @@ class EventDetailController: UIViewController {
     
         view.addSubview(detailView!)
         detailView!.event = event
-        detailView!.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, width: view.bounds.width, height: view.bounds.height)
+        
+        let safeMargins = view.safeAreaLayoutGuide
+        detailView!.anchor(top: view.topAnchor, left: safeMargins.leftAnchor, bottom: view.bottomAnchor, right: safeMargins.rightAnchor, width: view.bounds.width, height: view.bounds.height)
     }
     
     // MARK: - Selectors
