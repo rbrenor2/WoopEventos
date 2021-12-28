@@ -62,7 +62,7 @@ class EventListViewModel {
         }
         
         self.input = Input(reload: reloadRelay)
-        self.output = Output(events: events, loading: loadingRelay.asDriver(onErrorJustReturn: false), error: errorRelay.asDriver(onErrorJustReturn: "GeneralError"))
+        self.output = Output(events: events, loading: loadingRelay.asDriver(onErrorJustReturn: false), error: errorRelay.asDriver(onErrorJustReturn: K.EventList.reloadError))
     }
 }
 

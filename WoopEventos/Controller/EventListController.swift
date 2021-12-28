@@ -73,7 +73,7 @@ class EventListController: UIViewController {
                 guard let self = self else {
                     return
                 }
-                Utilities().showAlertView(withTarget: self, title: "Error", message: error, action: "OK")
+                Utilities().showAlertView(withTarget: self, title: K.EventList.reloadErrorTitle, message: Utilities().getErrorMessage(withError: error), action: K.General.confirmAlertButtonTitle)
             })
             .disposed(by: disposeBag)
     }

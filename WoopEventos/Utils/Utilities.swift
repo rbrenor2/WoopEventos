@@ -94,6 +94,10 @@ class Utilities {
         target.present(alert, animated: true, completion: nil)
     }
     
+    func getErrorMessage(withError error: String) -> String {
+        return "Razão: \(error)"
+    }
+    
     func setupMapAnnotation(withTitle title: String, location: CLLocationCoordinate2D) -> MKPointAnnotation {
         let pin = MKPointAnnotation()
         pin.coordinate = location

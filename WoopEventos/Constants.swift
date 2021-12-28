@@ -11,12 +11,15 @@ struct K {
     struct General {
         static let woopLogoImage = "woopLogo"
         static let placeholderimage = "placeholder"
+        static let confirmAlertButtonTitle = "OK"
     }
     
     struct EventList {
         static let favoriteUnselectedIcon = "heart"
         static let favoriteSelectedIcon = "heart.fill"
         static let refreshTitle = "Carregando..."
+        static let reloadErrorTitle = "Xiii... ocorreu algum erro"
+        static let reloadError = "Xiii... ocorreu algum erro. Tente novemente em alguns momentos."
     }
     
     struct EventDetail {
