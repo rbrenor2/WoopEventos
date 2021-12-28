@@ -1,0 +1,6 @@
+module Pods_WoopEventosTests {
+  umbrella header "Pods-WoopEventosTests-umbrella.h"
+
+  export *
+  module * { export * }
+}

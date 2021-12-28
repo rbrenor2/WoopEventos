@@ -18,7 +18,7 @@ struct Event: Decodable {
     let title: String
     let id: String
     
-    private enum CodingKeys : String, CodingKey { case people, date, description, image, longitude, latitude, price, title, id, test }
+    private enum CodingKeys : String, CodingKey { case people, date, description, image, longitude, latitude, price, title, id }
     
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
@@ -39,5 +39,18 @@ struct Event: Decodable {
         comps?.scheme = "https"
         guard let secureUrl = URL(string: comps!.string!) else {return}
         image = secureUrl
+    }
+    
+    init(people: [String], date: Double, description: String, image: String, longitude: Double, latitude: Double, price: Double, title: String, id: String) {
+        
+        self.people = people
+        self.description = description
+        self.longitude = longitude
+        self.latitude = latitude
+        self.price = price
+        self.title = title
+        self.id = id
+        self.image = URL(string: image)!
+        self.date = Date(timeIntervalSince1970: date/1000)
     }
 }

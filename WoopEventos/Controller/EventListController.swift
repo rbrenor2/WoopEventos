@@ -15,6 +15,7 @@ class EventListController: UIViewController {
     
     // MARK: - Properties
     let disposeBag = DisposeBag()
+    
     let eventListViewModel: EventListViewModel = EventListViewModel(eventService: EventService())
     
     let loadingView: AnimationView = Utilities().loadingAnimationView()
@@ -28,87 +29,70 @@ class EventListController: UIViewController {
         super.viewDidLoad()
         
         configureUI()
-        bindViewModel()
-        handleCellTapped()
-
-        eventListViewModel.getEvents()
+        binding()
+        errorBinding()
+        eventListViewModel.input.reload.accept(())
     }
     
     // MARK: - Bind to ViewModel
     
-    func bindViewModel() {
-        eventListViewModel.eventLoading
-            .map ({ [unowned self] loading in
-                if (loading == false) {refreshControl.endRefreshing()}
-            })
-            .subscribe()
-            .disposed(by: disposeBag)
-        
-        tableView
-            .rx.setDelegate(self)
-            .disposed(by: disposeBag)
-        
-        eventListViewModel.eventCells.bind(to: tableView.rx.items, curriedArgument: {
-            tableView, index, element in
-            
-            let indexPath = IndexPath(item: index, section: 0)
-            
-            switch element {
-            case .normal(let event):
-                
-                guard let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as? EventCell else {
-                    return UITableViewCell()
-                }
-                cell.event = event
-                
-                return cell
+    func binding() {
+        eventListViewModel
+            .output
+            .loading
+            .asDriver(onErrorJustReturn: false)
+            .drive(onNext: { [weak self] isLoading in
+                guard let self = self else {return}
+                if (isLoading == false) {self.refreshControl.endRefreshing()}
+            }).disposed(by: disposeBag)
 
-            case .error(let message):
-                let cell = UITableViewCell()
-                cell.isUserInteractionEnabled = false
-                cell.textLabel?.text = message
-                
-                return cell
-                
-            case .empty:
-                let cell = UITableViewCell()
-                cell.isUserInteractionEnabled = false
-                cell.textLabel?.text = "Sem dados"
-                
-                return cell
-            }
-        }).disposed(by: disposeBag)
+        eventListViewModel.output
+            .events
+            .asDriver(onErrorJustReturn: [])
+            .drive(tableView.rx.items(cellIdentifier: reuseIdentifier, cellType: EventCell.self)) {  (row,event,cell) in
+                cell.event = event
+            }.disposed(by: disposeBag)
         
+        tableView.rx.itemSelected.subscribe(onNext: { [weak self] indexPath in
+            guard let self = self else {
+                return
+            }
+            self.tableView.deselectRow(at: indexPath, animated: true)
+            let event: Event = try! self.tableView.rx.model(at: indexPath)
+            let detailVC = EventDetailController(id: event.id)
+            self.present(detailVC, animated: true, completion: nil)
+        }).disposed(by: disposeBag)
     }
     
-    func handleCellTapped() {
-        tableView
-        .rx
-        .modelSelected(EventCellViewModelType.self)
-        .subscribe(
-            onNext: { [unowned self] eventCellType in
-                if case let .normal(event) = eventCellType {
-                    let detailVC = EventDetailController(id: event.id)
-                    self.present(detailVC, animated: true, completion: nil)
+    private func errorBinding() {
+        eventListViewModel
+            .output
+            .error
+            .asDriver(onErrorJustReturn: "")
+            .drive(onNext: { [weak self] error in
+                guard let self = self else {
+                    return
                 }
-            }
-        )
-        .disposed(by: disposeBag)
+                Utilities().showAlertView(withTarget: self, title: "Error", message: error, action: "OK")
+            })
+            .disposed(by: disposeBag)
     }
     
     // MARK: - Helpers
+    
     func configureUI() {
-        configureNavBarUI()
-        configureEventListUI()
+        configureNavBar()
+        configureTableView()
     }
     
-    func configureEventListUI() {
+    func configureTableView() {
         view.backgroundColor = .white
         view.addSubview(tableView)
         
         refreshControl.attributedTitle = NSAttributedString(string: K.EventList.refreshTitle)
         refreshControl.addTarget(self, action: #selector(loadNewEvents), for: .valueChanged)
         tableView.addSubview(refreshControl)
+        tableView.rowHeight = 130
         
         let safeMargins = view.safeAreaLayoutGuide
         tableView.anchor(top: view.topAnchor, left: safeMargins.leftAnchor, bottom: view.bottomAnchor, right: safeMargins.rightAnchor)
@@ -118,7 +102,7 @@ class EventListController: UIViewController {
         tableView.register(EventCell.self, forCellReuseIdentifier: reuseIdentifier)
     }
     
-    func configureNavBarUI() {
+    func configureNavBar() {
         let logoImageView = UIImageView(image: UIImage(named: K.General.woopLogoImage))
         logoImageView.contentMode = .scaleAspectFit
         logoImageView.setDimensions(width: 34, height: 34)
@@ -133,12 +117,6 @@ class EventListController: UIViewController {
     // MARK: - Selectors
 
     @objc func loadNewEvents() {
-        eventListViewModel.getEvents()
-    }
-}
-
-extension EventListController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 130
+        eventListViewModel.input.reload.accept(())
     }
 }

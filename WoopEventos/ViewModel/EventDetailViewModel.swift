@@ -24,7 +24,7 @@ enum EventChekinViewModelType {
 class EventDetailViewModel {
     // MARK: - Properties
     
-    private let eventService: EventService
+    private let eventService: EventServiceType
 
     private let loading = BehaviorRelay<Bool>(value: false)
     private let detail = BehaviorRelay<EventDetailViewModelType>(value: .empty)
@@ -46,7 +46,7 @@ class EventDetailViewModel {
     
     // MARK: - Lifecycle
     
-    init(eventService: EventService) {
+    init(eventService: EventServiceType) {
         self.eventService = eventService
     }
     

@@ -8,60 +8,61 @@
 import RxSwift
 import RxCocoa
 
-enum EventCellViewModelType {
-    case normal(event: Event)
-    case error(message: String)
-    case empty
+protocol ViewModelType {
+    associatedtype Input
+    associatedtype Output
+    
+    var input: Input { get }
+    var output: Output { get }
 }
 
 class EventListViewModel {
-    // MARK: - Properties
-    private let eventService: EventService
     
-    private let loading = BehaviorRelay<Bool>(value: false)
-    private let cells = BehaviorRelay<[EventCellViewModelType]>(value: [])
+    // MARK: - Properties
+    
+    let input: Input
+    let output: Output
+    
+    private let eventService: EventServiceType
     private let disposeBag = DisposeBag()
     
-    var eventLoading: Observable<Bool> {
-        return loading.asObservable()
+    struct Input {
+        let reload: PublishRelay<Void>
     }
-
-    var eventCells: Observable<[EventCellViewModelType]> {
-        return cells.asObservable()
+        
+    struct Output {
+        let events: Driver<[Event]>
+        let loading: Driver<Bool>
+        let error: Driver<String>
     }
-    
-    let onShowError = PublishSubject<UIAlertController>()
     
     // MARK: - Lifecycle
     
-    init(eventService: EventService) {
+    init(eventService: EventServiceType) {
         self.eventService = eventService
-    }
-    
-    // MARK: - API
-    
-    func getEvents() {
-        loading.accept(true)
         
-        eventService.getEventList().subscribe (onNext: { [unowned self] events in
-            self.loading.accept(false)
-            
-            let count = events.count
-            if count == 0 {
-                self.cells.accept([.empty])
-            }
-            
-            let cellsViewModelList: [EventCellViewModelType] = events.compactMap { event in
-                
-                let type = EventCellViewModelType.normal(event: event)
-                return type
-            }
-            
-            self.cells.accept(cellsViewModelList)
-        }, onError: { [unowned self] error in
-            self.loading.accept(false)
-            self.cells.accept([.error(message: "Xiii, ocorreu um problema. Tente novamente em alguns momentos.")])
-        }).disposed(by: disposeBag)
+        let errorRelay = PublishRelay<String>()
+        let loadingRelay = PublishRelay<Bool>()
+        let reloadRelay = PublishRelay<Void>()
+    
+        let events = reloadRelay
+            .asObservable()
+            .flatMap({ _ -> Observable<[Event]> in
+                loadingRelay.accept(true)
+                return eventService.getEventList()
+            })
+            .map({ events in
+                loadingRelay.accept(false)
+                return events
+            })
+            .asDriver { (error) -> Driver<[Event]> in
+                loadingRelay.accept(false)
+                errorRelay.accept(error.localizedDescription)
+                return Driver.just([])
+        }
+        
+        self.input = Input(reload: reloadRelay)
+        self.output = Output(events: events, loading: loadingRelay.asDriver(onErrorJustReturn: false), error: errorRelay.asDriver(onErrorJustReturn: "GeneralError"))
     }
 }
 

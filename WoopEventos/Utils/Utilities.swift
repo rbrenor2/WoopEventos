@@ -87,6 +87,13 @@ class Utilities {
         return mapView
     }
     
+    func showAlertView(withTarget target: UIViewController, title: String, message: String, action: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let action = UIAlertAction(title: action, style: .cancel)
+        alert.addAction(action)
+        target.present(alert, animated: true, completion: nil)
+    }
+    
     func setupMapAnnotation(withTitle title: String, location: CLLocationCoordinate2D) -> MKPointAnnotation {
         let pin = MKPointAnnotation()
         pin.coordinate = location
