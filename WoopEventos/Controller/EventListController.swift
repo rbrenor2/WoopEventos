@@ -14,6 +14,7 @@ private let reuseIdentifier = "eventCell"
 class EventListController: UIViewController {
     
     // MARK: - Properties
+    
     let disposeBag = DisposeBag()
     
     let eventListViewModel: EventListViewModel = EventListViewModel(eventService: EventService())
@@ -25,6 +26,7 @@ class EventListController: UIViewController {
     let refreshControl = UIRefreshControl()
     
     // MARK: - Lifecycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
