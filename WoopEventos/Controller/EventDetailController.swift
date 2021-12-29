@@ -9,6 +9,7 @@ import UIKit
 import SDWebImage
 import MapKit
 import RxSwift
+import RxCocoa
 import Lottie
 import KeychainAccess
 
@@ -17,6 +18,8 @@ class EventDetailController: UIViewController {
     var id: String?
     
     var event: Event?
+    
+    private var isCheckedin: Bool = false
     
     private let disposeBag = DisposeBag()
         
@@ -75,7 +78,10 @@ class EventDetailController: UIViewController {
             .drive(onNext: { [weak self] response in
                 guard let self = self else {return}
                 Utilities().showAlertView(withTarget: self, title: K.EventDetail.checkinSuccessTitle, message: K.EventDetail.checkinSuccessMessage, action: K.General.confirmAlertButtonTitle)
+                self.isCheckedin = true
+                self.configureCheckinButtonStateUI()
             }).disposed(by: disposeBag)
+        
     }
     
     private func errorBinding() {
@@ -109,6 +115,17 @@ class EventDetailController: UIViewController {
         detailView.anchor(top: view.topAnchor, left: safeMargins.leftAnchor, bottom: view.bottomAnchor, right: safeMargins.rightAnchor)
     }
     
+    func configureCheckinButtonStateUI() {
+        if isCheckedin {
+            detailView.checkinButton.setTitle(K.EventDetail.checkinConfirmedButtonTitle, for: .normal)
+            detailView.checkinButton.backgroundColor = .lightGreen
+        } else {
+            detailView.checkinButton.setTitle(K.EventDetail.checkinButtonTitle, for: .normal)
+            detailView.checkinButton.backgroundColor = .mainPurple
+        }
+        
+    }
+    
     // MARK: - Selectors
     
     @objc func handleCloseTapped() {
@@ -116,7 +133,12 @@ class EventDetailController: UIViewController {
     }
     
     @objc func handleCheckinTapped() {
-        eventDetailViewModel.input.checkin.accept(())
+        if isCheckedin {
+            isCheckedin = false
+            configureCheckinButtonStateUI()
+        } else {
+            eventDetailViewModel.input.checkin.accept(())
+        }
     }
     
     @objc func handleShareTapped() {

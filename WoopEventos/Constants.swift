@@ -28,6 +28,7 @@ struct K {
         static let locationTitle = "Onde vai ser?"
         static let shareButtonIconName = "square.and.arrow.up.fill"
         static let checkinButtonTitle = "Check-in"
+        static let checkinConfirmedButtonTitle = "Confirmado"
         static let checkinAlertActionButtonTitle = "OK"
         static let checkinErrorTitle = "Xiii... ocorreu algum problema."
         static let checkinErrorMessage = "Status: {code}"

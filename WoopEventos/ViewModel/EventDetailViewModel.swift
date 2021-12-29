@@ -58,7 +58,7 @@ class EventDetailViewModel: ViewModelType {
         
         let checkin = checkinRelay
             .asObservable()
-            .flatMap({ _ -> Observable<EventCheckinResponse> in
+            .flatMapLatest({ _ -> Observable<EventCheckinResponse> in
                 loadingRelay.accept(true)
                 return eventService.checkinEvent(byId: eventId)
             })

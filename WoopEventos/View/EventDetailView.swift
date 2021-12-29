@@ -33,7 +33,7 @@ class EventDetailView: UIScrollView {
     
     private lazy var shareButton: UIButton = Utilities().actionIconButton(withIconNamed: K.EventDetail.shareButtonIconName, handleTap: handleShareTapped!)
 
-    private lazy var checkinButton: UIButton = Utilities().actionButton(withTitle: K.EventDetail.checkinButtonTitle, handleTap: handleCheckinTapped!)
+    lazy var checkinButton: UIButton = Utilities().actionButton(withTitle: K.EventDetail.checkinButtonTitle, handleTap: handleCheckinTapped!)
     
     private lazy var closeButton: UIButton = Utilities().actionIconButton(withIconNamed: K.EventDetail.closeButtonIconName, handleTap: handleCloseTapped!)
     
