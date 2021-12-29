@@ -49,7 +49,7 @@ class EventListViewModel: ViewModelType {
             })
             .asDriver { (error) -> Driver<[Event]> in
                 loadingRelay.accept(false)
-                errorRelay.accept(error.localizedDescription)
+                errorRelay.accept((error as? ErrorResult)?.localizedDescription ?? error.localizedDescription)
                 return Driver.just([])
         }
         

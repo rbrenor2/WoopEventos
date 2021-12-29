@@ -6,15 +6,16 @@ target 'WoopEventos' do
   use_frameworks!
 
   # Pods for WoopEventos
-  pod 'RxSwift', '~> 5'
-  pod 'RxCocoa', '~> 5'
+  pod 'RxSwift'
+  pod 'RxCocoa'
   pod 'lottie-ios'
   pod 'SDWebImage', '~> 5.0'
-  pod 'Alamofire', '~> 5.5' 
+  pod 'Alamofire', '~> 5.5'
   pod 'KeychainAccess'
 end
 
 target 'WoopEventosTests' do
-  pod 'RxBlocking', '~> 5'
-  pod 'RxTest', '~> 5'
+  pod 'RxBlocking'
+  pod 'RxTest'
+  pod 'RxCocoa'
 end

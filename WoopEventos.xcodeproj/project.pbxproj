@@ -9,8 +9,7 @@
 /* Begin PBXBuildFile section */
 		11C4D68708E3C30B5DF7E024 /* Pods_WoopEventos.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B890973E9ABC1CA9A0000BE3 /* Pods_WoopEventos.framework */; };
 		5B664BA8277AAA8E00F580E7 /* EventListTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B664BA7277AAA8E00F580E7 /* EventListTests.swift */; };
-		5B664BAF277AAB2000F580E7 /* EventMockService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B664BAE277AAB2000F580E7 /* EventMockService.swift */; };
-		5B664BB1277BD2CA00F580E7 /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B664BB0277BD2C800F580E7 /* Protocols.swift */; };
+		5B664BB1277BD2CA00F580E7 /* Types.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B664BB0277BD2C800F580E7 /* Types.swift */; };
 		5B8669EF27726CA300A56DEF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B8669EE27726CA300A56DEF /* AppDelegate.swift */; };
 		5B8669F127726CA300A56DEF /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B8669F027726CA300A56DEF /* SceneDelegate.swift */; };
 		5B8669F627726CA300A56DEF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5B8669F427726CA300A56DEF /* Main.storyboard */; };
@@ -50,8 +49,7 @@
 		4701C90D0A9EAD511A24FB0F /* Pods-WoopEventosTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WoopEventosTests.release.xcconfig"; path = "Target Support Files/Pods-WoopEventosTests/Pods-WoopEventosTests.release.xcconfig"; sourceTree = "<group>"; };
 		5B664BA5277AAA8E00F580E7 /* WoopEventosTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WoopEventosTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5B664BA7277AAA8E00F580E7 /* EventListTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventListTests.swift; sourceTree = "<group>"; };
-		5B664BAE277AAB2000F580E7 /* EventMockService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventMockService.swift; sourceTree = "<group>"; };
-		5B664BB0277BD2C800F580E7 /* Protocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocols.swift; sourceTree = "<group>"; };
+		5B664BB0277BD2C800F580E7 /* Types.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Types.swift; sourceTree = "<group>"; };
 		5B8669EB27726CA300A56DEF /* WoopEventos.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WoopEventos.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5B8669EE27726CA300A56DEF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5B8669F027726CA300A56DEF /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -115,7 +113,6 @@
 			isa = PBXGroup;
 			children = (
 				5B664BA7277AAA8E00F580E7 /* EventListTests.swift */,
-				5B664BAE277AAB2000F580E7 /* EventMockService.swift */,
 			);
 			path = WoopEventosTests;
 			sourceTree = "<group>";
@@ -165,7 +162,7 @@
 			children = (
 				5B866A142772A99200A56DEF /* Extensions.swift */,
 				5B866A182772E63400A56DEF /* Utilities.swift */,
-				5B664BB0277BD2C800F580E7 /* Protocols.swift */,
+				5B664BB0277BD2C800F580E7 /* Types.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -394,7 +391,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5B664BAF277AAB2000F580E7 /* EventMockService.swift in Sources */,
 				5B664BA8277AAA8E00F580E7 /* EventListTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -418,7 +414,7 @@
 				5B866A0D2772A0B300A56DEF /* Event.swift in Sources */,
 				5B866A112772A0FA00A56DEF /* EventService.swift in Sources */,
 				5B866A2127758EBB00A56DEF /* EventDetailViewModel.swift in Sources */,
-				5B664BB1277BD2CA00F580E7 /* Protocols.swift in Sources */,
+				5B664BB1277BD2CA00F580E7 /* Types.swift in Sources */,
 				5B866A132772A1A300A56DEF /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

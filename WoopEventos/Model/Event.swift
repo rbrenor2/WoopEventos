@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Event: Decodable {
+struct Event: Decodable, Equatable {
     let people: [String]
     var date: Date!
     let description: String
@@ -64,5 +64,9 @@ struct Event: Decodable {
         self.id = "0"
         self.image = URL(string: K.General.placeholderimage)!
         self.date = Date()
+    }
+    
+    static func == (lhs: Event, rhs: Event) -> Bool {
+        return lhs.id == rhs.id
     }
 }
