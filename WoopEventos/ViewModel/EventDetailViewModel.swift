@@ -25,7 +25,7 @@ class EventDetailViewModel: ViewModelType {
         
     struct Output {
         let event: Driver<Event>
-        let checkin: Driver<EventCheckinResponse>
+        let checkin: Driver<EventDetailResponse>
         let loading: Driver<Bool>
         let error: Driver<String>
     }
@@ -58,7 +58,7 @@ class EventDetailViewModel: ViewModelType {
         
         let checkin = checkinRelay
             .asObservable()
-            .flatMapLatest({ _ -> Observable<EventCheckinResponse> in
+            .flatMapLatest({ _ -> Observable<EventDetailResponse> in
                 loadingRelay.accept(true)
                 return eventService.checkinEvent(byId: eventId)
             })
@@ -66,10 +66,10 @@ class EventDetailViewModel: ViewModelType {
                 loadingRelay.accept(false)
                 return checkin
             })
-            .asDriver { (error) -> Driver<EventCheckinResponse> in
+            .asDriver { (error) -> Driver<EventDetailResponse> in
                 loadingRelay.accept(false)
                 errorRelay.accept((error as? ErrorResult)?.localizedDescription ?? error.localizedDescription)
-                return Driver.just(EventCheckinResponse(status: "200"))
+                return Driver.just(EventDetailResponse(status: 200, message: ""))
         }
         
         self.input = Input(load: loadRelay, checkin: checkinRelay)

@@ -74,12 +74,19 @@ class EventDetailController: UIViewController {
         eventDetailViewModel
             .output
             .checkin
-            .asDriver(onErrorJustReturn: EventCheckinResponse(status: "200"))
+            .asDriver(onErrorJustReturn: EventDetailResponse(status: 500, title: K.EventDetail.checkinErrorTitle, message: K.General.checkinErrorDefaultMessage))
             .drive(onNext: { [weak self] response in
                 guard let self = self else {return}
-                Utilities().showAlertView(withTarget: self, title: K.EventDetail.checkinSuccessTitle, message: K.EventDetail.checkinSuccessMessage, action: K.General.confirmAlertButtonTitle)
-                self.isCheckedin = true
-                self.configureCheckinButtonStateUI()
+                guard let message = response.message else {return}
+                guard let title = response.title else {return}
+                
+                Utilities().showAlertView(withTarget: self, title: title, message: message, action: K.General.confirmAlertButtonTitle)
+                
+                // Only changes button if the request was successful
+                if (response.status == StatusCodeType.success.rawValue) {
+                    self.isCheckedin = true
+                    self.configureCheckinButtonStateUI()
+                }
             }).disposed(by: disposeBag)
         
     }
@@ -136,6 +143,11 @@ class EventDetailController: UIViewController {
         if isCheckedin {
             isCheckedin = false
             configureCheckinButtonStateUI()
+            
+            let message = K.EventDetail.uncheckMessage
+            let title = K.EventDetail.uncheckTitle
+            
+            Utilities().showAlertView(withTarget: self, title: title, message: message, action: K.General.confirmAlertButtonTitle)
         } else {
             eventDetailViewModel.input.checkin.accept(())
         }

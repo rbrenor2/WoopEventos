@@ -13,7 +13,7 @@ import RxSwift
 class MockEventService: EventServiceType {
     var eventList : [WoopEventos.Event]?
     var event: WoopEventos.Event?
-    var checkinResponse: WoopEventos.EventCheckinResponse?
+    var checkinResponse: WoopEventos.EventDetailResponse?
     
     func getEventList() -> Observable<[WoopEventos.Event]> {
         if let events = eventList {
@@ -31,7 +31,7 @@ class MockEventService: EventServiceType {
         }
     }
     
-    func checkinEvent(byId eventId: String) -> Observable<EventCheckinResponse> {
+    func checkinEvent(byId eventId: String) -> Observable<EventDetailResponse> {
         if let response = checkinResponse {
             return Observable.just(response)
         } else {
@@ -59,8 +59,8 @@ class DataGenerator {
         return found[0]
     }
     
-    static func mockCheckinResponse() -> WoopEventos.EventCheckinResponse {
-        let response = EventCheckinResponse(status: "200")
+    static func mockCheckinResponse() -> WoopEventos.EventDetailResponse {
+        let response = EventDetailResponse(status: 200)
         
         return response
     }

@@ -20,7 +20,7 @@ protocol ViewModelType {
 protocol EventServiceType {
     func getEventList() -> Observable<[Event]>
     func getEvent(byId id: String) -> Observable<Event>
-    func checkinEvent(byId eventId: String) -> Observable<EventCheckinResponse>
+    func checkinEvent(byId eventId: String) -> Observable<EventDetailResponse>
 }
 
 protocol KeychainServiceType {
@@ -35,4 +35,20 @@ enum ErrorResult: Error {
         case .custom(let value):    return value
         }
     }
+}
+
+struct Response: Decodable { }
+
+enum StatusCodeType: Int {
+    case unauthorized = 401
+    case notFound = 404
+    case badRequest = 400
+    case success = 201
+}
+
+enum EventFailureReason: Int, Error {
+    case unauthorized = 401
+    case notFound = 404
+    case badRequest = 400
+    case success = 201
 }

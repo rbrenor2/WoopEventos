@@ -10,16 +10,12 @@ import RxSwift
 import Alamofire
 import KeychainAccess
 
-enum EventFailureReason: Int, Error {
-    case unauthorized = 401
-    case notFound = 404
-    case badRequest = 400
-}
-
-struct EventCheckinResponse: Decodable, Equatable {
-    let status: String
+struct EventDetailResponse: Decodable, Equatable, Error {
+    let status: Int
+    var title: String?
+    var message: String?
     
-    static func == (lhs: EventCheckinResponse, rhs: EventCheckinResponse) -> Bool {
+    static func == (lhs: EventDetailResponse, rhs: EventDetailResponse) -> Bool {
         return lhs.status == rhs.status
     }
 }
@@ -103,7 +99,7 @@ struct EventService: EventServiceType {
     
     // MARK: - Checkin Event
     
-    func checkinEvent(byId eventId: String) -> Observable<EventCheckinResponse> {
+    func checkinEvent(byId eventId: String) -> Observable<EventDetailResponse> {
         let keychain = Keychain(service: K.Services.keychainService)
         let username = keychain["username"]!
         let email = keychain["email"]!
@@ -111,33 +107,25 @@ struct EventService: EventServiceType {
         
         return Observable.create { observer -> Disposable in
             AF.request(K.Services.postEventCheckinURL, method: .post, parameters: checkin)
-                .validate()
-                .responseDecodable(of: EventCheckinResponse.self) {
+                .responseData {
                     response in
-        
-                    switch response.result {
-                    case .success:
-                        do {
-                            guard let data = response.data else {return}
-                            let response = try JSONDecoder().decode(EventCheckinResponse.self, from: data)
-                            observer.onNext(response)
-                            break
-                        } catch {
-                            observer.onError(error)
-                            break
-                        }
-                    case .failure(let error):
-                        if let statusCode = response.response?.statusCode,
-                            let reason = EventFailureReason(rawValue: statusCode)
-                        {
-                            observer.onError(reason)
-                        }
-                        observer.onError(error)
+
+                    let statusCode = response.response!.statusCode
+                    switch statusCode {
+                    case 201:
+                        var response = try! JSONDecoder().decode(EventDetailResponse.self, from: response.data!)
+                        response.title = K.EventDetail.checkinSuccessTitle
+                        response.message = K.EventDetail.checkinSuccessMessage
+                        observer.onNext(response)
                         break
+                    default:
+                        let title = K.EventDetail.checkinErrorTitle
+                        let message = try! JSONDecoder().decode(String.self, from: response.data!)
+                        let error = EventDetailResponse(status: statusCode, title: title, message: message)
+                        observer.onNext(error)
                     }
-            
                 }
-                    
+
                 return Disposables.create()
             }
     }

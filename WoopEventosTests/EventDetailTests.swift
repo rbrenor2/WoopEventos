@@ -86,9 +86,9 @@ class EventDetailTests: XCTestCase {
     }
     
     func testCheckin_success() {
-        let checkin = scheduler.createObserver(WoopEventos.EventCheckinResponse.self)
+        let checkin = scheduler.createObserver(WoopEventos.EventDetailResponse.self)
         
-        let expected: WoopEventos.EventCheckinResponse = DataGenerator.mockCheckinResponse()
+        let expected: WoopEventos.EventDetailResponse = DataGenerator.mockCheckinResponse()
         
         self.viewModel
             .output
@@ -106,7 +106,7 @@ class EventDetailTests: XCTestCase {
     }
     
     func testCheckin_error() {
-        let checkin = scheduler.createObserver(WoopEventos.EventCheckinResponse.self)
+        let checkin = scheduler.createObserver(WoopEventos.EventDetailResponse.self)
         let error = scheduler.createObserver(String.self)
         
         service.checkinResponse = nil

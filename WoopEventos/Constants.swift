@@ -12,6 +12,7 @@ struct K {
         static let woopLogoImage = "woopLogo"
         static let placeholderimage = "placeholder"
         static let confirmAlertButtonTitle = "OK"
+        static let checkinErrorDefaultMessage = "Tente novamente em alguns instantes"
     }
     
     struct EventList {
@@ -35,6 +36,8 @@ struct K {
         static let checkinSuccessTitle = "Parabéns!"
         static let checkinSuccessMessage = "Seu lugar já está reservado.\nAproveite o evento!"
         static let closeButtonIconName = "xmark.circle.fill"
+        static let uncheckMessage = "Caso mude de ideia, é só fazer o check-in novamente"
+        static let uncheckTitle = "Reserva cancelada"
     }
     
     struct Services {
