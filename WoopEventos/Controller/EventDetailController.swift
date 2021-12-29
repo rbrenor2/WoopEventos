@@ -10,6 +10,7 @@ import SDWebImage
 import MapKit
 import RxSwift
 import Lottie
+import KeychainAccess
 
 class EventDetailController: UIViewController {
     // MARK: - Properties
@@ -19,7 +20,7 @@ class EventDetailController: UIViewController {
     
     private let disposeBag = DisposeBag()
         
-    private let eventDetailViewModel: EventDetailViewModel = EventDetailViewModel(eventService: EventService())
+    private let eventDetailViewModel: EventDetailViewModel
         
     private let loadingView: AnimationView = Utilities().loadingAnimationView()
     
@@ -27,59 +28,13 @@ class EventDetailController: UIViewController {
         let view = EventDetailView(frame: view.frame, handleCheckin: #selector(handleCheckinTapped), handleShare: #selector(handleShareTapped), handleClose: #selector(handleCloseTapped))
         return view
     }()
-        
-    // MARK: - Bind ViewModel
-    
-    func bindLoading() {
-        eventDetailViewModel.eventLoading
-            .map ({ [unowned self] loading in
-                Utilities().showLoadingIndicator(inView: self.view, loadingView: loadingView, isLoading: loading)
-            })
-            .subscribe()
-            .disposed(by: disposeBag)
-    }
-    
-    func bindCheckin() {
-        eventDetailViewModel.eventCheckin.subscribe (onNext:{ [unowned self] eventCheckinType in
-            switch eventCheckinType {
-            case .normal(let code):
-                self.showCheckinConfirmationAlert(title: K.EventDetail.checkinSuccessTitle, message: code)
-                break
-            case .error(let error):
-                self.showCheckinConfirmationAlert(title: K.EventDetail.checkinErrorTitle, message: error)
-                break
-            case .empty:
-                self.showCheckinConfirmationAlert(title: "", message: "")
-                break
-            }
-        }, onError: { [unowned self] error in
-            self.configureErrorUI(message: error.localizedDescription)
-        } ).disposed(by: disposeBag)
-    }
-    
-    func bindDetailInfo() {
-        eventDetailViewModel.eventDetail.subscribe (onNext:{ [unowned self] eventDetailType in
-            switch eventDetailType {
-            case .normal(let event):
-                self.configureUI(event: event)
-                self.event = event
-                break
-            case .error(let error):
-                self.configureErrorUI(message: error)
-                break
-            case .empty:
-                break
-            }
-        }, onError: { [unowned self] error in
-            self.configureErrorUI(message: error.localizedDescription)
-        } ).disposed(by: disposeBag)
-    }
     
     // MARK: - Lifecycle
     
     init(id: String) {
-        super.init(nibName: nil, bundle: nil)
         self.id = id
+        self.eventDetailViewModel = EventDetailViewModel(eventService: EventService(), keychainService: Keychain(service: "com.woopeventos-credentials"), eventId: id)
+        super.init(nibName: nil, bundle: nil)
     }
     
     required init?(coder: NSCoder) {
@@ -87,10 +42,54 @@ class EventDetailController: UIViewController {
     }
     
     override func viewDidLoad() {
-        bindLoading()
-        bindDetailInfo()
-        bindCheckin()
-        eventDetailViewModel.getEvent(id: self.id!)
+        binding()
+        eventDetailViewModel.input.load.accept(())
+    }
+    
+    // MARK: - Bindings
+    
+    func binding() {
+        eventDetailViewModel
+            .output
+            .loading
+            .asDriver(onErrorJustReturn: false)
+            .drive(onNext: { [weak self] isLoading in
+                guard let self = self else {return}
+                Utilities().showLoadingIndicator(inView: self.view, loadingView: self.loadingView, isLoading: isLoading)
+            }).disposed(by: disposeBag)
+
+        eventDetailViewModel
+            .output
+            .event
+            .asDriver(onErrorJustReturn: Event())
+            .drive(onNext: { [weak self] event in
+                guard let self = self else {return}
+                self.configureUI(event: event)
+                self.event = event
+            }).disposed(by: disposeBag)
+        
+        eventDetailViewModel
+            .output
+            .checkin
+            .asDriver(onErrorJustReturn: EventCheckinResponse(status: "500"))
+            .drive(onNext: { [weak self] response in
+                guard let self = self else {return}
+                Utilities().showAlertView(withTarget: self, title: K.EventDetail.checkinSuccessTitle, message: K.EventDetail.checkinSuccessMessage, action: K.General.confirmAlertButtonTitle)
+            }).disposed(by: disposeBag)
+    }
+    
+    private func errorBinding() {
+        eventDetailViewModel
+            .output
+            .error
+            .asDriver(onErrorJustReturn: "")
+            .drive(onNext: { [weak self] error in
+                guard let self = self else {
+                    return
+                }
+                Utilities().showAlertView(withTarget: self, title: K.EventDetail.checkinErrorTitle, message: Utilities().getErrorMessage(withError: error), action: K.General.confirmAlertButtonTitle)
+            })
+            .disposed(by: disposeBag)
     }
     
     // MARK: - UI Setup
@@ -100,12 +99,6 @@ class EventDetailController: UIViewController {
         let action = UIAlertAction(title: K.EventDetail.checkinAlertActionButtonTitle, style: .cancel)
         alert.addAction(action)
         self.present(alert, animated: true, completion: nil)
-    }
-    
-    func configureErrorUI(message: String) {
-        let detailErrorView = EventDetailErrorView(frame: view.bounds, title: message)
-        view.addSubview(detailErrorView)
-        detailErrorView.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, width: view.bounds.width, height: view.bounds.height)
     }
         
     func configureUI(event: Event) {
@@ -123,9 +116,7 @@ class EventDetailController: UIViewController {
     }
     
     @objc func handleCheckinTapped() {
-        guard let id = self.id else {return}
-        let eventCheckin = EventCheckin(eventId: id, name: "Breno Rios", email: "rbrenorios@gmail.com")
-        eventDetailViewModel.checkinEvent(eventCheckin: eventCheckin)
+        eventDetailViewModel.input.checkin.accept(())
     }
     
     @objc func handleShareTapped() {

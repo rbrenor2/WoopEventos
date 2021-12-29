@@ -20,6 +20,7 @@ struct K {
         static let refreshTitle = "Carregando..."
         static let reloadErrorTitle = "Xiii... ocorreu algum erro"
         static let reloadError = "Xiii... ocorreu algum erro. Tente novemente em alguns momentos."
+        static let emptyTableMessage = "Nenhum evento no momento"
     }
     
     struct EventDetail {

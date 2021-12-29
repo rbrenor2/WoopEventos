@@ -34,7 +34,7 @@ class EventListController: UIViewController {
         eventListViewModel.input.reload.accept(())
     }
     
-    // MARK: - Bind to ViewModel
+    // MARK: - Bindings
     
     func binding() {
         eventListViewModel
@@ -61,7 +61,7 @@ class EventListController: UIViewController {
             let event: Event = try! self.tableView.rx.model(at: indexPath)
             let detailVC = EventDetailController(id: event.id)
             self.present(detailVC, animated: true, completion: nil)
-        }).disposed(by: disposeBag)
+        }).disposed(by: disposeBag)        
     }
     
     private func errorBinding() {

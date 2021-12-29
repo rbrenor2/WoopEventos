@@ -11,6 +11,7 @@ target 'WoopEventos' do
   pod 'lottie-ios'
   pod 'SDWebImage', '~> 5.0'
   pod 'Alamofire', '~> 5.5' 
+  pod 'KeychainAccess'
 end
 
 target 'WoopEventosTests' do

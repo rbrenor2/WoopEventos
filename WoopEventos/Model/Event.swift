@@ -53,4 +53,16 @@ struct Event: Decodable {
         self.image = URL(string: image)!
         self.date = Date(timeIntervalSince1970: date/1000)
     }
+    
+    init() {
+        self.people = []
+        self.description = ""
+        self.longitude = 0.00
+        self.latitude = 0.00
+        self.price = 0.00
+        self.title = ""
+        self.id = "0"
+        self.image = URL(string: K.General.placeholderimage)!
+        self.date = Date()
+    }
 }

@@ -9,12 +9,6 @@ import Foundation
 import RxSwift
 import Alamofire
 
-protocol EventServiceType {
-    func getEventList() -> Observable<[Event]>
-    func getEvent(byId id: String) -> Observable<Event>
-    func checkinEvent(byEventCheckin checkin: EventCheckin) -> Observable<EventCheckinResponse>
-}
-
 enum EventFailureReason: Int, Error {
     case unauthorized = 401
     case notFound = 404
@@ -22,7 +16,7 @@ enum EventFailureReason: Int, Error {
 }
 
 struct EventCheckinResponse: Decodable {
-    let code: String
+    let status: String
 }
 
 struct EventService: EventServiceType {

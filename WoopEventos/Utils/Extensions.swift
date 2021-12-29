@@ -93,6 +93,28 @@ extension UIView {
     }
 }
 
+// MARK: - UITableView
+
+extension UITableView {
+    func setNoDataMessage(_ message: String) {
+        let frame = CGRect(x: 0, y: 0, width: self.bounds.size.width, height: self.bounds.size.height)
+        let label = UILabel(frame: frame)
+        label.text = message
+        label.textColor = .darkGray
+        label.textAlignment = .center
+        label.font = UIFont.systemFont(ofSize: 16)
+        label.sizeToFit()
+        
+        self.backgroundView = label
+        self.separatorStyle = .none
+    }
+    
+    func restore() {
+        self.backgroundView = nil
+        self.separatorStyle = .singleLine
+    }
+}
+
 // MARK: - UIColor
 
 extension UIColor {

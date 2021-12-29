@@ -8,81 +8,75 @@
 import Foundation
 import RxSwift
 import RxCocoa
+import KeychainAccess
 
-enum EventDetailViewModelType {
-    case normal(event: Event)
-    case error(message: String)
-    case empty
-}
-
-enum EventChekinViewModelType {
-    case normal(code: String)
-    case error(message: String)
-    case empty
-}
-
-class EventDetailViewModel {
+class EventDetailViewModel: ViewModelType {
     // MARK: - Properties
     
+    let input: Input
+    let output: Output
+    
     private let eventService: EventServiceType
-
-    private let loading = BehaviorRelay<Bool>(value: false)
-    private let detail = BehaviorRelay<EventDetailViewModelType>(value: .empty)
-    private let checkin = BehaviorRelay<EventChekinViewModelType>(value: .empty)
     private let disposeBag = DisposeBag()
     
-    var eventLoading: Observable<Bool> {
-        return loading.asObservable()
+    struct Input {
+        let load: PublishRelay<Void>
+        let checkin: PublishRelay<Void>
     }
-
-    var eventCheckin: Observable<EventChekinViewModelType> {
-        return checkin.asObservable()
+        
+    struct Output {
+        let event: Driver<Event>
+        let checkin: Driver<EventCheckinResponse>
+        let loading: Driver<Bool>
+        let error: Driver<String>
     }
-    var eventDetail: Observable<EventDetailViewModelType> {
-        return detail.asObservable()
-    }
-    
-    let onShowError = PublishSubject<UIAlertController>()
-    
+        
     // MARK: - Lifecycle
     
-    init(eventService: EventServiceType) {
+    init(eventService: EventServiceType, keychainService: Keychain, eventId: String) {
         self.eventService = eventService
-    }
-    
-    // MARK: - API
-            
-    func getEvent(id: String) {
-        loading.accept(true)
         
-        eventService.getEvent(byId: id).subscribe (onNext: { [unowned self] event in
-            self.loading.accept(false)
-            
-            if event.id == "" {
-                self.detail.accept(.empty)
-            }
-            
-            let eventDetailViewModel: EventDetailViewModelType = EventDetailViewModelType.normal(event: event)
-            
-            self.detail.accept(eventDetailViewModel)
-        }, onError: { [unowned self] error in
-            self.loading.accept(false)
-            self.detail.accept(.error(message: "Xiii... ocorreu um problema"))
-        }).disposed(by: disposeBag)
-    }
-    
-    func checkinEvent(eventCheckin: EventCheckin) {
-        loading.accept(true)
+        let errorRelay = PublishRelay<String>()
+        let loadingRelay = PublishRelay<Bool>()
+        let loadRelay = PublishRelay<Void>()
+        let checkinRelay = PublishRelay<Void>()
+
+        let event = loadRelay
+            .asObservable()
+            .flatMap({ _ -> Observable<Event> in
+                loadingRelay.accept(true)
+                return eventService.getEvent(byId: eventId)
+            })
+            .map({ event in
+                loadingRelay.accept(false)
+                return event
+            })
+            .asDriver { (error) -> Driver<Event> in
+                loadingRelay.accept(false)
+                errorRelay.accept(error.localizedDescription)
+                return Driver.just(Event())
+        }
         
-        eventService.checkinEvent(byEventCheckin: eventCheckin).subscribe (onNext: { [unowned self] response in
-            self.loading.accept(false)
-            
-            let eventCheckinViewModel: EventChekinViewModelType = EventChekinViewModelType.normal(code: response.code)
-            
-            self.checkin.accept(eventCheckinViewModel)
-        }, onError: { [unowned self] error in
-            self.loading.accept(false)
-            self.checkin.accept(.error(message: K.EventDetail.checkinErrorMessage.replacingOccurrences(of: "{code}", with: "\(error)")))
-        }).disposed(by: disposeBag)
+        let checkin = checkinRelay
+            .asObservable()
+            .flatMap({ _ -> Observable<EventCheckinResponse> in
+                loadingRelay.accept(true)
+                let username = keychainService["username"]!
+                let email = keychainService["email"]!
+                let checkin = EventCheckin(eventId: eventId, name: username, email: email)
+                return eventService.checkinEvent(byEventCheckin: checkin)
+            })
+            .map({ checkin in
+                loadingRelay.accept(false)
+                return checkin
+            })
+            .asDriver { (error) -> Driver<EventCheckinResponse> in
+                loadingRelay.accept(false)
+                errorRelay.accept(error.localizedDescription)
+                return Driver.just(EventCheckinResponse(status: "500"))
+        }
+        
+        self.input = Input(load: loadRelay, checkin: checkinRelay)
+        self.output = Output(event: event, checkin: checkin, loading: loadingRelay.asDriver(onErrorJustReturn: false), error: errorRelay.asDriver(onErrorJustReturn: K.EventList.reloadError))
     }
 }

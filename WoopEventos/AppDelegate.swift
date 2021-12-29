@@ -6,12 +6,19 @@
 //
 
 import UIKit
+import KeychainAccess
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        
+        // Storing keychain user credentials
+        let keychain = Keychain(service: "com.woopeventos-credentials")
+        keychain["username"] = "Breno Rios"
+        keychain["email"] = "breno.rios@br2digital.com.br"
+        
         return true
     }
 
