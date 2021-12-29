@@ -8,6 +8,7 @@
 import Foundation
 import RxSwift
 import Alamofire
+import KeychainAccess
 
 enum EventFailureReason: Int, Error {
     case unauthorized = 401
@@ -15,8 +16,12 @@ enum EventFailureReason: Int, Error {
     case badRequest = 400
 }
 
-struct EventCheckinResponse: Decodable {
+struct EventCheckinResponse: Decodable, Equatable {
     let status: String
+    
+    static func == (lhs: EventCheckinResponse, rhs: EventCheckinResponse) -> Bool {
+        return lhs.status == rhs.status
+    }
 }
 
 struct EventService: EventServiceType {
@@ -98,7 +103,12 @@ struct EventService: EventServiceType {
     
     // MARK: - Checkin Event
     
-    func checkinEvent(byEventCheckin checkin: EventCheckin) -> Observable<EventCheckinResponse> {
+    func checkinEvent(byId eventId: String) -> Observable<EventCheckinResponse> {
+        let keychain = Keychain(service: K.Services.keychainService)
+        let username = keychain["username"]!
+        let email = keychain["email"]!
+        let checkin = EventCheckin(eventId: eventId, name: username, email: email)
+        
         return Observable.create { observer -> Disposable in
             AF.request(K.Services.postEventCheckinURL, method: .post, parameters: checkin)
                 .validate()

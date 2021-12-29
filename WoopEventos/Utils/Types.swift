@@ -7,6 +7,7 @@
 
 import Foundation
 import RxSwift
+import KeychainAccess
 
 protocol ViewModelType {
     associatedtype Input
@@ -19,7 +20,11 @@ protocol ViewModelType {
 protocol EventServiceType {
     func getEventList() -> Observable<[Event]>
     func getEvent(byId id: String) -> Observable<Event>
-    func checkinEvent(byEventCheckin checkin: EventCheckin) -> Observable<EventCheckinResponse>
+    func checkinEvent(byId eventId: String) -> Observable<EventCheckinResponse>
+}
+
+protocol KeychainServiceType {
+    static var shared: Keychain? { get set }
 }
 
 enum ErrorResult: Error {

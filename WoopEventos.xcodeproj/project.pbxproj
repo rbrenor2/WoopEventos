@@ -30,6 +30,9 @@
 		5B9685722778AB360053B25B /* EventDetailInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B9685712778AB350053B25B /* EventDetailInfoView.swift */; };
 		5B9685762778F3330053B25B /* EventDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B9685752778F3330053B25B /* EventDetailView.swift */; };
 		5B96857A2779074D0053B25B /* EventDetailErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B9685792779074D0053B25B /* EventDetailErrorView.swift */; };
+		5BAA14A5277C0CA4008A9497 /* EventDetailTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BAA14A4277C0CA4008A9497 /* EventDetailTests.swift */; };
+		5BAA14A7277C0D0C008A9497 /* MockEventService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BAA14A6277C0D0C008A9497 /* MockEventService.swift */; };
+		5BAA14AB277C1687008A9497 /* KeychainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BAA14AA277C1687008A9497 /* KeychainService.swift */; };
 		E3AE612D4353F8473AD02C61 /* libPods-WoopEventosTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 34518B13365D745E3A22CF2C /* libPods-WoopEventosTests.a */; };
 /* End PBXBuildFile section */
 
@@ -72,6 +75,9 @@
 		5B9685712778AB350053B25B /* EventDetailInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDetailInfoView.swift; sourceTree = "<group>"; };
 		5B9685752778F3330053B25B /* EventDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDetailView.swift; sourceTree = "<group>"; };
 		5B9685792779074D0053B25B /* EventDetailErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDetailErrorView.swift; sourceTree = "<group>"; };
+		5BAA14A4277C0CA4008A9497 /* EventDetailTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDetailTests.swift; sourceTree = "<group>"; };
+		5BAA14A6277C0D0C008A9497 /* MockEventService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockEventService.swift; sourceTree = "<group>"; };
+		5BAA14AA277C1687008A9497 /* KeychainService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainService.swift; sourceTree = "<group>"; };
 		69F194EE22E9D9D5B460616F /* Pods-WoopEventos.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WoopEventos.release.xcconfig"; path = "Target Support Files/Pods-WoopEventos/Pods-WoopEventos.release.xcconfig"; sourceTree = "<group>"; };
 		B046E9AEFF10D4B9A8951BB5 /* Pods-WoopEventosTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WoopEventosTests.debug.xcconfig"; path = "Target Support Files/Pods-WoopEventosTests/Pods-WoopEventosTests.debug.xcconfig"; sourceTree = "<group>"; };
 		B890973E9ABC1CA9A0000BE3 /* Pods_WoopEventos.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WoopEventos.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -113,6 +119,8 @@
 			isa = PBXGroup;
 			children = (
 				5B664BA7277AAA8E00F580E7 /* EventListTests.swift */,
+				5BAA14A4277C0CA4008A9497 /* EventDetailTests.swift */,
+				5BAA14A6277C0D0C008A9497 /* MockEventService.swift */,
 			);
 			path = WoopEventosTests;
 			sourceTree = "<group>";
@@ -209,6 +217,7 @@
 			isa = PBXGroup;
 			children = (
 				5B866A102772A0FA00A56DEF /* EventService.swift */,
+				5BAA14AA277C1687008A9497 /* KeychainService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -392,6 +401,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				5B664BA8277AAA8E00F580E7 /* EventListTests.swift in Sources */,
+				5BAA14A7277C0D0C008A9497 /* MockEventService.swift in Sources */,
+				5BAA14A5277C0CA4008A9497 /* EventDetailTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -404,6 +415,7 @@
 				5B866A1F27755E1200A56DEF /* EventListViewModel.swift in Sources */,
 				5B9685722778AB360053B25B /* EventDetailInfoView.swift in Sources */,
 				5B866A192772E63400A56DEF /* Utilities.swift in Sources */,
+				5BAA14AB277C1687008A9497 /* KeychainService.swift in Sources */,
 				5B866A0927729FB600A56DEF /* EventListController.swift in Sources */,
 				5B96857A2779074D0053B25B /* EventDetailErrorView.swift in Sources */,
 				5B8669F127726CA300A56DEF /* SceneDelegate.swift in Sources */,

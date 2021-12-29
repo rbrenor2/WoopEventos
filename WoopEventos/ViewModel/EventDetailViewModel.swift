@@ -8,7 +8,6 @@
 import Foundation
 import RxSwift
 import RxCocoa
-import KeychainAccess
 
 class EventDetailViewModel: ViewModelType {
     // MARK: - Properties
@@ -33,7 +32,7 @@ class EventDetailViewModel: ViewModelType {
         
     // MARK: - Lifecycle
     
-    init(eventService: EventServiceType, keychainService: Keychain, eventId: String) {
+    init(eventService: EventServiceType, eventId: String) {
         self.eventService = eventService
         
         let errorRelay = PublishRelay<String>()
@@ -53,7 +52,7 @@ class EventDetailViewModel: ViewModelType {
             })
             .asDriver { (error) -> Driver<Event> in
                 loadingRelay.accept(false)
-                errorRelay.accept(error.localizedDescription)
+                errorRelay.accept((error as? ErrorResult)?.localizedDescription ?? error.localizedDescription)
                 return Driver.just(Event())
         }
         
@@ -61,10 +60,7 @@ class EventDetailViewModel: ViewModelType {
             .asObservable()
             .flatMap({ _ -> Observable<EventCheckinResponse> in
                 loadingRelay.accept(true)
-                let username = keychainService["username"]!
-                let email = keychainService["email"]!
-                let checkin = EventCheckin(eventId: eventId, name: username, email: email)
-                return eventService.checkinEvent(byEventCheckin: checkin)
+                return eventService.checkinEvent(byId: eventId)
             })
             .map({ checkin in
                 loadingRelay.accept(false)
@@ -72,8 +68,8 @@ class EventDetailViewModel: ViewModelType {
             })
             .asDriver { (error) -> Driver<EventCheckinResponse> in
                 loadingRelay.accept(false)
-                errorRelay.accept(error.localizedDescription)
-                return Driver.just(EventCheckinResponse(status: "500"))
+                errorRelay.accept((error as? ErrorResult)?.localizedDescription ?? error.localizedDescription)
+                return Driver.just(EventCheckinResponse(status: "200"))
         }
         
         self.input = Input(load: loadRelay, checkin: checkinRelay)

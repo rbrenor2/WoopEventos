@@ -33,7 +33,7 @@ class EventDetailController: UIViewController {
     
     init(id: String) {
         self.id = id
-        self.eventDetailViewModel = EventDetailViewModel(eventService: EventService(), keychainService: Keychain(service: "com.woopeventos-credentials"), eventId: id)
+        self.eventDetailViewModel = EventDetailViewModel(eventService: EventService(), eventId: id)
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -71,7 +71,7 @@ class EventDetailController: UIViewController {
         eventDetailViewModel
             .output
             .checkin
-            .asDriver(onErrorJustReturn: EventCheckinResponse(status: "500"))
+            .asDriver(onErrorJustReturn: EventCheckinResponse(status: "200"))
             .drive(onNext: { [weak self] response in
                 guard let self = self else {return}
                 Utilities().showAlertView(withTarget: self, title: K.EventDetail.checkinSuccessTitle, message: K.EventDetail.checkinSuccessMessage, action: K.General.confirmAlertButtonTitle)
