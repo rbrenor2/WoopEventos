@@ -40,6 +40,10 @@ struct K {
         static let uncheckTitle = "Reserva cancelada"
     }
     
+    struct EventError {
+        static let closeButtonTitle = "Fechar"
+    }
+    
     struct Services {
         static let getEventListURL = "https://5f5a8f24d44d640016169133.mockapi.io/api/events"
         static let getEventURL = "https://5f5a8f24d44d640016169133.mockapi.io/api/events/{id}"

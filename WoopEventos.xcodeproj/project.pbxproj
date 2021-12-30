@@ -29,7 +29,7 @@
 		5B866A2127758EBB00A56DEF /* EventDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B866A2027758EBA00A56DEF /* EventDetailViewModel.swift */; };
 		5B9685722778AB360053B25B /* EventDetailInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B9685712778AB350053B25B /* EventDetailInfoView.swift */; };
 		5B9685762778F3330053B25B /* EventDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B9685752778F3330053B25B /* EventDetailView.swift */; };
-		5B96857A2779074D0053B25B /* EventDetailErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B9685792779074D0053B25B /* EventDetailErrorView.swift */; };
+		5B96857A2779074D0053B25B /* EventErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B9685792779074D0053B25B /* EventErrorView.swift */; };
 		5BAA14A5277C0CA4008A9497 /* EventDetailTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BAA14A4277C0CA4008A9497 /* EventDetailTests.swift */; };
 		5BAA14A7277C0D0C008A9497 /* MockEventService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BAA14A6277C0D0C008A9497 /* MockEventService.swift */; };
 		5BAA14AB277C1687008A9497 /* KeychainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BAA14AA277C1687008A9497 /* KeychainService.swift */; };
@@ -74,7 +74,7 @@
 		5B866A2027758EBA00A56DEF /* EventDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDetailViewModel.swift; sourceTree = "<group>"; };
 		5B9685712778AB350053B25B /* EventDetailInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDetailInfoView.swift; sourceTree = "<group>"; };
 		5B9685752778F3330053B25B /* EventDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDetailView.swift; sourceTree = "<group>"; };
-		5B9685792779074D0053B25B /* EventDetailErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDetailErrorView.swift; sourceTree = "<group>"; };
+		5B9685792779074D0053B25B /* EventErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventErrorView.swift; sourceTree = "<group>"; };
 		5BAA14A4277C0CA4008A9497 /* EventDetailTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDetailTests.swift; sourceTree = "<group>"; };
 		5BAA14A6277C0D0C008A9497 /* MockEventService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockEventService.swift; sourceTree = "<group>"; };
 		5BAA14AA277C1687008A9497 /* KeychainService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainService.swift; sourceTree = "<group>"; };
@@ -190,7 +190,7 @@
 				5B866A0E2772A0D300A56DEF /* EventCell.swift */,
 				5B9685712778AB350053B25B /* EventDetailInfoView.swift */,
 				5B9685752778F3330053B25B /* EventDetailView.swift */,
-				5B9685792779074D0053B25B /* EventDetailErrorView.swift */,
+				5B9685792779074D0053B25B /* EventErrorView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -417,7 +417,7 @@
 				5B866A192772E63400A56DEF /* Utilities.swift in Sources */,
 				5BAA14AB277C1687008A9497 /* KeychainService.swift in Sources */,
 				5B866A0927729FB600A56DEF /* EventListController.swift in Sources */,
-				5B96857A2779074D0053B25B /* EventDetailErrorView.swift in Sources */,
+				5B96857A2779074D0053B25B /* EventErrorView.swift in Sources */,
 				5B8669F127726CA300A56DEF /* SceneDelegate.swift in Sources */,
 				5B866A0B27729FD100A56DEF /* EventDetailController.swift in Sources */,
 				5B9685762778F3330053B25B /* EventDetailView.swift in Sources */,
