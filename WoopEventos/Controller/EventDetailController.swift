@@ -36,7 +36,7 @@ class EventDetailController: UIViewController {
     
     init(id: String) {
         self.id = id
-        self.eventDetailViewModel = EventDetailViewModel(eventService: EventService.shared, eventId: id)
+        self.eventDetailViewModel = EventDetailViewModel(eventService: EventService().shared, eventId: id)
         super.init(nibName: nil, bundle: nil)
     }
     

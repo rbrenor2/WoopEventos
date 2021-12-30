@@ -17,7 +17,7 @@ class EventListController: UIViewController {
     
     let disposeBag = DisposeBag()
     
-    let eventListViewModel: EventListViewModel = EventListViewModel(eventService: EventService.shared)
+    let eventListViewModel: EventListViewModel = EventListViewModel(eventService: EventService().shared)
     
     let loadingView: AnimationView = Utilities().loadingAnimationView()
     
