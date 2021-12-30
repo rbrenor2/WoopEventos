@@ -22,6 +22,7 @@ struct EventDetailResponse: Decodable, Equatable, Error {
 
 struct EventService: EventServiceType {
     // MARK: - Get Event list
+    let shared = EventServiceType()
     
     func getEventList() -> Observable<[Event]> {
         return Observable.create { observer -> Disposable in
