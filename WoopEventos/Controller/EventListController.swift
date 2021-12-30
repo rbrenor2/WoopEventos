@@ -15,17 +15,31 @@ class EventListController: UIViewController {
     
     // MARK: - Properties
     
-    let disposeBag = DisposeBag()
+    let disposeBag: DisposeBag
     
-    let eventListViewModel: EventListViewModel = EventListViewModel(eventService: EventService().shared)
+    let viewModel: EventListViewModel
     
-    let loadingView: AnimationView = Utilities().loadingAnimationView()
+    let loadingView: AnimationView
     
-    let tableView: UITableView = UITableView()
+    let tableView: UITableView
     
-    let refreshControl = UIRefreshControl()
+    let refreshControl: UIRefreshControl
     
     // MARK: - Lifecycle
+    
+    init() {
+        disposeBag = DisposeBag()
+        refreshControl = UIRefreshControl()
+        tableView = UITableView()
+        loadingView = Utilities().loadingAnimationView()
+        viewModel = EventListViewModel(eventService: EventService().shared)
+        
+        super.init()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,13 +47,14 @@ class EventListController: UIViewController {
         configureUI()
         binding()
         errorBinding()
-        eventListViewModel.input.reload.accept(())
+        refreshControl.beginRefreshing()
+        viewModel.input.reload.accept(())
     }
     
     // MARK: - Bindings
     
     func binding() {
-        eventListViewModel
+        viewModel
             .output
             .loading
             .asDriver(onErrorJustReturn: false)
@@ -48,7 +63,7 @@ class EventListController: UIViewController {
                 if (isLoading == false) {self.refreshControl.endRefreshing()}
             }).disposed(by: disposeBag)
 
-        eventListViewModel.output
+        viewModel.output
             .events
             .asDriver(onErrorJustReturn: [])
             .drive(tableView.rx.items(cellIdentifier: reuseIdentifier, cellType: EventCell.self)) {  (row,event,cell) in
@@ -67,14 +82,13 @@ class EventListController: UIViewController {
     }
     
     private func errorBinding() {
-        eventListViewModel
+        viewModel
             .output
             .error
             .asDriver(onErrorJustReturn: "")
             .drive(onNext: { [weak self] error in
-                guard let self = self else {
-                    return
-                }
+                guard let self = self else { return }
+                self.refreshControl.endRefreshing()
                 Utilities().showAlertView(withTarget: self, title: K.EventList.reloadErrorTitle, message: Utilities().getErrorMessage(withError: error), action: K.General.confirmAlertButtonTitle)
             })
             .disposed(by: disposeBag)
@@ -119,6 +133,6 @@ class EventListController: UIViewController {
     // MARK: - Selectors
 
     @objc func loadNewEvents() {
-        eventListViewModel.input.reload.accept(())
+        viewModel.input.reload.accept(())
     }
 }
