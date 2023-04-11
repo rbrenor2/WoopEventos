@@ -89,7 +89,10 @@ class EventListController: UIViewController {
             .drive(onNext: { [weak self] error in
                 guard let self = self else { return }
                 self.refreshControl.endRefreshing()
-                Utilities().showAlertView(withTarget: self, title: K.EventList.reloadErrorTitle, message: Utilities().getErrorMessage(withError: error), action: K.General.confirmAlertButtonTitle)
+                
+                let title = K.EventDetail.checkinErrorTitle
+                let message = Utilities().getErrorMessage(withError: error)
+                Utilities().showErrorView(forTarget: self, withTitle: title, withMessage: message)
             })
             .disposed(by: disposeBag)
     }

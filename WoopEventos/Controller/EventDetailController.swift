@@ -100,7 +100,9 @@ class EventDetailController: UIViewController {
                 guard let self = self else {
                     return
                 }
-                Utilities().showAlertView(withTarget: self, title: K.EventDetail.checkinErrorTitle, message: Utilities().getErrorMessage(withError: error), action: K.General.confirmAlertButtonTitle)
+                let title = K.EventDetail.checkinErrorTitle
+                let message = Utilities().getErrorMessage(withError: error)
+                Utilities().showErrorView(forTarget: self, withTitle: title, withMessage: message)
             })
             .disposed(by: disposeBag)
     }

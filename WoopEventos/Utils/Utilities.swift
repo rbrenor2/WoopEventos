@@ -110,6 +110,11 @@ class Utilities {
         return url
     }
     
+    func showErrorView(forTarget target: UIViewController, withTitle title: String, withMessage message: String) {
+        let errorView = EventErrorViewController(title: title, message: message)
+        target.present(errorView, animated: true, completion: nil)
+    }
+    
     func getTextToShare(title: String, date: Date, description: String, price: Double, latitutde: Double, longitude: Double) -> String {
         let formattedDate = self.formatDate(withDate: date)
         let formattedPrice = self.formatPrice(withPrice: price)

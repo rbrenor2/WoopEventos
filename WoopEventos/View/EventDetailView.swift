@@ -35,7 +35,7 @@ class EventDetailView: UIScrollView {
 
     lazy var checkinButton: UIButton = Utilities().actionButton(withTitle: K.EventDetail.checkinButtonTitle, handleTap: handleCheckinTapped!)
     
-    private lazy var closeButton: UIButton = Utilities().actionIconButton(withIconNamed: K.EventDetail.closeButtonIconName, handleTap: handleCloseTapped!)
+    private lazy var closeButton: UIButton = Utilities().actionIconButton(withIconNamed: K.General.closeButtonIconName, handleTap: handleCloseTapped!)
     
     private let priceLabel: UILabel = {
         let label = UILabel()
