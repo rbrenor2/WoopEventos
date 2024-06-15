@@ -63,7 +63,7 @@ class EventCell: UITableViewCell {
     let favoriteButton: UIButton = {
         let button = UIButton()
         button.tintColor = .mainPurple
-        button.addTarget(self, action: #selector(handleFavoriteTapped), for: .touchUpInside)
+        button.addTarget(EventCell.self, action: #selector(handleFavoriteTapped), for: .touchUpInside)
         
         return button
     }()

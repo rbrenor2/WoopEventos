@@ -10,5 +10,5 @@ import Foundation
 import KeychainAccess
 
 class KeychainService: KeychainServiceType {    
-    static var shared: Keychain? = Keychain(service: K.Services.keychainService)
+    static var shared: Keychain = Keychain(service: K.Services.keychainService)
 }

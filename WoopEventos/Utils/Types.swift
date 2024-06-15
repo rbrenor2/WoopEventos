@@ -25,7 +25,7 @@ protocol EventServiceType {
 }
 
 protocol KeychainServiceType {
-    static var shared: Keychain? { get set }
+    static var shared: Keychain { get set }
 }
 
 enum ErrorResult: Error {

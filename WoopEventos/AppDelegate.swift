@@ -15,8 +15,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         
         // Storing keychain user credentials
-        KeychainService.shared!["username"] = "Breno Rios"
-        KeychainService.shared!["email"] = "breno.rios@br2digital.com.br"
+        KeychainService.shared["username"] = "Breno Rios"
+        KeychainService.shared["email"] = "breno.rios@br2digital.com.br"
         
         return true
     }
