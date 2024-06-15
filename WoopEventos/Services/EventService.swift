@@ -21,9 +21,9 @@ struct EventDetailResponse: Decodable, Equatable, Error {
 }
 
 class EventService: EventServiceType {
+    static var shared: EventService = EventService()
+    
     // MARK: - Get Event list
-    let shared = EventService()
-        
     func getEventList() -> Observable<[Event]> {
         return Observable.create { observer -> Disposable in
             AF.request(K.Services.getEventListURL, method: .get)

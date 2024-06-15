@@ -32,9 +32,9 @@ class EventListController: UIViewController {
         refreshControl = UIRefreshControl()
         tableView = UITableView()
         loadingView = Utilities().loadingAnimationView()
-        viewModel = EventListViewModel(eventService: EventService().shared)
+        viewModel = EventListViewModel(eventService: EventService.shared)
         
-        super.init()
+        super.init(nibName: nil, bundle: nil) // Correctly calling the superclass initializer
     }
     
     required init?(coder: NSCoder) {
@@ -78,7 +78,7 @@ class EventListController: UIViewController {
             let event: Event = try! self.tableView.rx.model(at: indexPath)
             let detailVC = EventDetailController(id: event.id)
             self.present(detailVC, animated: true, completion: nil)
-        }).disposed(by: disposeBag)        
+        }).disposed(by: disposeBag)
     }
     
     private func errorBinding() {

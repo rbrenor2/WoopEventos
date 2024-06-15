@@ -18,6 +18,7 @@ protocol ViewModelType {
 }
 
 protocol EventServiceType {
+    static var shared: EventService { get set }
     func getEventList() -> Observable<[Event]>
     func getEvent(byId id: String) -> Observable<Event>
     func checkinEvent(byId eventId: String) -> Observable<EventDetailResponse>
