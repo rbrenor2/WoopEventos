@@ -8,11 +8,11 @@ The app consumes a REST API provided by the client (this open version uses a moc
 
 ### API
 #### List events
-GET http://5f5a8f24d44d640016169133.mockapi.io/api/events
+_GET http://5f5a8f24d44d640016169133.mockapi.io/api/events
 #### Event details
-GET http://5f5a8f24d44d640016169133.mockapi.io/api/events/1
+_GET http://5f5a8f24d44d640016169133.mockapi.io/api/events/1
 #### Check in
-POST http://5f5a8f24d44d640016169133.mockapi.io/api/checkin
+_POST http://5f5a8f24d44d640016169133.mockapi.io/api/checkin
 - body example:
 ```{ "eventId": "1", "name": "Otávio", "email": "otavio_souza@..." }```
 
