@@ -1,4 +1,4 @@
-# WoopEventos
+# WoopEventos (prototype version)
 ### Summary
 WoopEventos is an RSVP management app developed for a bank institution in southern Brazil. 
 
@@ -6,13 +6,13 @@ The app allows users to explore charity events, organic food fairs, and other pu
 
 The app consumes a REST API provided by the client (this open version uses a mock API). It follows the MVVM pattern, with views built in view code using Swift.
 
-### API
+### API endpoints
 #### List events
-_GET http://5f5a8f24d44d640016169133.mockapi.io/api/events
+*GET http://5f5a8f24d44d640016169133.mockapi.io/api/events*
 #### Event details
-_GET http://5f5a8f24d44d640016169133.mockapi.io/api/events/1
+*GET http://5f5a8f24d44d640016169133.mockapi.io/api/events/1*
 #### Check in
-_POST http://5f5a8f24d44d640016169133.mockapi.io/api/checkin
+*POST http://5f5a8f24d44d640016169133.mockapi.io/api/checkin*
 - body example:
 ```{ "eventId": "1", "name": "Otávio", "email": "otavio_souza@..." }```
 
